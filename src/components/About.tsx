@@ -32,7 +32,7 @@ const About: React.FC<AboutProps> = ({ theme }) => {
   }, []);
 
   return (
-    <section id="about" className={`py-20 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <section id="about" className={`py-10 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating geometric shapes */}
@@ -66,19 +66,19 @@ const About: React.FC<AboutProps> = ({ theme }) => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-8">
           <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-title-slide-up' : 'opacity-0 translate-y-10'}`}>
             About <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">Me</span>
           </h2>
           <div className={`w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full ${isVisible ? 'animate-line-expand' : 'w-0'} transition-all duration-1000 delay-300`}></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
           {/* Left Side - Enhanced Image with 3D effects */}
-          <div className={`relative ${isVisible ? 'animate-slide-in-left' : 'opacity-0 -translate-x-10'}`}>
-            <div className="relative z-10 group">
-              <div className="w-80 h-80 mx-auto rounded-2xl overflow-hidden shadow-2xl transform-gpu perspective-1000 hover:rotate-y-12 transition-transform duration-700">
+          <div className={`relative flex justify-center ${isVisible ? 'animate-slide-in-left' : 'opacity-0 -translate-x-10'}`}>
+            <div className="relative z-10 group w-72 h-80">
+              <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl transform-gpu perspective-1000 hover:rotate-y-12 transition-transform duration-700">
                 <img 
                   src="/WhatsApp Image 2025-07-07 at 16.59.32_55fe4a13.jpg" 
                   alt="Mohit Sharma" 
@@ -111,8 +111,8 @@ const About: React.FC<AboutProps> = ({ theme }) => {
           </div>
 
           {/* Right Side - Enhanced Content */}
-          <div className={`space-y-8 ${isVisible ? 'animate-slide-in-right' : 'opacity-0 translate-x-10'}`}>
-            <div className={`p-8 rounded-2xl backdrop-blur-sm border glass-morphism ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-gray-200'} shadow-xl hover:shadow-2xl transition-all duration-500 group`}>
+          <div className={`space-y-6 ${isVisible ? 'animate-slide-in-right' : 'opacity-0 translate-x-10'}`}>
+            <div className={`p-6 rounded-2xl backdrop-blur-sm border glass-morphism ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-gray-200'} shadow-xl hover:shadow-2xl transition-all duration-500 group`}>
               <h3 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-purple-500 group-hover:bg-clip-text transition-all duration-300`}>
                 About Mohit Sharma
               </h3>
@@ -137,7 +137,7 @@ const About: React.FC<AboutProps> = ({ theme }) => {
             </div>
 
             {/* Enhanced Info Cards */}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-2">
               {[
                 { icon: GraduationCap, label: "Branch", value: "Information Technology", color: "from-blue-500 to-cyan-500" },
                 { icon: MapPin, label: "Location", value: "Jaipur, Rajasthan", color: "from-green-500 to-emerald-500" },

@@ -8,6 +8,7 @@ import Achievements from './components/Achievements';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+// Remove react-router-dom imports since we no longer need routing for Projects
 
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');

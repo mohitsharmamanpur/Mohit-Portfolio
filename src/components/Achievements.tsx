@@ -55,31 +55,32 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       date: "2024",
       color: "from-green-400 to-emerald-500",
       details: "National level hackathon participation with creative problem-solving"
-    },
-    {
-      icon: Code,
-      title: "LeetCode Problem Solver",
-      description: "Solved 350+ DSA problems",
-      date: "Ongoing",
-      color: "from-purple-400 to-pink-500",
-      details: "Consistent problem-solving practice with advanced algorithms"
-    },
-    {
-      icon: BookOpen,
-      title: "NPTEL Certified",
-      description: "DSA with C++",
-      date: "2023",
-      color: "from-indigo-400 to-purple-500",
-      details: "Comprehensive understanding of data structures and algorithms"
-    },
-    {
-      icon: BookOpen,
-      title: "NPTEL Certified",
-      description: "Database Management Systems",
-      date: "2023",
-      color: "from-cyan-400 to-blue-500",
-      details: "Advanced database concepts and management techniques"
     }
+    // Commented out for brevity
+    // ,{
+    //   icon: Code,
+    //   title: "LeetCode Problem Solver",
+    //   description: "Solved 350+ DSA problems",
+    //   date: "Ongoing",
+    //   color: "from-purple-400 to-pink-500",
+    //   details: "Consistent problem-solving practice with advanced algorithms"
+    // },
+    // {
+    //   icon: BookOpen,
+    //   title: "NPTEL Certified",
+    //   description: "DSA with C++",
+    //   date: "2023",
+    //   color: "from-indigo-400 to-purple-500",
+    //   details: "Comprehensive understanding of data structures and algorithms"
+    // },
+    // {
+    //   icon: BookOpen,
+    //   title: "NPTEL Certified",
+    //   description: "Database Management Systems",
+    //   date: "2023",
+    //   color: "from-cyan-400 to-blue-500",
+    //   details: "Advanced database concepts and management techniques"
+    // }
   ];
 
   return (

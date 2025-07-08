@@ -820,3 +820,160 @@ a:focus {
     display: none !important;
   }
 }
+
+/* Flip effect for Hero resume button */
+.flip-btn {
+  perspective: 800px;
+}
+.flip-btn-inner {
+  display: flex;
+  align-items: center;
+  transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+  transform-style: preserve-3d;
+  width: 100%;
+  height: 100%;
+}
+.flip-btn:hover .flip-btn-inner, .flip-btn:focus .flip-btn-inner {
+  transform: rotateY(180deg);
+}
+.flip-btn-front, .flip-btn-back {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  font-size: inherit;
+}
+.flip-btn-front {
+  z-index: 2;
+  background: transparent;
+}
+.flip-btn-back {
+  transform: rotateY(180deg);
+  background: transparent;
+  z-index: 1;
+}
+
+/* 3D tilt effect for project cards */
+.project-3d-tilt {
+  transition: transform 0.4s cubic-bezier(0.4,0.2,0.2,1), box-shadow 0.4s;
+  will-change: transform;
+}
+.project-3d-tilt:hover {
+  transform: perspective(800px) rotateY(8deg) rotateX(4deg) scale(1.04) !important;
+  box-shadow: 0 8px 40px 0 rgba(34,211,238,0.15), 0 1.5px 8px 0 rgba(139,92,246,0.10);
+  z-index: 2;
+}
+
+/* Glitch text effect for project titles */
+.glitch-text {
+  position: relative;
+  color: inherit;
+  font-family: inherit;
+}
+.glitch-text::before, .glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #06b6d4;
+  opacity: 0.7;
+  z-index: 1;
+  pointer-events: none;
+}
+.glitch-text::before {
+  animation: glitchTop 1.2s infinite linear alternate-reverse;
+  clip-path: inset(0 0 60% 0);
+  color: #06b6d4;
+}
+.glitch-text::after {
+  animation: glitchBottom 1.2s infinite linear alternate-reverse;
+  clip-path: inset(60% 0 0 0);
+  color: #8b5cf6;
+}
+@keyframes glitchTop {
+  0% { transform: translate(0,0); }
+  20% { transform: translate(-2px,-2px); }
+  40% { transform: translate(-2px,2px); }
+  60% { transform: translate(2px,-2px); }
+  80% { transform: translate(2px,2px); }
+  100% { transform: translate(0,0); }
+}
+@keyframes glitchBottom {
+  0% { transform: translate(0,0); }
+  20% { transform: translate(2px,2px); }
+  40% { transform: translate(2px,-2px); }
+  60% { transform: translate(-2px,2px); }
+  80% { transform: translate(-2px,-2px); }
+  100% { transform: translate(0,0); }
+}
+
+/* Navbar Animations */
+@keyframes navbarSlideDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-navbar-slide-down {
+  animation: navbarSlideDown 0.7s cubic-bezier(0.4,0.2,0.2,1) both;
+}
+@keyframes navbarFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-navbar-fade-in {
+  animation: navbarFadeIn 1.2s cubic-bezier(0.4,0.2,0.2,1) both;
+}
+.navbar-animated-item {
+  position: relative;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+@keyframes navbarItemPop {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-navbar-item-pop {
+  animation: navbarItemPop 0.5s cubic-bezier(0.4,0.2,0.2,1) both;
+}
+
+/* Flip effect only for project image */
+.project-image-flip {
+  position: relative;
+  width: 100%;
+  height: 12rem; /* h-48 */
+  perspective: 1000px;
+  margin-bottom: 0.5rem;
+}
+.project-image-front, .project-image-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+  z-index: 1;
+}
+.project-image-front {
+  background: transparent;
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+.project-image-back {
+  background: transparent;
+  z-index: 1;
+  transform: rotateY(180deg);
+}
+.project-image-flip.flipped .project-image-front {
+  transform: rotateY(180deg);
+}
+.project-image-flip.flipped .project-image-back {
+  transform: rotateY(0deg);
+  z-index: 3;
+}

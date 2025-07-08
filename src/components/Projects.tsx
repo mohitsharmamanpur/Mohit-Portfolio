@@ -22,10 +22,21 @@ export default function Projects({ theme }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [flippedId, setFlippedId] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
+
+    const section = document.getElementById('projects');
+    // Check if section is already in viewport on mount
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (inView) {
+        setIsVisible(true);
+      }
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -36,7 +47,6 @@ export default function Projects({ theme }: ProjectsProps) {
       { threshold: 0.1 }
     );
 
-    const section = document.getElementById('projects');
     if (section) observer.observe(section);
 
     return () => {
@@ -49,14 +59,14 @@ export default function Projects({ theme }: ProjectsProps) {
     {
       id: 1,
       title: "BGMI (Battlegrounds Mobile India) Info Site",
-      description: "A comprehensive web-based info hub for BGMI players providing detailed data on guns, maps, damage stats, utilities, and more.",
+      description: "A web-based info hub for BGMI players providing data on guns, maps, damage stats, utilities, and more.",
       tech: ["HTML", "CSS", "JavaScript"],
       features: [
+        "Gamer theme with glitch text and dark mode.",
+        "Used in projects to help YouTubers and eSports players.",
         "Complete weapon database with damage statistics",
         "Interactive maps with strategic locations",
         "Player statistics tracking",
-        "Gamer-themed UI with glitch effects",
-        "Dark mode optimized for gaming",
         "Mobile responsive design"
       ],
       github: "https://github.com/mohitsharma/bgmi-info",
@@ -67,7 +77,7 @@ export default function Projects({ theme }: ProjectsProps) {
     {
       id: 2,
       title: "Alumni Association Platform",
-      description: "A networking website that connects college/school students to their alumni for mentorship, career support, and professional networking.",
+      description: "A website that connects college/school students to their alumni for networking, mentorship, and career support.",
       tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
       features: [
         "Alumni registration and profile management",
@@ -85,8 +95,8 @@ export default function Projects({ theme }: ProjectsProps) {
     {
       id: 3,
       title: "IPC Section Suggestion System using ML",
-      description: "An intelligent machine learning system that suggests relevant IPC sections for legal cases, reducing manual referencing errors and saving time.",
-      tech: ["Python", "Scikit-learn", "Flask", "pandas", "NumPy"],
+      description: "An intelligent ML system to suggest IPC sections for legal cases, reducing manual referencing errors and saving time in legal documentation.",
+      tech: ["Python", "Scikit-learn", "Flask"],
       features: [
         "Natural Language Processing for case analysis",
         "ML model trained on legal case data",
@@ -95,7 +105,6 @@ export default function Projects({ theme }: ProjectsProps) {
         "Legal document parser",
         "Web-based interface for easy access"
       ],
-      award: "Winner, Hackverse 2024-2025",
       github: "https://github.com/mohitsharma/ipc-ml-system",
       image: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800",
       category: "Machine Learning"
@@ -116,6 +125,42 @@ export default function Projects({ theme }: ProjectsProps) {
       github: "https://github.com/mohitsharma/cicd-pipeline",
       image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
       category: "DevOps"
+    },
+    {
+      id: 5,
+      title: "Personal Portfolio Website",
+      description: "A modern, animated portfolio website to showcase my projects, skills, and achievements. Built with React and Tailwind CSS.",
+      tech: ["React", "TypeScript", "Tailwind CSS"],
+      features: [
+        "Animated hero and project sections",
+        "Responsive design for all devices",
+        "Dark/light theme toggle",
+        "Interactive project modals",
+        "Custom 3D and glitch effects",
+        "Fast performance with Vite"
+      ],
+      github: "https://github.com/mohitsharma/portfolio",
+      demo: "https://mohitsharma-portfolio.netlify.app",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Frontend"
+    },
+    {
+      id: 6,
+      title: "Weather Dashboard App",
+      description: "A real-time weather dashboard that fetches and displays weather data for any city using a public API.",
+      tech: ["React", "API", "CSS"],
+      features: [
+        "Live weather updates",
+        "Search by city",
+        "Animated weather icons",
+        "Responsive card layout",
+        "Dark mode support",
+        "Error handling for invalid cities"
+      ],
+      github: "https://github.com/mohitsharma/weather-dashboard",
+      demo: "https://weather-dashboard-mohit.netlify.app",
+      image: "https://images.pexels.com/photos/110874/pexels-photo-110874.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Frontend"
     }
   ];
 
@@ -128,7 +173,7 @@ export default function Projects({ theme }: ProjectsProps) {
   };
 
   return (
-    <section id="projects" className={`py-20 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <section id="projects" className={`pt-32 pb-20 relative overflow-hidden min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       {/* Enhanced Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating project icons */}
@@ -173,145 +218,136 @@ export default function Projects({ theme }: ProjectsProps) {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-title-reveal' : 'opacity-0'}`}>
             My <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">Projects</span>
           </h2>
           <div className={`w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full ${isVisible ? 'animate-line-expand' : 'w-0'} transition-all duration-1000 delay-300`}></div>
+          <p className={`mt-4 text-lg font-medium ${theme === 'dark' ? 'text-cyan-200' : 'text-purple-700'} animate-float`}>Click image to see details about project.</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className={`group relative overflow-hidden rounded-2xl shadow-xl transition-all duration-500 hover:scale-105 cursor-pointer project-card-3d project-flip-card ${
+              className={`group relative overflow-visible rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer project-card-3d ${
                 theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-              } ${isVisible ? 'animate-card-reveal' : 'opacity-0'}`}
+              } ${isVisible ? 'animate-card-reveal' : 'opacity-0'} project-3d-tilt`}
               style={{animationDelay: `${index * 0.2}s`}}
-              onClick={() => openModal(project)}
+              onClick={(e) => {
+                // If the image area was not clicked, open modal
+                if (!(e.target as HTMLElement).closest('.project-image-flip')) {
+                  openModal(project);
+                }
+              }}
             >
-              {/* Card Inner for Flip Effect */}
-              <div className="project-card-inner">
-                {/* Front Side */}
-                <div className="project-card-front">
-                  {/* Enhanced Project Image */}
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {project.award && (
-                      <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 animate-pulse">
-                        <Award className="w-4 h-4" />
-                        Winner
-                      </div>
-                    )}
-
-                    {/* Overlay effects */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
-                        Click to View Details
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Enhanced Project Content */}
-                  <div className="p-6 relative">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs rounded-full animate-pulse">
-                        {project.category}
-                      </span>
-                    </div>
-                    
-                    <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-purple-500 group-hover:bg-clip-text transition-all duration-300`}>
-                      {project.title}
-                    </h3>
-                    
-                    <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300`}>
-                      {project.description}
-                    </p>
-
-                    {/* Enhanced Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tech.slice(0, 3).map((tech, techIndex) => (
-                        <span
-                          key={tech}
-                          className={`px-2 py-1 text-xs rounded-full transition-all duration-300 hover:scale-110 ${
-                            theme === 'dark'
-                              ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                          }`}
-                          style={{animationDelay: `${techIndex * 0.1}s`}}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.tech.length > 3 && (
-                        <span className="text-xs text-gray-500 animate-pulse">+{project.tech.length - 3} more</span>
-                      )}
-                    </div>
-
-                    {/* Enhanced Action Links */}
-                    <div className="flex gap-3">
-                      {project.github && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(project.github, '_blank');
-                          }}
-                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
-                        >
-                          <Github className="w-4 h-4" />
-                          Code
-                        </button>
-                      )}
-                      {project.demo && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(project.demo, '_blank');
-                          }}
-                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Demo
-                        </button>
-                      )}
+              {/* Image Flip Effect Only */}
+              <div
+                className={`project-image-flip${flippedId === project.id ? ' flipped' : ''}`}
+                onClick={e => {
+                  e.stopPropagation();
+                  setFlippedId(flippedId === project.id ? null : project.id);
+                }}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="project-image-front">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Glowing border effect */}
+                  <div className="absolute inset-0 rounded-2xl border-4 border-transparent group-hover:border-cyan-400 group-hover:shadow-[0_0_32px_8px_rgba(34,211,238,0.4)] transition-all duration-500 pointer-events-none animate-gradient-border"></div>
+                  {/* Overlay effects */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
+                      Click to View Details
                     </div>
                   </div>
                 </div>
-
-                {/* Back Side */}
-                <div className="project-card-back">
-                  <div className="p-6 h-full flex flex-col justify-center">
-                    <h3 className={`text-2xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                      Key Features
-                    </h3>
-                    <ul className="space-y-2">
+                <div className="project-image-back">
+                  <div className="flex flex-col justify-center items-center w-full h-48 p-4 bg-gradient-to-br from-cyan-500/80 to-purple-500/80 rounded-2xl">
+                    <h3 className="text-lg font-bold text-white mb-2">Key Features</h3>
+                    <ul className="text-white text-sm space-y-1">
                       {project.features.slice(0, 4).map((feature, idx) => (
-                        <li key={idx} className={`flex items-start gap-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                          <div className="w-2 h-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-sm">{feature}</span>
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></span>
+                          {feature}
                         </li>
                       ))}
                     </ul>
                     {project.features.length > 4 && (
-                      <p className="text-sm text-gray-500 mt-2">+{project.features.length - 4} more features</p>
+                      <p className="text-xs text-white/80 mt-2">+{project.features.length - 4} more features</p>
                     )}
                   </div>
                 </div>
               </div>
-
+              {/* End Image Flip Effect Only */}
+              {/* Enhanced Project Content */}
+              <div className="p-6 relative">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs rounded-full animate-pulse">
+                    {project.category}
+                  </span>
+                </div>
+                {/* Glitch effect on title */}
+                <h3 className={`text-xl font-bold mb-3 glitch-text ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-purple-500 group-hover:bg-clip-text transition-all duration-300`} data-text={project.title}>
+                  {project.title}
+                </h3>
+                <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300`}>
+                  {project.description}
+                </p>
+                {/* Enhanced Tech Stack */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.slice(0, 3).map((tech, techIndex) => (
+                    <span
+                      key={tech}
+                      className={`px-2 py-1 text-xs rounded-full transition-all duration-300 hover:scale-110 ${
+                        theme === 'dark'
+                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      }`}
+                      style={{animationDelay: `${techIndex * 0.1}s`}}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.tech.length > 3 && (
+                    <span className="text-xs text-gray-500 animate-pulse">+{project.tech.length - 3} more</span>
+                  )}
+                </div>
+                {/* Enhanced Action Links */}
+                <div className="flex gap-3">
+                  {project.github && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.github, '_blank');
+                      }}
+                      className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
+                    >
+                      <Github className="w-4 h-4" />
+                      Code
+                    </button>
+                  )}
+                  {project.demo && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(project.demo, '_blank');
+                      }}
+                      className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Demo
+                    </button>
+                  )}
+                </div>
+              </div>
               {/* Enhanced Hover Effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-              
-              {/* 3D border effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-500 animate-gradient-border"></div>
-
               {/* Particle burst effect on hover */}
               <div className="particle-burst opacity-0 group-hover:opacity-100">
                 {[...Array(8)].map((_, i) => (

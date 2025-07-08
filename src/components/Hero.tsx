@@ -65,75 +65,83 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated Background with Floating Shapes */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-cyan-600 opacity-90">
-        {/* Animated geometric shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
+      {/* Animated Background with Floating Shapes (About-style) */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating geometric shapes */}
+        <div className="floating-shapes">
+          {[...Array(16)].map((_, i) => (
             <div
               key={i}
-              className="absolute animate-float opacity-20"
+              className={`floating-shape animate-float-complex`}
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${3 + Math.random() * 4}s`
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${4 + Math.random() * 2}s`
               }}
             >
-              <div className={`w-${4 + Math.floor(Math.random() * 8)} h-${4 + Math.floor(Math.random() * 8)} bg-white rounded-full`}></div>
+              <div className={`w-6 h-6 ${i % 3 === 0 ? 'rounded-full' : i % 3 === 1 ? 'rounded-lg rotate-45' : 'rounded-none'} ${theme === 'dark' ? 'bg-cyan-400/10' : 'bg-purple-400/10'} backdrop-blur-sm`} />
             </div>
           ))}
         </div>
-        
-        {/* Wave animation */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden">
-          <svg className="relative block w-full h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="white" className="animate-pulse"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="white" className="animate-pulse" style={{animationDelay: '1s'}}></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="white" className="animate-pulse" style={{animationDelay: '2s'}}></path>
-          </svg>
+        {/* Parallax background layer */}
+        <div 
+          className="parallax-layer-hero"
+          style={{
+            transform: `translateY(${scrollY * 0.1 || 0}px) translateX(${scrollY * 0.05 || 0}px)`
+          }}
+        >
+          <div className={`w-full h-full opacity-10 ${theme === 'dark' ? 'bg-gradient-to-br from-cyan-500 to-purple-500' : 'bg-gradient-to-br from-purple-500 to-pink-500'}`} />
+        </div>
+        {/* Extra floating particles for depth */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-40 animate-orbit"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: '4s'
+              }}
+            />
+          ))}
         </div>
       </div>
-      
-      {/* Matrix-style background effect */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="matrix-bg"></div>
-      </div>
-
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         {/* Profile Image with Rotating Tech Logos */}
         <div className="mb-8 flex justify-center">
           <div className="relative">
-            {/* Rotating tech logos border */}
+            {/* Rotating tech logos border - brighter */}
             <div className="absolute -inset-12 animate-spin-slow">
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
                 const radius = 100;
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
-                
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-12 h-12 flex items-center justify-center bg-white/20 backdrop-blur-sm rounded-full border-2 border-white/30 hover:scale-125 transition-transform duration-300 shadow-lg"
+                    className="absolute w-10 h-10 flex items-center justify-center border-2 border-white/90 rounded-full hover:scale-125 transition-transform duration-300 shadow-xl"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
-                      marginLeft: '-24px',
-                      marginTop: '-24px'
+                      marginLeft: '-20px',
+                      marginTop: '-20px',
+                      filter: 'brightness(3) drop-shadow(0 0 12px #06b6d4) drop-shadow(0 0 12px #fff)'
                     }}
                     title={tech.name}
                   >
-                    <span className="text-2xl filter drop-shadow-lg">{tech.icon}</span>
+                    <span className="text-2xl filter drop-shadow-lg" style={{filter: 'brightness(3) drop-shadow(0 0 12px #06b6d4) drop-shadow(0 0 12px #fff)'}}>{tech.icon}</span>
                   </div>
                 );
               })}
             </div>
-            
-            {/* Main profile image */}
-            <div className="w-48 h-48 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 animate-pulse relative z-10">
+            {/* Main profile image - no blinking */}
+            <div className="w-48 h-48 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 relative z-10">
               <div className="w-full h-full rounded-full overflow-hidden bg-gray-300">
                 <img 
                   src="/WhatsApp Image 2025-07-07 at 17.25.11_f266c35c.jpg" 
@@ -142,9 +150,8 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 />
               </div>
             </div>
-            
-            {/* Pulsing glow effect */}
-            <div className="absolute -inset-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
+            {/* Glow effect - no blinking */}
+            <div className="absolute -inset-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-30"></div>
           </div>
         </div>
 
@@ -185,17 +192,23 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
           </div>
         </div>
 
-        {/* Resume Download Button with enhanced effects */}
+        {/* Resume Download Button with enhanced effects and flip */}
         <div className="mb-8">
           <button 
             onClick={handleResumeDownload}
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 animate-bounce-gentle"
+            className="group relative inline-flex items-center gap-6 px-40 py-8 text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <Download className="w-5 h-5 relative z-10 group-hover:animate-bounce" />
-            <span className="relative z-10">Download Resume</span>
+            <div className="flip-btn-inner">
+              <div className="flip-btn-front flex items-center gap-3">
+                <Download className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Download Resume</span>
+              </div>
+              <div className="flip-btn-back flex items-center gap-3 justify-center">
+                <span className="relative z-10">Get PDF</span>
+                <Download className="w-5 h-5 relative z-10" />
+              </div>
+            </div>
             <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/30 rounded-full group-hover:animate-pulse"></div>
-            
             {/* Ripple effect */}
             <div className="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500 opacity-0 group-hover:opacity-100"></div>
           </button>
