@@ -145,29 +145,29 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         <div className="flex-1 flex justify-center items-center relative z-10">
           <div className="relative">
             {/* Rotating tech logos border - no brightness/glow */}
-            <div className="absolute -inset-12">
+            <div className="absolute -inset-20 pointer-events-none z-10">
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
-                const radius = 150;
+                const radius = 170; // orbit at a distance from the profile photo
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-14 h-14 flex items-center justify-center border-4 border-white/80 rounded-full bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 shadow-xl animate-orbit-tech-visible"
+                    className="absolute w-7 h-7 flex items-center justify-center rounded-full bg-white/30 shadow animate-orbit-tech"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
-                      marginLeft: '-28px',
-                      marginTop: '-28px',
+                      marginLeft: '-14px',
+                      marginTop: '-14px',
                       animationDelay: `${index * 0.2}s`,
-                      animationDuration: '7s',
-                      zIndex: 20
+                      animationDuration: '10s',
+                      zIndex: 10
                     }}
                     title={tech.name}
                   >
-                    <span className="text-3xl font-bold drop-shadow-lg text-white">{tech.icon}</span>
+                    <span className="text-base font-bold text-gray-700 opacity-80">{tech.icon}</span>
                   </div>
                 );
               })}
