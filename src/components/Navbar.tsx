@@ -100,8 +100,14 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               })}
             </div>
 
-            {/* Theme Toggle & Mobile Menu */}
+            {/* Social Icons + Theme Toggle & Mobile Menu */}
             <div className="flex items-center gap-4">
+              {/* Social Icons */}
+              <a href="https://github.com/mohitsharma" target="_blank" rel="noopener noreferrer" className={`p-2 rounded-full transition-all duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.461-1.11-1.461-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.22-.253-4.555-1.112-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.944.359.309.678.919.678 1.852 0 1.336-.012 2.417-.012 2.747 0 .268.18.579.688.481C19.138 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" /></svg></a>
+              <a href="https://linkedin.com/in/mohitsharma" target="_blank" rel="noopener noreferrer" className={`p-2 rounded-full transition-all duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 8.25V7.125A2.625 2.625 0 0013.875 4.5h-3.75A2.625 2.625 0 007.5 7.125v1.125M6.75 19.5v-7.5m10.5 7.5v-7.5m-10.5 0h10.5" /></svg></a>
+              <a href="https://twitter.com/mohitsharma" target="_blank" rel="noopener noreferrer" className={`p-2 rounded-full transition-all duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 19.5c7.5 0 11.625-6.225 11.625-11.625 0-.177 0-.353-.012-.53A8.348 8.348 0 0022.5 4.5a8.19 8.19 0 01-2.357.646A4.118 4.118 0 0021.9 3.1a8.224 8.224 0 01-2.605.996A4.107 4.107 0 0012 7.875c0 .32.036.634.105.934A11.654 11.654 0 013 4.875a4.106 4.106 0 001.27 5.482A4.073 4.073 0 012.8 9.6v.052a4.108 4.108 0 003.292 4.025 4.095 4.095 0 01-1.852.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.375a11.616 11.616 0 006.29 1.845" /></svg></a>
+              <a href="mailto:msharmampr@gmail.com" className={`p-2 rounded-full transition-all duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15A2.25 2.25 0 002.25 6.75m19.5 0v.243a2.25 2.25 0 01-.659 1.591l-7.09 7.09a2.25 2.25 0 01-3.182 0l-7.09-7.09A2.25 2.25 0 012.25 6.993V6.75" /></svg></a>
+              {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
                 className={`p-2 rounded-full transition-all duration-300 ${
@@ -112,7 +118,6 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               >
                 {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
-
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}

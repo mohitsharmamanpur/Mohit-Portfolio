@@ -110,11 +110,41 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         </div>
       </div>
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        {/* Profile Image with Rotating Tech Logos */}
-        <div className="mb-8 flex justify-center">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+        {/* Left: Text Content */}
+        <div className="flex-1 flex flex-col items-start justify-center md:items-start text-left z-10">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg animate-text-glow">
+            Hello, I'm{' '}
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse glitch-text">
+              Mohit Sharma
+            </span>
+          </h1>
+          <h2 className="text-xl md:text-2xl text-cyan-200 font-medium mb-4">Aspiring Software Developer</h2>
+          <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl animate-float">
+            DevOps Enthusiast | Full-Stack Learner | FAANG Aspirant
+          </p>
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <button 
+              onClick={handleResumeDownload}
+              className="group relative inline-flex items-center gap-6 px-40 py-8 text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
+            >
+              <div className="flip-btn-inner">
+                <div className="flip-btn-front flex items-center gap-3">
+                  <Download className="w-5 h-5 relative z-10" />
+                  <span className="relative z-10">Download Resume</span>
+                </div>
+                <div className="flip-btn-back flex items-center gap-3 justify-center">
+                  <span className="relative z-10">Get PDF</span>
+                  <Download className="w-5 h-5 relative z-10" />
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+        {/* Right: Profile Image with (optional) icons */}
+        <div className="flex-1 flex justify-center items-center relative z-10">
           <div className="relative">
-            {/* Rotating tech logos border - brighter */}
+            {/* Rotating tech logos border - no brightness/glow */}
             <div className="absolute -inset-12 animate-spin-slow">
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
@@ -124,23 +154,23 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-10 h-10 flex items-center justify-center border-2 border-white/90 rounded-full hover:scale-125 transition-transform duration-300 shadow-xl"
+                    className="absolute w-10 h-10 flex items-center justify-center border-2 border-white/40 rounded-full hover:scale-125 transition-transform duration-300 shadow"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
                       marginLeft: '-20px',
                       marginTop: '-20px',
-                      filter: 'brightness(3) drop-shadow(0 0 12px #06b6d4) drop-shadow(0 0 12px #fff)'
+                      filter: 'none'
                     }}
                     title={tech.name}
                   >
-                    <span className="text-2xl filter drop-shadow-lg" style={{filter: 'brightness(3) drop-shadow(0 0 12px #06b6d4) drop-shadow(0 0 12px #fff)'}}>{tech.icon}</span>
+                    <span className="text-2xl filter drop-shadow-lg">{tech.icon}</span>
                   </div>
                 );
               })}
             </div>
-            {/* Main profile image - no blinking */}
+            {/* Main profile image */}
             <div className="w-48 h-48 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 relative z-10">
               <div className="w-full h-full rounded-full overflow-hidden bg-gray-300">
                 <img 
@@ -150,94 +180,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 />
               </div>
             </div>
-            {/* Glow effect - no blinking */}
-            <div className="absolute -inset-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full blur-lg opacity-30"></div>
           </div>
-        </div>
-
-        {/* Name with glitch effect */}
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg animate-text-glow">
-          Hello, I'm{' '}
-          <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse glitch-text">
-            Mohit Sharma
-          </span>
-        </h1>
-
-        {/* Typing Animation with enhanced effects */}
-        <div className="h-16 flex items-center justify-center mb-8">
-          <h2 className="text-xl md:text-2xl text-cyan-200 font-medium typing-container">
-            🚀 <span className="typing-text">{typedText}</span>
-            <span className="animate-pulse text-cyan-400">|</span>
-          </h2>
-        </div>
-
-        {/* Goal with floating animation */}
-        <p className="text-lg md:text-xl text-white/90 mb-4 max-w-2xl mx-auto animate-float">
-          🎯 Goal: To work at top-tier tech companies like FAANG
-        </p>
-
-        {/* Location & College with stagger animation */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8 text-white/80">
-          <div className="flex items-center gap-2 animate-slide-in-left">
-            <MapPin className="w-5 h-5" />
-            <span>B.Tech Student, SKIT</span>
-          </div>
-          <div className="flex items-center gap-2 animate-slide-in-up" style={{animationDelay: '0.2s'}}>
-            <Mail className="w-5 h-5" />
-            <span>msharmampr@gmail.com</span>
-          </div>
-          <div className="flex items-center gap-2 animate-slide-in-right" style={{animationDelay: '0.4s'}}>
-            <Phone className="w-5 h-5" />
-            <span>9694591869</span>
-          </div>
-        </div>
-
-        {/* Resume Download Button with enhanced effects and flip */}
-        <div className="mb-8">
-          <button 
-            onClick={handleResumeDownload}
-            className="group relative inline-flex items-center gap-6 px-40 py-8 text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
-          >
-            <div className="flip-btn-inner">
-              <div className="flip-btn-front flex items-center gap-3">
-                <Download className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">Download Resume</span>
-              </div>
-              <div className="flip-btn-back flex items-center gap-3 justify-center">
-                <span className="relative z-10">Get PDF</span>
-                <Download className="w-5 h-5 relative z-10" />
-              </div>
-            </div>
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/30 rounded-full group-hover:animate-pulse"></div>
-            {/* Ripple effect */}
-            <div className="absolute inset-0 rounded-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-500 opacity-0 group-hover:opacity-100"></div>
-          </button>
-        </div>
-
-        {/* Social Links with enhanced hover effects */}
-        <div className="flex justify-center gap-6">
-          {[
-            { icon: Github, href: "https://github.com/mohitsharma", label: "GitHub", color: "hover:bg-gray-600" },
-            { icon: Linkedin, href: "https://linkedin.com/in/mohitsharma", label: "LinkedIn", color: "hover:bg-blue-600" },
-            { icon: Code, href: "https://leetcode.com/mohitsharma", label: "LeetCode", color: "hover:bg-yellow-600" }
-          ].map(({ icon: Icon, href, label, color }, index) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group relative p-4 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 ${color} transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/30 animate-slide-in-up`}
-              style={{animationDelay: `${index * 0.2}s`}}
-            >
-              <Icon className="w-6 h-6 text-white group-hover:text-cyan-300 transition-colors" />
-              <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-black/80 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {label}
-              </div>
-              
-              {/* Ripple effect on hover */}
-              <div className="absolute inset-0 rounded-full bg-white/10 scale-0 group-hover:scale-150 transition-transform duration-500 opacity-0 group-hover:opacity-100"></div>
-            </a>
-          ))}
         </div>
       </div>
 

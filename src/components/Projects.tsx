@@ -332,6 +332,18 @@ export default function Projects({ theme }: ProjectsProps) {
                       Code
                     </button>
                   )}
+                  {project.github && (
+                    <button
+                      onClick={e => {
+                        e.stopPropagation();
+                        window.open(project.github, '_blank');
+                      }}
+                      className="p-2 ml-1 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
+                      title="GitHub"
+                    >
+                      <Github className="w-4 h-4" />
+                    </button>
+                  )}
                   {project.demo && (
                     <button
                       onClick={(e) => {
