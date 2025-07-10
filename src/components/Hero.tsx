@@ -17,20 +17,24 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
     "FAANG Aspirant"
   ];
 
-  // Tech logos for rotating border
+  // Tech logos for rotating border (updated to requested tools)
   const techLogos = [
-    { name: 'React', icon: '⚛️' },
-    { name: 'Python', icon: '🐍' },
-    { name: 'JavaScript', icon: '🟨' },
+    { name: 'Linux', icon: '🐧' },
     { name: 'Docker', icon: '🐳' },
-    { name: 'AWS', icon: '☁️' },
-    { name: 'Node.js', icon: '🟢' },
-    { name: 'MongoDB', icon: '🍃' },
-    { name: 'Git', icon: '📦' },
-    { name: 'Java', icon: '☕' },
-    { name: 'MySQL', icon: '🗄️' },
+    { name: 'Jenkins', icon: '🤖' },
     { name: 'Kubernetes', icon: '⚙️' },
-    { name: 'Linux', icon: '🐧' }
+    { name: 'Cloud', icon: '☁️' },
+    { name: 'Flutter', icon: '💙' },
+    { name: 'VS Code', icon: '📝' },
+    { name: 'Jupyter', icon: '📒' },
+    { name: 'HTML', icon: '🌐' },
+    { name: 'CSS', icon: '🎨' },
+    { name: 'JavaScript', icon: '🟨' },
+    { name: 'Node.js', icon: '🟢' },
+    // Add more popular tools as needed
+    { name: 'Git', icon: '📦' },
+    { name: 'Python', icon: '🐍' },
+    { name: 'React', icon: '⚛️' }
   ];
 
   useEffect(() => {
