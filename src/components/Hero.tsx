@@ -148,25 +148,26 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
             <div className="absolute -inset-12">
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
-                const radius = 140; // larger radius for bigger photo
+                const radius = 150;
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-10 h-10 flex items-center justify-center border-2 border-white/40 rounded-full bg-white/10 hover:scale-125 transition-transform duration-300 shadow animate-orbit-tech"
+                    className="absolute w-14 h-14 flex items-center justify-center border-4 border-white/80 rounded-full bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 shadow-xl animate-orbit-tech-visible"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
-                      marginLeft: '-20px',
-                      marginTop: '-20px',
+                      marginLeft: '-28px',
+                      marginTop: '-28px',
                       animationDelay: `${index * 0.2}s`,
-                      animationDuration: '6s'
+                      animationDuration: '7s',
+                      zIndex: 20
                     }}
                     title={tech.name}
                   >
-                    <span className="text-2xl filter drop-shadow-lg">{tech.icon}</span>
+                    <span className="text-3xl font-bold drop-shadow-lg text-white">{tech.icon}</span>
                   </div>
                 );
               })}
