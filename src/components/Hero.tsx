@@ -126,7 +126,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <button 
               onClick={handleResumeDownload}
-              className="group relative inline-flex items-center gap-6 px-40 py-8 text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
+              className="group relative inline-flex items-center gap-6 px-40 py-6 text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
             >
               <div className="flip-btn-inner">
                 <div className="flip-btn-front flex items-center gap-3">
@@ -188,7 +188,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
             <div className="w-72 h-72 rounded-full bg-white p-1 relative z-10 shadow-2xl">
               <div className="w-full h-full rounded-full overflow-hidden">
                 <img 
-                  src="/WhatsApp Image 2025-07-07 at 16.59.32_55fe4a13.jpg" 
+                  src="/WhatsApp Image 2025-07-09 at 13.38.49_979ae582.jpg" 
                   alt="Mohit Sharma" 
                   className="w-full h-full object-cover rounded-full hover:scale-110 transition-transform duration-500 brightness-110 contrast-125"
                 />

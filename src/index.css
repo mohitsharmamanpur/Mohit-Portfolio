@@ -977,3 +977,15 @@ a:focus {
   transform: rotateY(0deg);
   z-index: 3;
 }
+
+@keyframes orbit-tech {
+  0% {
+    transform: rotate(0deg) translateX(170px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(170px) rotate(-360deg);
+  }
+}
+.animate-orbit-tech {
+  animation: orbit-tech 10s linear infinite;
+}
