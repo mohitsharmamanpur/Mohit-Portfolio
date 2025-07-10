@@ -251,22 +251,22 @@ export default function Projects({ theme }: ProjectsProps) {
                 style={{ cursor: 'pointer' }}
               >
                 <div className="project-image-front">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   {/* Glowing border effect */}
                   <div className="absolute inset-0 rounded-2xl border-4 border-transparent group-hover:border-cyan-400 group-hover:shadow-[0_0_32px_8px_rgba(34,211,238,0.4)] transition-all duration-500 pointer-events-none animate-gradient-border"></div>
-                  {/* Overlay effects */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
-                      Click to View Details
+                    {/* Overlay effects */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
+                        Click to View Details
+                      </div>
                     </div>
                   </div>
-                </div>
                 <div className="project-image-back">
                   <div className="flex flex-col justify-center items-center w-full h-48 p-4 bg-gradient-to-br from-cyan-500/80 to-purple-500/80 rounded-2xl">
                     <h3 className="text-lg font-bold text-white mb-2">Key Features</h3>
@@ -285,53 +285,53 @@ export default function Projects({ theme }: ProjectsProps) {
                 </div>
               </div>
               {/* End Image Flip Effect Only */}
-              {/* Enhanced Project Content */}
-              <div className="p-6 relative">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs rounded-full animate-pulse">
-                    {project.category}
-                  </span>
-                </div>
+                  {/* Enhanced Project Content */}
+                  <div className="p-6 relative">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs rounded-full animate-pulse">
+                        {project.category}
+                      </span>
+                    </div>
                 {/* Glitch effect on title */}
                 <h3 className={`text-xl font-bold mb-3 glitch-text ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-purple-500 group-hover:bg-clip-text transition-all duration-300`} data-text={project.title}>
-                  {project.title}
-                </h3>
-                <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300`}>
-                  {project.description}
-                </p>
-                {/* Enhanced Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.slice(0, 3).map((tech, techIndex) => (
-                    <span
-                      key={tech}
-                      className={`px-2 py-1 text-xs rounded-full transition-all duration-300 hover:scale-110 ${
-                        theme === 'dark'
-                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      }`}
-                      style={{animationDelay: `${techIndex * 0.1}s`}}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.tech.length > 3 && (
-                    <span className="text-xs text-gray-500 animate-pulse">+{project.tech.length - 3} more</span>
-                  )}
-                </div>
-                {/* Enhanced Action Links */}
-                <div className="flex gap-3">
-                  {project.github && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.github, '_blank');
-                      }}
-                      className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
-                    >
-                      <Github className="w-4 h-4" />
-                      Code
-                    </button>
-                  )}
+                      {project.title}
+                    </h3>
+                    <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300`}>
+                      {project.description}
+                    </p>
+                    {/* Enhanced Tech Stack */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tech.slice(0, 3).map((tech, techIndex) => (
+                        <span
+                          key={tech}
+                          className={`px-2 py-1 text-xs rounded-full transition-all duration-300 hover:scale-110 ${
+                            theme === 'dark'
+                              ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                          }`}
+                          style={{animationDelay: `${techIndex * 0.1}s`}}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 3 && (
+                        <span className="text-xs text-gray-500 animate-pulse">+{project.tech.length - 3} more</span>
+                      )}
+                    </div>
+                    {/* Enhanced Action Links */}
+                    <div className="flex gap-3">
+                      {project.github && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(project.github, '_blank');
+                          }}
+                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
+                        >
+                          <Github className="w-4 h-4" />
+                          Code
+                        </button>
+                      )}
                   {project.github && (
                     <button
                       onClick={e => {
@@ -344,20 +344,20 @@ export default function Projects({ theme }: ProjectsProps) {
                       <Github className="w-4 h-4" />
                     </button>
                   )}
-                  {project.demo && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.demo, '_blank');
-                      }}
-                      className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Demo
-                    </button>
-                  )}
-                </div>
-              </div>
+                      {project.demo && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(project.demo, '_blank');
+                          }}
+                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Demo
+                        </button>
+                      )}
+                    </div>
+                  </div>
               {/* Enhanced Hover Effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               {/* Particle burst effect on hover */}
