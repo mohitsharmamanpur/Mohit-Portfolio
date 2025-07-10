@@ -139,6 +139,18 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 </div>
               </div>
             </button>
+            {/* Contact Me Button */}
+            <button
+              onClick={() => {
+                const section = document.getElementById('contact');
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="group relative inline-flex items-center gap-4 px-12 py-6 text-xl font-bold bg-gradient-to-r from-pink-500 to-cyan-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/50 mt-6"
+            >
+              <span className="relative z-10">Contact Me</span>
+            </button>
           </div>
         </div>
         {/* Right: Profile Image with (optional) icons */}
@@ -154,31 +166,31 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-7 h-7 flex items-center justify-center rounded-full bg-white/30 shadow animate-orbit-tech"
+                    className="absolute w-8 h-8 flex items-center justify-center rounded-full bg-white/90 shadow-lg animate-orbit-tech"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
-                      marginLeft: '-14px',
-                      marginTop: '-14px',
+                      marginLeft: '-16px',
+                      marginTop: '-16px',
                       animationDelay: `${index * 0.2}s`,
                       animationDuration: '10s',
                       zIndex: 10
                     }}
                     title={tech.name}
                   >
-                    <span className="text-base font-bold text-gray-700 opacity-80">{tech.icon}</span>
+                    <span className="text-lg font-bold text-yellow-500 drop-shadow-[0_0_6px_rgba(255,255,0,0.7)]">{tech.icon}</span>
                   </div>
                 );
               })}
             </div>
             {/* Main profile image */}
-            <div className="w-72 h-72 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 relative z-10">
-              <div className="w-full h-full rounded-full overflow-hidden bg-gray-300">
+            <div className="w-72 h-72 rounded-full bg-white p-1 relative z-10 shadow-2xl">
+              <div className="w-full h-full rounded-full overflow-hidden">
                 <img 
                   src="/WhatsApp Image 2025-07-07 at 16.59.32_55fe4a13.jpg" 
                   alt="Mohit Sharma" 
-                  className="w-full h-full object-cover rounded-full hover:scale-110 transition-transform duration-500"
+                  className="w-full h-full object-cover rounded-full hover:scale-110 transition-transform duration-500 brightness-110 contrast-125"
                 />
               </div>
             </div>
