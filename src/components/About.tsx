@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, MapPin, Mail, Phone, GraduationCap } from 'lucide-react';
+import { User, MapPin, Mail, Phone, GraduationCap, Award } from 'lucide-react';
 
 interface AboutProps {
   theme: 'light' | 'dark';
@@ -99,17 +99,15 @@ const About: React.FC<AboutProps> = ({ theme }) => {
             {[
               { icon: GraduationCap, label: "Branch", value: "Information Technology", color: "from-blue-500 to-cyan-500" },
               { icon: MapPin, label: "Location", value: "Jaipur, Rajasthan", color: "from-green-500 to-emerald-500" },
-              { icon: Mail, label: "Email", value: "msharmampr@gmail.com", color: "from-purple-500 to-pink-500" },
               { icon: Phone, label: "Phone", value: "9694591869", color: "from-orange-500 to-red-500" },
-              { icon: User, label: "Role", value: "Student", color: "from-cyan-500 to-blue-500" },
-              { icon: User, label: "Experience", value: "2+ Years", color: "from-pink-500 to-purple-500" },
-              { icon: User, label: "Hackathons", value: "5+ Participated", color: "from-green-400 to-blue-400" },
-              { icon: User, label: "Certifications", value: "NPTEL, Coursera", color: "from-yellow-400 to-orange-400" },
-              { icon: User, label: "Languages", value: "English, Hindi", color: "from-indigo-500 to-blue-500" },
-              { icon: User, label: "Hobbies", value: "Coding, Gaming", color: "from-pink-400 to-red-400" },
-              { icon: User, label: "LinkedIn", value: "linkedin.com/in/mohitsharma", color: "from-blue-700 to-cyan-400" },
-              { icon: User, label: "GitHub", value: "github.com/mohitsharma", color: "from-gray-700 to-gray-900" }
-            ].map(({ icon: Icon, label, value, color }, index) => (
+              // 9 project cards from the screenshot
+              { icon: Award, label: "Web Scraping using Python", value: "Automated data extraction from websites using Python scripts.", github: "https://github.com/yourusername/web-scraping-python", color: "from-cyan-500 to-blue-500" },
+              { icon: Award, label: "Send an Email with Python", value: "Use Python to successfully send an email programmatically.", github: "https://github.com/yourusername/send-email-python", color: "from-purple-500 to-pink-500" },
+              { icon: Award, label: "Send an SMS with Python", value: "Send a text message using Python and an SMS gateway/API.", github: "https://github.com/yourusername/send-sms-python", color: "from-green-400 to-blue-400" },
+              { icon: Award, label: "Make a Phone Call with Python", value: "Use Python to make a phone call using a text-to-voice API.", github: "https://github.com/yourusername/phone-call-python", color: "from-yellow-400 to-orange-400" },
+              { icon: Award, label: "Post on Instagram with Python", value: "Post a message and images on Instagram using Python automation.", github: "https://github.com/yourusername/instagram-python", color: "from-pink-400 to-red-400" },
+              { icon: Award, label: "Menu-Driven Python Project", value: "A menu-driven Python program that combines all automation tasks into a single interface.", github: "https://github.com/yourusername/menu-driven-python", color: "from-gray-700 to-gray-900" }
+            ].map(({ icon: Icon, label, value, github, color }, index) => (
               <div 
                 key={label} 
                 className={`p-4 rounded-xl backdrop-blur-sm border info-card-3d ${theme === 'dark' ? 'bg-gray-800/30 border-gray-700' : 'bg-white/50 border-gray-200'} hover:shadow-lg transition-all duration-500 group ${isVisible ? 'animate-card-reveal' : 'opacity-0'}`}
@@ -122,9 +120,11 @@ const About: React.FC<AboutProps> = ({ theme }) => {
                   <div className="flex-1">
                     <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${color} group-hover:bg-clip-text transition-all duration-300`}>{label}</p>
                     <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300 break-all`}>{value}</p>
+                    {github && (
+                      <a href={github} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full text-xs font-semibold shadow hover:scale-105 transition-transform">View on GitHub</a>
+                    )}
                   </div>
                 </div>
-                {/* Hover glow effect */}
                 <div className={`absolute inset-0 bg-gradient-to-r ${color} opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300`}></div>
               </div>
             ))}

@@ -171,10 +171,10 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
               })}
             </div>
             {/* Main profile image */}
-            <div className="w-48 h-48 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 relative z-10">
+            <div className="w-72 h-72 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 relative z-10">
               <div className="w-full h-full rounded-full overflow-hidden bg-gray-300">
                 <img 
-                  src="/WhatsApp Image 2025-07-07 at 17.25.11_f266c35c.jpg" 
+                  src="/WhatsApp Image 2025-07-07 at 16.59.32_55fe4a13.jpg" 
                   alt="Mohit Sharma" 
                   className="w-full h-full object-cover rounded-full hover:scale-110 transition-transform duration-500"
                 />
