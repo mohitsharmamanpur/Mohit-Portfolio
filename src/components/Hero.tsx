@@ -145,23 +145,24 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         <div className="flex-1 flex justify-center items-center relative z-10">
           <div className="relative">
             {/* Rotating tech logos border - no brightness/glow */}
-            <div className="absolute -inset-12 animate-spin-slow">
+            <div className="absolute -inset-12">
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
-                const radius = 100;
+                const radius = 140; // larger radius for bigger photo
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-10 h-10 flex items-center justify-center border-2 border-white/40 rounded-full hover:scale-125 transition-transform duration-300 shadow"
+                    className="absolute w-10 h-10 flex items-center justify-center border-2 border-white/40 rounded-full bg-white/10 hover:scale-125 transition-transform duration-300 shadow animate-orbit-tech"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
                       marginLeft: '-20px',
                       marginTop: '-20px',
-                      filter: 'none'
+                      animationDelay: `${index * 0.2}s`,
+                      animationDuration: '6s'
                     }}
                     title={tech.name}
                   >
