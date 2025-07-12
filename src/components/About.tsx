@@ -127,8 +127,8 @@ const About: React.FC<AboutProps> = ({ theme }) => {
             { icon: Award, label: "Send Email Using JavaScript or API", value: "Use EmailJS or a backend API to send email through a JavaScript-based interface.", github: "https://github.com/yourusername/send-email-js", color: "from-purple-500 to-pink-500" },
             { icon: Award, label: "Send WhatsApp Message Using JavaScript", value: "Use WhatsApp web URL scheme or API to initiate a WhatsApp message from JS.", github: "https://github.com/yourusername/send-whatsapp-js", color: "from-green-400 to-blue-400" },
             { icon: Award, label: "Send WhatsApp Message Using Python", value: "Automate WhatsApp messaging using Python with web automation or API integration.", github: "https://github.com/yourusername/send-whatsapp-python", color: "from-green-500 to-teal-500" },
-            { icon: Award, label: "Track Most Viewed Product", value: "Create a system to track and analyze the most viewed products on an e-commerce platform.", github: "https://github.com/yourusername/track-most-viewed-product", color: "from-indigo-500 to-purple-600" },
-            { icon: Award, label: "Get Current IP and Location", value: "Build a Python script to retrieve current IP address and geolocation information.", github: "https://github.com/yourusername/get-ip-location", color: "from-blue-600 to-indigo-700" }
+            { icon: Award, label: "Track Most Viewed Product using Javascript", value: "Create a system to track and analyze the most viewed products on an e-commerce platform.", github: "https://github.com/yourusername/track-most-viewed-product", color: "from-indigo-500 to-purple-600" },
+            { icon: Award, label: "Get Current IP and Location using Javascript", value: "Build a Python script to retrieve current IP address and geolocation information.", github: "https://github.com/yourusername/get-ip-location", color: "from-blue-600 to-indigo-700" }
           ].map(({ icon: Icon, label, value, github, color }, index) => (
             <div 
               key={label} 
