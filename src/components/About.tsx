@@ -9,6 +9,9 @@ const About: React.FC<AboutProps> = ({ theme }) => {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Your GitHub profile URL
+  const githubProfileUrl = "https://github.com/mohitsharmamanpur";
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
@@ -117,19 +120,19 @@ const About: React.FC<AboutProps> = ({ theme }) => {
         {/* Project Cards Grid Below */}
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[
-            { icon: Award, label: "Web Scraping using Python", value: "Automated data extraction from websites using Python scripts.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-cyan-500 to-blue-500" },
-            { icon: Award, label: "Send an Email with Python", value: "Use Python to successfully send an email programmatically.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-purple-500 to-pink-500" },
-            { icon: Award, label: "Send an SMS with Python", value: "Send a text message using Python and an SMS gateway/API.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-green-400 to-blue-400" },
-            { icon: Award, label: "Make a Phone Call with Python", value: "Use Python to make a phone call using a text-to-voice API.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-yellow-400 to-orange-400" },
-            { icon: Award, label: "Post on Instagram with Python", value: "Post a message and images on Instagram using Python automation.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-pink-400 to-red-400" },
-            { icon: Award, label: "Menu-Driven Python Project", value: "A menu-driven Python program that combines all automation tasks into a single interface.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-gray-700 to-gray-900" },
-            { icon: Award, label: "Take Photo Using JavaScript", value: "Create a JavaScript function to access the webcam and capture a photo.", github: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html", color: "from-cyan-500 to-blue-500" },
-            { icon: Award, label: "Send Email Using JavaScript or API", value: "Use EmailJS or a backend API to send email through a JavaScript-based interface.", github: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html", color: "from-purple-500 to-pink-500" },
-            { icon: Award, label: "Send WhatsApp Message Using JavaScript", value: "Use WhatsApp web URL scheme or API to initiate a WhatsApp message from JS.", github: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html", color: "from-green-400 to-blue-400" },
-            { icon: Award, label: "Send WhatsApp Message Using Python", value: "Automate WhatsApp messaging using Python with web automation or API integration.", github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py", color: "from-green-500 to-teal-500" },
-            { icon: Award, label: "Track Most Viewed Product using Javascript", value: "Create a system to track and analyze the most viewed products on an e-commerce platform.", github: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html", color: "from-indigo-500 to-purple-600" },
-            { icon: Award, label: "Get Current IP and Location using Javascript", value: "Build a Python script to retrieve current IP address and geolocation information.", github: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html", color: "from-blue-600 to-indigo-700" }
-          ].map(({ icon: Icon, label, value, github, color }, index) => (
+            { icon: Award, label: "Web Scraping using Python", value: "Automated data extraction from websites using Python scripts.", color: "from-cyan-500 to-blue-500" },
+            { icon: Award, label: "Send an Email with Python", value: "Use Python to successfully send an email programmatically.", color: "from-purple-500 to-pink-500" },
+            { icon: Award, label: "Send an SMS with Python", value: "Send a text message using Python and an SMS gateway/API.", color: "from-green-400 to-blue-400" },
+            { icon: Award, label: "Make a Phone Call with Python", value: "Use Python to make a phone call using a text-to-voice API.", color: "from-yellow-400 to-orange-400" },
+            { icon: Award, label: "Post on Instagram with Python", value: "Post a message and images on Instagram using Python automation.", color: "from-pink-400 to-red-400" },
+            { icon: Award, label: "Menu-Driven Python Project", value: "A menu-driven Python program that combines all automation tasks into a single interface.", color: "from-gray-700 to-gray-900" },
+            { icon: Award, label: "Take Photo Using JavaScript", value: "Create a JavaScript function to access the webcam and capture a photo.", color: "from-cyan-500 to-blue-500" },
+            { icon: Award, label: "Send Email Using JavaScript or API", value: "Use EmailJS or a backend API to send email through a JavaScript-based interface.", color: "from-purple-500 to-pink-500" },
+            { icon: Award, label: "Send WhatsApp Message Using JavaScript", value: "Use WhatsApp web URL scheme or API to initiate a WhatsApp message from JS.", color: "from-green-400 to-blue-400" },
+            { icon: Award, label: "Send WhatsApp Message Using Python", value: "Automate WhatsApp messaging using Python with web automation or API integration.", color: "from-green-500 to-teal-500" },
+            { icon: Award, label: "Track Most Viewed Product using Javascript", value: "Create a system to track and analyze the most viewed products on an e-commerce platform.", color: "from-indigo-500 to-purple-600" },
+            { icon: Award, label: "Get Current IP and Location using Javascript", value: "Build a Python script to retrieve current IP address and geolocation information.", color: "from-blue-600 to-indigo-700" }
+          ].map(({ icon: Icon, label, value, color }, index) => (
             <div 
               key={label} 
               className={`p-4 rounded-xl backdrop-blur-sm border info-card-3d ${theme === 'dark' ? 'bg-gray-800/30 border-gray-700' : 'bg-white/50 border-gray-200'} hover:shadow-lg transition-all duration-500 group ${isVisible ? 'animate-card-reveal' : 'opacity-0'}`}
@@ -142,9 +145,12 @@ const About: React.FC<AboutProps> = ({ theme }) => {
                 <div className="flex-1">
                   <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${color} group-hover:bg-clip-text transition-all duration-300`}>{label}</p>
                   <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300 break-all`}>{value}</p>
-                  {github && (
-                    <a href={github} target="_blank" rel="noopener noreferrer" className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full text-xs font-semibold shadow hover:scale-105 transition-transform">View on GitHub</a>
-                  )}
+                  <button 
+                    onClick={() => window.open(githubProfileUrl, '_blank', 'noopener,noreferrer')}
+                    className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full text-xs font-semibold shadow hover:scale-105 transition-transform cursor-pointer"
+                  >
+                    View on GitHub
+                  </button>
                 </div>
               </div>
               <div className={`absolute inset-0 bg-gradient-to-r ${color} opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300`}></div>
