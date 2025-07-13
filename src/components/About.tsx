@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, MapPin, Mail, Phone, GraduationCap, Award } from 'lucide-react';
+import { User, MapPin, Mail, Phone, GraduationCap, Award, Github, Linkedin } from 'lucide-react';
 
 interface AboutProps {
   theme: 'light' | 'dark';
@@ -29,161 +29,147 @@ const About: React.FC<AboutProps> = ({ theme }) => {
     };
   }, []);
 
-  const projects = [
-    {
-      icon: Award,
-      label: "Web Scraping using Python",
-      value: "Automated data extraction from websites using Python scripts.",
-      color: "from-cyan-500 to-blue-500",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Send an Email with Python",
-      value: "Use Python to successfully send an email programmatically.",
-      color: "from-purple-500 to-pink-500",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Send an SMS with Python",
-      value: "Send a text message using Python and an SMS gateway/API.",
-      color: "from-green-400 to-blue-400",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Make a Phone Call with Python",
-      value: "Use Python to make a phone call using a text-to-voice API.",
-      color: "from-yellow-400 to-orange-400",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Post on Instagram with Python",
-      value: "Post a message and images on Instagram using Python automation.",
-      color: "from-pink-400 to-red-400",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Menu-Driven Python Project",
-      value: "A menu-driven Python program that combines all automation tasks into a single interface.",
-      color: "from-gray-700 to-gray-900",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Take Photo Using JavaScript",
-      value: "Create a JavaScript function to access the webcam and capture a photo.",
-      color: "from-cyan-500 to-blue-500",
-      repoLink: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html"
-    },
-    {
-      icon: Award,
-      label: "Send Email Using JavaScript or API",
-      value: "Use EmailJS or a backend API to send email through a JavaScript-based interface.",
-      color: "from-purple-500 to-pink-500",
-      repoLink: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html"
-    },
-    {
-      icon: Award,
-      label: "Send WhatsApp Message Using JavaScript",
-      value: "Use WhatsApp web URL scheme or API to initiate a WhatsApp message from JS.",
-      color: "from-green-400 to-blue-400",
-      repoLink: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html"
-    },
-    {
-      icon: Award,
-      label: "Send WhatsApp Message Using Python",
-      value: "Automate WhatsApp messaging using Python with web automation or API integration.",
-      color: "from-green-500 to-teal-500",
-      repoLink: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py"
-    },
-    {
-      icon: Award,
-      label: "Track Most Viewed Product using Javascript",
-      value: "Create a system to track and analyze the most viewed products on an e-commerce platform.",
-      color: "from-indigo-500 to-purple-600",
-      repoLink: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html"
-    },
-    {
-      icon: Award,
-      label: "Get Current IP and Location using Javascript",
-      value: "Build a script to retrieve current IP address and geolocation information.",
-      color: "from-blue-600 to-indigo-700",
-      repoLink: "https://github.com/mohitsharmamanpur/JavaScript-Menu-Tasks-/blob/main/Menu.html"
-    }
-  ];
-
   return (
-    <section id="about" className={`py-10 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-8">
-          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-title-slide-up' : 'opacity-0 translate-y-10'}`}>
-            About <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">Me</span>
-          </h2>
-        </div>
-
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-8">
-          <div className="flex-1">
-            <div className={`p-6 rounded-2xl border ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-gray-200'} shadow-xl`}>
-              <h3 className={`text-2xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                About Mohit Sharma
-              </h3>
-              <div className="space-y-2">
-                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                  I'm an enthusiastic and detail-oriented engineering student pursuing my B.Tech at <span className="font-semibold text-cyan-500">Swami Keshwanand Institute of Technology and Gramothan (SKIT)</span>.
-                </p>
-                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                  I specialize in <span className="font-semibold text-purple-500">Python, Machine Learning, DevOps, and Full-Stack development</span>. I'm involved in projects, internships, and hackathons.
-                </p>
-                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                  I'm a fast learner and team player aiming to work in <span className="font-semibold text-pink-500">top product-based companies like FAANG</span>.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full md:w-64 flex flex-col gap-4">
-            {[
-              { icon: GraduationCap, label: "Branch", value: "Information Technology", color: "from-blue-500 to-cyan-500" },
-              { icon: MapPin, label: "Location", value: "Jaipur, Rajasthan", color: "from-green-500 to-emerald-500" },
-              { icon: Phone, label: "Phone", value: "9694591869", color: "from-orange-500 to-red-500" }
-            ].map(({ icon: Icon, label, value, color }, index) => (
-              <div key={label} className={`flex items-center gap-3 p-4 rounded-xl border ${theme === 'dark' ? 'bg-gray-800/30 border-gray-700' : 'bg-white/50 border-gray-200'}`}>
-                <div className={`p-2 bg-gradient-to-r ${color} rounded-lg`}>
-                  <Icon className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{label}</p>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} break-all`}>{value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {projects.map(({ icon: Icon, label, value, color, repoLink }, index) => (
-            <div key={label} className={`p-4 rounded-xl border ${theme === 'dark' ? 'bg-gray-800/30 border-gray-700' : 'bg-white/50 border-gray-200'} shadow-md`}>
-              <div className="flex items-center gap-3">
-                <div className={`p-2 bg-gradient-to-r ${color} rounded-lg`}>
-                  <Icon className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex-1">
-                  <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{label}</p>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} break-all`}>{value}</p>
-                  <button
-                    onClick={() => window.open(repoLink, '_blank', 'noopener,noreferrer')}
-                    className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full text-xs font-semibold shadow hover:scale-105 transition-transform"
-                  >
-                    View on GitHub
-                  </button>
-                </div>
-              </div>
+    <section id="about" className={`pt-32 pb-20 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      {/* Enhanced Animated Background */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating icons */}
+        <div className="floating-about-icons">
+          {['👨‍💻', '🎓', '🚀', '💡', '🌟', '🔥', '⚡', '🎯'].map((icon, i) => (
+            <div
+              key={i}
+              className={`absolute text-4xl opacity-10 ${isVisible ? 'animate-float-complex' : ''} hover:opacity-30 hover:scale-125 transition-all duration-300`}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${4 + Math.random() * 2}s`
+              }}
+            >
+              {icon}
             </div>
           ))}
+        </div>
+
+        {/* Parallax background */}
+        <div 
+          className="parallax-layer-3"
+          style={{
+            transform: `translateY(${scrollY * 0.15}px) scale(${1 + scrollY * 0.0001})`,
+          }}
+        >
+          <div className={`w-full h-full opacity-5 ${theme === 'dark' ? 'bg-gradient-to-bl from-purple-500 to-pink-500' : 'bg-gradient-to-bl from-pink-500 to-purple-500'}`} />
+        </div>
+
+        {/* Enhanced pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <svg width="100%" height="100%" viewBox="0 0 100 100" className="about-pattern">
+            <defs>
+              <pattern id="about-pattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                <circle cx="4" cy="4" r="1" fill={theme === 'dark' ? '#8b5cf6' : '#ec4899'} opacity="0.3"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#about-pattern)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-12">
+          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-title-reveal' : 'opacity-0'}`}>
+            About <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Me</span>
+          </h2>
+          <div className={`w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full ${isVisible ? 'animate-line-expand' : 'w-0'} transition-all duration-1000 delay-300`}></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Main About Content */}
+            <div className="lg:col-span-2">
+              <div className={`p-8 rounded-2xl border shadow-2xl ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700' : 'bg-white/70 border-gray-200'} ${isVisible ? 'animate-slide-in-left' : 'opacity-0'}`}>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl shadow-lg">
+                    <User className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className={`text-3xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    Mohit Sharma
+                  </h3>
+                </div>
+                
+                <div className="space-y-4 text-lg">
+                  <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
+                    I'm an enthusiastic and detail-oriented engineering student pursuing my B.Tech at{' '}
+                    <span className="font-semibold text-purple-500 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                      Swami Keshwanand Institute of Technology and Gramothan (SKIT)
+                    </span>.
+                  </p>
+                  
+                  <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
+                    I specialize in{' '}
+                    <span className="font-semibold text-pink-500 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                      Python, Machine Learning, DevOps, and Full-Stack development
+                    </span>. 
+                    I'm actively involved in projects, internships, and hackathons to enhance my skills.
+                  </p>
+                  
+                  <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
+                    I'm a fast learner and team player with a strong passion for technology, aiming to work in{' '}
+                    <span className="font-semibold text-purple-500 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                      top product-based companies like FAANG
+                    </span>.
+                  </p>
+                </div>
+
+                {/* Social Links */}
+                <div className="flex gap-4 mt-8">
+                  <a
+                    href="https://github.com/mohitsharma"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  >
+                    <Github className="w-5 h-5" />
+                    GitHub
+                  </a>
+                  <a
+                    href="mailto:msharmampr@gmail.com"
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  >
+                    <Mail className="w-5 h-5" />
+                    Contact Me
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Personal Info Cards */}
+            <div className="space-y-6">
+              {[
+                { icon: GraduationCap, label: "Branch", value: "Information Technology", color: "from-blue-500 to-cyan-500" },
+                { icon: MapPin, label: "Location", value: "Jaipur, Rajasthan", color: "from-green-500 to-emerald-500" },
+                { icon: Phone, label: "Phone", value: "9694591869", color: "from-orange-500 to-red-500" },
+                { icon: Award, label: "Focus", value: "Full-Stack & ML", color: "from-purple-500 to-pink-500" }
+              ].map(({ icon: Icon, label, value, color }, index) => (
+                <div 
+                  key={label} 
+                  className={`p-6 rounded-2xl border shadow-xl transition-all duration-500 hover:scale-105 ${
+                    theme === 'dark' ? 'bg-gray-800/30 border-gray-700' : 'bg-white/50 border-gray-200'
+                  } ${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`}
+                  style={{animationDelay: `${index * 0.1}s`}}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`p-3 bg-gradient-to-r ${color} rounded-xl shadow-lg`}>
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className={`font-semibold text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{label}</p>
+                      <p className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{value}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -220,7 +220,7 @@ export default function Projects({ theme }: ProjectsProps) {
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-10">
           <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-title-reveal' : 'opacity-0'}`}>
-            My <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">Projects</span>
+            Major <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">Projects</span>
           </h2>
           <div className={`w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full ${isVisible ? 'animate-line-expand' : 'w-0'} transition-all duration-1000 delay-300`}></div>
           <p className={`mt-4 text-lg font-medium ${theme === 'dark' ? 'text-cyan-200' : 'text-purple-700'} animate-float`}>Click image to see details about project.</p>

@@ -3,11 +3,13 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
+import MiniProjects from './components/MiniProjects';
 import Projects from './components/Projects';
 import Achievements from './components/Achievements';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 // Remove react-router-dom imports since we no longer need routing for Projects
 
 function App() {
@@ -64,11 +66,13 @@ function App() {
       <Hero theme={theme} />
       <About theme={theme} />
       <Skills theme={theme} />
+      <MiniProjects theme={theme} />
       <Projects theme={theme} />
       <Achievements theme={theme} />
       <Experience theme={theme} />
       <Contact theme={theme} />
       <Footer theme={theme} />
+      <Chatbot theme={theme} />
     </div>
   );
 }
