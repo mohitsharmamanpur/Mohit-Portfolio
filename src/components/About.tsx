@@ -123,7 +123,7 @@ const About: React.FC<AboutProps> = ({ theme }) => {
                 {/* Social Links */}
                 <div className="flex gap-4 mt-8">
                   <a
-                    href="https://github.com/mohitsharma"
+                    href="https://github.com/mohitsharmamanpur"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"

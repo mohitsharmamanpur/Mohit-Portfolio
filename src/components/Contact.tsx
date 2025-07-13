@@ -40,7 +40,7 @@ const Contact: React.FC<ContactProps> = ({ theme }) => {
       icon: Mail,
       label: "Email",
       value: "msharmampr@gmail.com",
-      href: "mailto:msharmampr@gmail.com",
+      href: "https://mail.google.com/mail/u/0/#inbox",
       color: "from-blue-400 to-cyan-500"
     },
     {
@@ -63,19 +63,19 @@ const Contact: React.FC<ContactProps> = ({ theme }) => {
     {
       icon: Github,
       label: "GitHub",
-      href: "https://github.com/mohitsharma",
+      href: "https://github.com/mohitsharmamanpur",
       color: "from-gray-600 to-gray-800"
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      href: "https://linkedin.com/in/mohitsharma",
+      href: "https://www.linkedin.com/feed/?trk=hb_signin",
       color: "from-blue-600 to-blue-800"
     },
     {
       icon: Code,
       label: "LeetCode",
-      href: "https://leetcode.com/mohitsharma",
+      href: "https://leetcode.com/problemset/",
       color: "from-yellow-600 to-orange-600"
     }
   ];
