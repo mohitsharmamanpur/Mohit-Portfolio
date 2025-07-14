@@ -160,13 +160,16 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         {/* Right: Profile Image with revolving tech icons */}
         <div className="flex-1 flex justify-center items-start relative z-10 mt-[-60px]"> {/* Shift upwards */}
           <div className="relative flex flex-col items-center">
-            {/* Rotating tech logos border - closely orbiting the profile photo */}
+            {/* Rotating tech logos border - exactly on the border of the profile photo */}
             <div className="absolute left-1/2 top-1/2" style={{ transform: 'translate(-50%, -50%)' }}>
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
-                const radius = 155; // slightly less than profile image radius (180/2 + border)
-                const x = Math.cos((angle * Math.PI) / 180) * radius;
-                const y = Math.sin((angle * Math.PI) / 180) * radius;
+                const profileRadius = 144; // 288px/2 for w-72/h-72 profile image
+                const iconRadius = 20; // w-10/h-10 icon
+                const borderPadding = 4; // p-1 (4px)
+                const orbitRadius = profileRadius + iconRadius + borderPadding; // icon should touch the border
+                const x = Math.cos((angle * Math.PI) / 180) * orbitRadius;
+                const y = Math.sin((angle * Math.PI) / 180) * orbitRadius;
                 return (
                   <div
                     key={tech.name}
