@@ -157,14 +157,14 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
             </button>
           </div>
         </div>
-        {/* Right: Profile Image with (optional) icons */}
-        <div className="flex-1 flex justify-center items-center relative z-10">
-          <div className="relative">
-            {/* Rotating tech logos border - no brightness/glow */}
-            <div className="absolute -inset-24 pointer-events-none z-0">
+        {/* Right: Profile Image with revolving tech icons */}
+        <div className="flex-1 flex justify-center items-start relative z-10 mt-[-60px]"> {/* Shift upwards */}
+          <div className="relative flex flex-col items-center">
+            {/* Rotating tech logos border - closely orbiting the profile photo */}
+            <div className="absolute left-1/2 top-1/2" style={{ transform: 'translate(-50%, -50%)' }}>
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
-                const radius = 170; // orbit at a distance from the profile photo
+                const radius = 155; // slightly less than profile image radius (180/2 + border)
                 const x = Math.cos((angle * Math.PI) / 180) * radius;
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
                 return (
@@ -172,9 +172,8 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                     key={tech.name}
                     className="absolute w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-lg animate-orbit-tech"
                     style={{
-                      transform: `translate(${x}px, ${y}px)`,
-                      left: '50%',
-                      top: '50%',
+                      left: `calc(50% + ${x}px)` ,
+                      top: `calc(50% + ${y}px)` ,
                       marginLeft: '-20px',
                       marginTop: '-20px',
                       animationDelay: `${index * 0.2}s`,
