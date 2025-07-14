@@ -161,7 +161,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         <div className="flex-1 flex justify-center items-center relative z-10">
           <div className="relative">
             {/* Rotating tech logos border - no brightness/glow */}
-            <div className="absolute -inset-20 pointer-events-none z-10">
+            <div className="absolute -inset-24 pointer-events-none z-0">
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
                 const radius = 170; // orbit at a distance from the profile photo
@@ -170,26 +170,26 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-8 h-8 flex items-center justify-center rounded-full bg-white/90 shadow-lg animate-orbit-tech"
+                    className="absolute w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-lg animate-orbit-tech"
                     style={{
                       transform: `translate(${x}px, ${y}px)`,
                       left: '50%',
                       top: '50%',
-                      marginLeft: '-16px',
-                      marginTop: '-16px',
+                      marginLeft: '-20px',
+                      marginTop: '-20px',
                       animationDelay: `${index * 0.2}s`,
                       animationDuration: '10s',
-                      zIndex: 10
+                      zIndex: 0
                     }}
                     title={tech.name}
                   >
-                    <span className="text-lg font-bold text-yellow-500 drop-shadow-[0_0_6px_rgba(255,255,0,0.7)]">{tech.icon}</span>
+                    <span className="text-xl font-bold text-yellow-500 drop-shadow-[0_0_6px_rgba(255,255,0,0.7)]">{tech.icon}</span>
                   </div>
                 );
               })}
             </div>
             {/* Main profile image */}
-            <div className="w-72 h-72 rounded-full bg-white p-1 relative z-10 shadow-2xl">
+            <div className="w-72 h-72 rounded-full bg-white p-1 relative z-10 shadow-2xl flex items-center justify-center mx-auto">
               <div className="w-full h-full rounded-full overflow-hidden">
                 <img 
                   src="/WhatsApp Image 2025-07-09 at 13.38.49_979ae582.jpg" 
@@ -197,37 +197,6 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                   className="w-full h-full object-cover rounded-full hover:scale-110 transition-transform duration-500 brightness-110 contrast-125"
                 />
               </div>
-            </div>
-            {/* Social Buttons */}
-            <div className="flex justify-center gap-6 mt-8">
-              <a
-                href="https://github.com/mohitsharmamanpur"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-full hover:bg-gray-700 transition-all duration-300 shadow-lg"
-                title="GitHub"
-              >
-                <Github className="w-5 h-5" />
-                GitHub
-              </a>
-              <a
-                href="mailto:mohitsharmamanpur30@gmail.com"
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 shadow-lg"
-                title="Mail"
-              >
-                <Mail className="w-5 h-5" />
-                Mail
-              </a>
-              <a
-                href="https://leetcode.com/mohitsharmamanpur/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 transition-all duration-300 shadow-lg"
-                title="LeetCode"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.205 17.392c-1.13 1.13-2.62 1.752-4.215 1.752-1.597 0-3.086-.622-4.217-1.752l-5.165-5.165c-.232-.232-.232-.609 0-.84.232-.232.609-.232.84 0l5.165 5.165c.88.88 2.05 1.366 3.312 1.366 1.262 0 2.432-.486 3.312-1.366.232-.232.609-.232.84 0 .232.232.232.609 0 .84zm-8.432-10.784c.88-.88 2.05-1.366 3.312-1.366 1.262 0 2.432.486 3.312 1.366.232.232.609.232.84 0 .232-.232.232-.609 0-.84-1.13-1.13-2.62-1.752-4.215-1.752-1.597 0-3.086.622-4.217 1.752l-5.165 5.165c-.232.232-.232.609 0 .84.232.232.609.232.84 0l5.165-5.165zm10.784 4.217c.232-.232.232-.609 0-.84l-2.165-2.165c-.232-.232-.609-.232-.84 0-.232.232-.232.609 0 .84l2.165 2.165c.232.232.609.232.84 0zm-15.114 0c.232.232.609.232.84 0l2.165-2.165c.232-.232.232-.609 0-.84-.232-.232-.609-.232-.84 0l-2.165 2.165c-.232.232-.232.609 0 .84zm7.557 2.783c.232.232.609.232.84 0l2.165-2.165c.232-.232.232-.609 0-.84-.232-.232-.609-.232-.84 0l-2.165 2.165c-.232.232-.232.609 0 .84zm-2.783-2.783c.232.232.609.232.84 0l2.165-2.165c.232-.232.232-.609 0-.84-.232-.232-.609-.232-.84 0l-2.165 2.165c-.232.232-.232.609 0 .84z"/></svg>
-                LeetCode
-              </a>
             </div>
           </div>
         </div>
