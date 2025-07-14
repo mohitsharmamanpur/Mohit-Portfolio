@@ -160,8 +160,8 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         {/* Right: Profile Image with revolving tech icons */}
         <div className="flex-1 flex justify-center items-start relative z-10 mt-[-60px]"> {/* Shift upwards */}
           <div className="relative flex flex-col items-center">
-            {/* Rotating tech logos border - icons stick to the profile photo border */}
-            <div className="absolute left-1/2 top-1/2 pointer-events-none" style={{ transform: 'translate(-50%, -50%)' }}>
+            {/* Rotating tech logos border - icons move in a perfect circle around the profile photo */}
+            <div className="absolute left-1/2 top-1/2 pointer-events-none animate-spin-slow" style={{ transform: 'translate(-50%, -50%)' }}>
               {techLogos.map((tech, index) => {
                 const angle = (index * 360) / techLogos.length;
                 const profileDiameter = 288; // w-72/h-72 profile image
@@ -169,19 +169,16 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
                 const iconRadius = 20; // w-10/h-10 icon
                 // Orbit radius: from center to edge of profile + half icon size
                 const orbitRadius = (profileDiameter / 2) + borderWidth - 1 + (iconRadius / 2);
-                const x = Math.cos((angle * Math.PI) / 180) * orbitRadius;
-                const y = Math.sin((angle * Math.PI) / 180) * orbitRadius;
                 return (
                   <div
                     key={tech.name}
-                    className="absolute w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-lg animate-orbit-tech"
+                    className="absolute w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-lg"
                     style={{
-                      left: `calc(50% + ${x}px)` ,
-                      top: `calc(50% + ${y}px)` ,
+                      left: '50%',
+                      top: '50%',
+                      transform: `rotate(${angle}deg) translateY(-${orbitRadius}px)`,
                       marginLeft: '-20px',
                       marginTop: '-20px',
-                      animationDelay: `${index * 0.2}s`,
-                      animationDuration: '10s',
                       zIndex: 0
                     }}
                     title={tech.name}
