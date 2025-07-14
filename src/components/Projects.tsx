@@ -58,59 +58,6 @@ export default function Projects({ theme }: ProjectsProps) {
   const projects: Project[] = [
     {
       id: 1,
-      title: "BGMI (Battlegrounds Mobile India) Info Site",
-      description: "A web-based info hub for BGMI players providing data on guns, maps, damage stats, utilities, and more.",
-      tech: ["HTML", "CSS", "JavaScript"],
-      features: [
-        "Gamer theme with glitch text and dark mode.",
-        "Used in projects to help YouTubers and eSports players.",
-        "Complete weapon database with damage statistics",
-        "Interactive maps with strategic locations",
-        "Player statistics tracking",
-        "Mobile responsive design"
-      ],
-      github: "https://github.com/mohitsharma/bgmi-info",
-      demo: "https://bgmi-info.netlify.app",
-      image: "https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Web Development"
-    },
-    {
-      id: 2,
-      title: "Alumni Association Platform",
-      description: "A website that connects college/school students to their alumni for networking, mentorship, and career support.",
-      tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
-      features: [
-        "Alumni registration and profile management",
-        "Mentorship matching system",
-        "Event management and notifications",
-        "Career opportunity board",
-        "Discussion forums and networking",
-        "Success stories showcase"
-      ],
-      github: "https://github.com/mohitsharma/alumni-platform",
-      demo: "https://alumni-connect.netlify.app",
-      image: "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Web Development"
-    },
-    {
-      id: 3,
-      title: "IPC Section Suggestion System using ML",
-      description: "An intelligent ML system to suggest IPC sections for legal cases, reducing manual referencing errors and saving time in legal documentation.",
-      tech: ["Python", "Scikit-learn", "Flask"],
-      features: [
-        "Natural Language Processing for case analysis",
-        "ML model trained on legal case data",
-        "Intelligent IPC section recommendations",
-        "Confidence scoring system",
-        "Legal document parser",
-        "Web-based interface for easy access"
-      ],
-      github: "https://github.com/mohitsharma/ipc-ml-system",
-      image: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Machine Learning"
-    },
-    {
-      id: 4,
       title: "CI/CD Pipeline Automation",
       description: "Built a comprehensive CI/CD pipeline to automate build-test-deploy workflows for applications, demonstrating modern DevOps practices.",
       tech: ["Docker", "Jenkins", "Git", "GitHub", "Kubernetes"],
@@ -122,12 +69,29 @@ export default function Projects({ theme }: ProjectsProps) {
         "Rollback capabilities",
         "Monitoring and logging integration"
       ],
-      github: "https://github.com/mohitsharma/cicd-pipeline",
+      github: "https://github.com/mohitsharmamanpur/DevOps-project-1",
       image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
       category: "DevOps"
     },
     {
-      id: 5,
+      id: 2,
+      title: "IPC Section Suggestion System using ML",
+      description: "An intelligent ML system to suggest IPC sections for legal cases, reducing manual referencing errors and saving time in legal documentation.",
+      tech: ["Python", "Scikit-learn", "Flask"],
+      features: [
+        "Natural Language Processing for case analysis",
+        "ML model trained on legal case data",
+        "Intelligent IPC section recommendations",
+        "Confidence scoring system",
+        "Legal document parser",
+        "Web-based interface for easy access"
+      ],
+      github: "https://github.com/mohitsharmamanpur/IPC-Section-Suggestion-ML",
+      image: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Machine Learning"
+    },
+    {
+      id: 3,
       title: "Personal Portfolio Website",
       description: "A modern, animated portfolio website to showcase my projects, skills, and achievements. Built with React and Tailwind CSS.",
       tech: ["React", "TypeScript", "Tailwind CSS"],
@@ -139,28 +103,94 @@ export default function Projects({ theme }: ProjectsProps) {
         "Custom 3D and glitch effects",
         "Fast performance with Vite"
       ],
-      github: "https://github.com/mohitsharma/portfolio",
-      demo: "https://mohitsharma-portfolio.netlify.app",
+      github: "https://github.com/mohitsharmamanpur/Mohit-Portfolio",
+      demo: "https://mohitportfolio30.netlify.app/",
       image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
       category: "Frontend"
     },
     {
-      id: 6,
-      title: "Weather Dashboard App",
-      description: "A real-time weather dashboard that fetches and displays weather data for any city using a public API.",
-      tech: ["React", "API", "CSS"],
+      id: 4,
+      title: "BGMI (Battlegrounds Mobile India) Info Site",
+      description: "A web-based info hub for BGMI players providing data on guns, maps, damage stats, utilities, and more.",
+      tech: ["HTML", "CSS", "JavaScript"],
       features: [
-        "Live weather updates",
-        "Search by city",
-        "Animated weather icons",
-        "Responsive card layout",
-        "Dark mode support",
-        "Error handling for invalid cities"
+        "Gamer theme with glitch text and dark mode.",
+        "Used in projects to help YouTubers and eSports players.",
+        "Complete weapon database with damage statistics",
+        "Interactive maps with strategic locations",
+        "Player statistics tracking",
+        "Mobile responsive design"
       ],
-      github: "https://github.com/mohitsharma/weather-dashboard",
-      demo: "https://weather-dashboard-mohit.netlify.app",
-      image: "https://images.pexels.com/photos/110874/pexels-photo-110874.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Frontend"
+      github: "https://github.com/mohitsharmamanpur/bgmi-project",
+      demo: "https://bgmi-info.netlify.app",
+      image: "https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Web Development"
+    },
+    {
+      id: 5,
+      title: "Alumni Association Platform",
+      description: "A website that connects college/school students to their alumni for networking, mentorship, and career support.",
+      tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+      features: [
+        "Alumni registration and profile management",
+        "Mentorship matching system",
+        "Event management and notifications",
+        "Career opportunity board",
+        "Discussion forums and networking",
+        "Success stories showcase"
+      ],
+      github: "https://github.com/mohitsharmamanpur/Collage-Assoiciation-Platform",
+      demo: "https://alumni-connect.netlify.app",
+      image: "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Web Development"
+    },
+    {
+      id: 6,
+      title: "Menu Based Project",
+      description: "A menu-based project is a program or application that presents the user with a list of options (a menu) and performs specific actions based on the user's selection. It usually follows this structure:",
+      tech: ["Machine Learning", "Linux", "Windows", "Python", "DevOps", "Cloud", "Agentic AI", "Full-Stack", "JavaScript"],
+      features: [
+        "User-friendly menu-driven interface",
+        "Supports multiple platforms: Linux, Windows",
+        "Integrates Machine Learning and DevOps tasks",
+        "Cloud and Agentic AI capabilities",
+        "Full-Stack and JavaScript automation"
+      ],
+      github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Automation"
+    },
+    {
+      id: 7,
+      title: "Automated EC2 Instance Launch Using Python & Boto3 | AWS Cloud Project",
+      description: "I’m excited to share that I successfully launched an Amazon EC2 instance using Python (Boto3 SDK)! This hands-on experience helped me understand the real power of Infrastructure as Code (IaC), cloud automation, and AWS services — crucial skills in the DevOps and cloud ecosystem.",
+      tech: ["Python", "AWS", "Boto3", "Cloud", "DevOps"],
+      features: [
+        "Launched a t2.micro EC2 instance using a Python script",
+        "Integrated AWS credentials securely with the Boto3 SDK",
+        "Specified AMI, region, and instance configurations programmatically",
+        "Understood the backend automation behind GUI-based EC2 launches",
+        "Explored how DevOps tools leverage automation for scalable deployments"
+      ],
+      github: "https://github.com/mohitsharmamanpur/aws-ec2-automation",
+      image: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Cloud/DevOps"
+    },
+    {
+      id: 8,
+      title: "Finance Education Chatbot using Google Gemini + Gradio",
+      description: "In the fast-paced world of AI and finance, I’ve created a beginner-friendly chatbot that explains financial concepts like SIPs, mutual funds, stocks, Nifty 50, compound interest, and more — all in simple, easy-to-understand language. The chatbot is powered by Google’s Gemini 1.5 Flash model and features a sleek Gradio interface where users can ask finance-related questions and get instant AI-generated responses.",
+      tech: ["Python", "Gradio", "Google Gemini", "AI", "Finance"],
+      features: [
+        "Natural language answers to complex finance topics",
+        "Interactive Gradio UI with input, examples, and clear options",
+        "Prompt-engineered backend for reliable, beginner-focused output",
+        "Beginner-friendly explanations for financial literacy",
+        "Explores Generative AI in education"
+      ],
+      github: "https://github.com/mohitsharmamanpur/finance-chatbot-gemini",
+      image: "https://images.pexels.com/photos/4386375/pexels-photo-4386375.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "AI/Education"
     }
   ];
 

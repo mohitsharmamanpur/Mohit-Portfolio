@@ -66,8 +66,8 @@ function App() {
       <Hero theme={theme} />
       <About theme={theme} />
       <Skills theme={theme} />
-      <MiniProjects theme={theme} />
       <Projects theme={theme} />
+      <MiniProjects theme={theme} />
       <Achievements theme={theme} />
       <Experience theme={theme} />
       <Contact theme={theme} />
