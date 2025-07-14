@@ -62,7 +62,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   const handleResumeDownload = () => {
     // Create a mock resume download
     const link = document.createElement('a');
-    link.href = 'C:\Users\Lenovo\Desktop\Resume-Mohit.pdf';
+    link.href = "C:\Users\Lenovo\project\public\Resume-Mohit.pdf";
     link.download = 'Mohit_Sharma_Resume.pdf';
     link.click();
   };
