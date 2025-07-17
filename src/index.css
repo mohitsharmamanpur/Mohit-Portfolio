@@ -1104,3 +1104,15 @@ a:focus {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@keyframes orbit-individual {
+  0% {
+    transform: rotate(var(--start-angle, 0deg)) translateY(var(--orbit-radius, 180px)) rotate(calc(-1 * var(--start-angle, 0deg)));
+  }
+  100% {
+    transform: rotate(calc(360deg + var(--start-angle, 0deg))) translateY(var(--orbit-radius, 180px)) rotate(calc(-1 * (360deg + var(--start-angle, 0deg))));
+  }
+}
+.animate-orbit-individual {
+  animation: orbit-individual 6s linear infinite;
+}

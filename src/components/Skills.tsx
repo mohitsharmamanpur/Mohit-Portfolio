@@ -219,7 +219,7 @@ const Skills: React.FC<SkillsProps> = ({ theme }) => {
             {skillCategories[activeTab as keyof typeof skillCategories].skills.map((skill, index) => (
               <div key={skill.name} className="space-y-3 group skill-item-hover">
                 <div className="flex justify-between items-center">
-                  <span className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:${skill.color} group-hover:bg-clip-text transition-all duration-300`}>
+                  <span className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'} transition-all duration-300`}>
                     {skill.name}
                   </span>
                   <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} font-mono bg-gradient-to-r ${skill.color} bg-clip-text text-transparent font-bold`}>

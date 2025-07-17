@@ -117,10 +117,11 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Left: Text Content */}
         <div className="flex-1 flex flex-col items-start justify-center md:items-start text-left z-10">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg animate-text-glow">
-            Hello, I'm{' '}
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse glitch-text">
-              Mohit Sharma
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg flex items-center gap-4">
+            Hello, I'm <span className="relative inline-block ml-3">
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-extrabold animate-blink" style={{animation: 'blink 1.2s infinite alternate'}}>
+                Mohit Sharma
+              </span>
             </span>
           </h1>
           <h2 className="text-xl md:text-2xl text-cyan-200 font-medium mb-4">Aspiring Software Developer</h2>
@@ -130,7 +131,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <button 
               onClick={handleResumeDownload}
-              className="group relative inline-flex items-center gap-6 px-40 py-6 text-2xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
+              className="group relative inline-flex items-center gap-4 px-12 py-6 text-xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
             >
               <div className="flip-btn-inner">
                 <div className="flip-btn-front flex items-center gap-3">
@@ -158,38 +159,10 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
           </div>
         </div>
         {/* Right: Profile Image with revolving tech icons */}
-        <div className="flex-1 flex justify-center items-start relative z-10 mt-[-60px]"> {/* Shift upwards */}
+        <div className="flex-1 flex justify-center items-start relative z-10 mt-[-60px]">
           <div className="relative flex flex-col items-center">
-            {/* Rotating tech logos border - icons move in a perfect circle around the profile photo */}
-            <div className="absolute left-1/2 top-1/2 pointer-events-none animate-spin-slow" style={{ transform: 'translate(-50%, -50%)' }}>
-              {techLogos.map((tech, index) => {
-                const angle = (index * 360) / techLogos.length;
-                const profileDiameter = 288; // w-72/h-72 profile image
-                const borderWidth = 4; // p-1 (4px)
-                const iconRadius = 20; // w-10/h-10 icon
-                // Orbit radius: from center to edge of profile + half icon size
-                const orbitRadius = (profileDiameter / 2) + borderWidth - 1 + (iconRadius / 2);
-                return (
-                  <div
-                    key={tech.name}
-                    className="absolute w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-lg"
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      transform: `rotate(${angle}deg) translateY(-${orbitRadius}px)`,
-                      marginLeft: '-20px',
-                      marginTop: '-20px',
-                      zIndex: 0
-                    }}
-                    title={tech.name}
-                  >
-                    <span className="text-xl font-bold text-yellow-500 drop-shadow-[0_0_6px_rgba(255,255,0,0.7)]">{tech.icon}</span>
-                  </div>
-                );
-              })}
-            </div>
-            {/* Main profile image */}
-            <div className="w-72 h-72 rounded-full bg-white p-1 relative z-10 shadow-2xl flex items-center justify-center mx-auto">
+            {/* Main profile image - larger size, no rotating icons */}
+            <div className="w-96 h-96 rounded-full bg-white p-1 relative z-10 shadow-2xl flex items-center justify-center mx-auto">
               <div className="w-full h-full rounded-full overflow-hidden">
                 <img 
                   src="/WhatsApp Image 2025-07-09 at 13.38.49_979ae582.jpg" 
@@ -232,3 +205,13 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
 };
 
 export default Hero;
+
+<style>
+{`
+@keyframes blink {
+  0% { opacity: 1; filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #a78bfa); }
+  50% { opacity: 0.5; filter: drop-shadow(0 0 16px #f472b6) drop-shadow(0 0 32px #06b6d4); }
+  100% { opacity: 1; filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #a78bfa); }
+}
+`}
+</style>

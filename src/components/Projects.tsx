@@ -172,7 +172,7 @@ export default function Projects({ theme }: ProjectsProps) {
         "Understood the backend automation behind GUI-based EC2 launches",
         "Explored how DevOps tools leverage automation for scalable deployments"
       ],
-      github: "https://github.com/mohitsharmamanpur/aws-ec2-automation",
+      github: "https://github.com/mohitsharmamanpur/secure-ec2-launcher",
       image: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800",
       category: "Cloud/DevOps"
     },
