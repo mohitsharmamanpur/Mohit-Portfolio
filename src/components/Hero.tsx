@@ -117,9 +117,9 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
         {/* Left: Text Content */}
         <div className="flex-1 flex flex-col items-start justify-center md:items-start text-left z-10">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg flex items-center gap-4">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg flex items-center gap-4 whitespace-nowrap">
             Hello, I'm <span className="relative inline-block ml-3">
-              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-extrabold animate-blink" style={{animation: 'blink 1.2s infinite alternate'}}>
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-extrabold animate-blink shimmer-text" style={{animation: 'blink 1.2s infinite alternate'}}>
                 Mohit Sharma
               </span>
             </span>
@@ -131,18 +131,19 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <button 
               onClick={handleResumeDownload}
-              className="group relative inline-flex items-center gap-4 px-12 py-6 text-xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50 flip-btn"
+              className="flip-btn group relative inline-flex items-center justify-center gap-4 px-12 py-6 text-xl font-bold bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full overflow-hidden transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/50"
+              style={{ minWidth: '220px', minHeight: '56px' }}
             >
-              <div className="flip-btn-inner">
-                <div className="flip-btn-front flex items-center gap-3">
+              <span className="flip-btn-inner w-full h-full flex items-center justify-center">
+                <span className="flip-btn-front flex items-center gap-3 w-full h-full justify-center transition-opacity duration-300 group-hover:opacity-0">
                   <Download className="w-5 h-5 relative z-10" />
                   <span className="relative z-10">Download Resume</span>
-                </div>
-                <div className="flip-btn-back flex items-center gap-3 justify-center">
+                </span>
+                <span className="flip-btn-back flex items-center gap-3 w-full h-full justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ transform: 'rotateY(180deg)' }}>
                   <span className="relative z-10">Get PDF</span>
                   <Download className="w-5 h-5 relative z-10" />
-                </div>
-              </div>
+                </span>
+              </span>
             </button>
             {/* Contact Me Button */}
             <button
@@ -212,6 +213,44 @@ export default Hero;
   0% { opacity: 1; filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #a78bfa); }
   50% { opacity: 0.5; filter: drop-shadow(0 0 16px #f472b6) drop-shadow(0 0 32px #06b6d4); }
   100% { opacity: 1; filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 16px #a78bfa); }
+}
+.shimmer-text {
+  background: linear-gradient(90deg, #06b6d4, #a78bfa, #f472b6, #06b6d4);
+  background-size: 200% 200%;
+  animation: shimmer 2.5s linear infinite, blink 1.2s infinite alternate;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.flip-btn {
+  perspective: 800px;
+}
+.flip-btn-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.group:hover .flip-btn-inner {
+  transform: rotateY(180deg);
+}
+.flip-btn-front, .flip-btn-back {
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.flip-btn-back {
+  transform: rotateY(180deg);
 }
 `}
 </style>
