@@ -13,8 +13,8 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   const textArray = [
     "Aspiring Software Developer",
     "DevOps Enthusiast", 
-    "Full-Stack Learner",
-    "FAANG Aspirant"
+    "Machine Learning Learner",
+    "Cloud Aspirant"
   ];
 
   // Tech logos for rotating border (updated to requested tools)

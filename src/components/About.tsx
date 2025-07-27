@@ -107,7 +107,7 @@ const About: React.FC<AboutProps> = ({ theme }) => {
                   <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} leading-relaxed`}>
                     I specialize in{' '}
                     <span className="font-semibold text-pink-500 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-                      Python, Machine Learning, DevOps, and Full-Stack development
+                      DevOps, Cloud, Python, Machine Learning 
                     </span>. 
                     I'm actively involved in projects, internships, and hackathons to enhance my skills.
                   </p>
@@ -148,7 +148,7 @@ const About: React.FC<AboutProps> = ({ theme }) => {
                 { icon: GraduationCap, label: "Branch", value: "Information Technology", color: "from-blue-500 to-cyan-500" },
                 { icon: MapPin, label: "Location", value: "Jaipur, Rajasthan", color: "from-green-500 to-emerald-500" },
                 { icon: Phone, label: "Phone", value: "9694591869", color: "from-orange-500 to-red-500" },
-                { icon: Award, label: "Focus", value: "Full-Stack & ML", color: "from-purple-500 to-pink-500" }
+                { icon: Award, label: "Focus", value: "DevOps & Cloud", color: "from-purple-500 to-pink-500" }
               ].map(({ icon: Icon, label, value, color }, index) => (
                 <div 
                   key={label} 
