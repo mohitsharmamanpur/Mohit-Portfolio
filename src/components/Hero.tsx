@@ -126,7 +126,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
           </h1>
           <h2 className="text-xl md:text-2xl text-cyan-200 font-medium mb-4">Aspiring Software Developer</h2>
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl animate-float">
-            DevOps & Cloud Enthusiast | Python Learner | Machinr Learning
+            DevOps & Cloud Enthusiast | Python Learner | Machine Learning
           </p>
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <button 
