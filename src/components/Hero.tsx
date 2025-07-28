@@ -166,7 +166,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
             <div className="w-96 h-96 rounded-full bg-white p-1 relative z-10 shadow-2xl flex items-center justify-center mx-auto">
               <div className="w-full h-full rounded-full overflow-hidden">
                 <img 
-                  src="/WhatsApp Image 2025-07-09 at 13.38.49_979ae582.jpg" 
+                  src="/WhatsApp Image 2025-07-29 at 02.15.40_38a321fc.jpg" 
                   alt="Mohit Sharma" 
                   className="w-full h-full object-cover rounded-full hover:scale-110 transition-transform duration-500 brightness-110 contrast-125"
                 />

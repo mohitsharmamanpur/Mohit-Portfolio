@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
-import MiniProjects from './components/MiniProjects';
+
 import Projects from './components/Projects';
 import Achievements from './components/Achievements';
 import Experience from './components/Experience';
@@ -67,7 +67,6 @@ function App() {
       <About theme={theme} />
       <Skills theme={theme} />
       <Projects theme={theme} />
-      <MiniProjects theme={theme} />
       <Achievements theme={theme} />
       <Experience theme={theme} />
       <Contact theme={theme} />

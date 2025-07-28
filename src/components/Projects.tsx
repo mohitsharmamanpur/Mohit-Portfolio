@@ -23,13 +23,12 @@ export default function Projects({ theme }: ProjectsProps) {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [flippedId, setFlippedId] = useState<number | null>(null);
+  const [activeSection, setActiveSection] = useState<'industry' | 'major' | 'minor'>('major');
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
 
     const section = document.getElementById('projects');
-    // Check if section is already in viewport on mount
     if (section) {
       const rect = section.getBoundingClientRect();
       const inView = rect.top < window.innerHeight && rect.bottom > 0;
@@ -49,16 +48,37 @@ export default function Projects({ theme }: ProjectsProps) {
 
     if (section) observer.observe(section);
 
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
     };
   }, []);
 
-  const projects: Project[] = [
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash === 'industry-projects') {
+        setActiveSection('industry');
+      } else if (hash === 'major-projects') {
+        setActiveSection('major');
+      } else if (hash === 'minor-projects') {
+        setActiveSection('minor');
+      }
+    };
+
+    // Check initial hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const industryProjects: Project[] = [
     {
       id: 1,
-      title: "CI/CD Pipeline Automation",
+      title: "Full CI/CD Pipeline",
       description: "Built a comprehensive CI/CD pipeline to automate build-test-deploy workflows for applications, demonstrating modern DevOps practices.",
       tech: ["Docker", "Jenkins", "Git", "GitHub", "Kubernetes"],
       features: [
@@ -71,126 +91,549 @@ export default function Projects({ theme }: ProjectsProps) {
       ],
       github: "https://github.com/mohitsharmamanpur/DevOps-project-1",
       image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "DevOps"
+      category: "Industry Level"
     },
     {
       id: 2,
-      title: "IPC Section Suggestion System using ML",
-      description: "An intelligent ML system to suggest IPC sections for legal cases, reducing manual referencing errors and saving time in legal documentation.",
-      tech: ["Python", "Scikit-learn", "Flask"],
+      title: "Microservices Scaling inside Docker",
+      description: "Implemented microservices architecture with Docker containerization and automated scaling capabilities.",
+      tech: ["Docker", "Docker Compose", "Microservices", "Load Balancing"],
       features: [
-        "Natural Language Processing for case analysis",
-        "ML model trained on legal case data",
-        "Intelligent IPC section recommendations",
-        "Confidence scoring system",
-        "Legal document parser",
-        "Web-based interface for easy access"
+        "Containerized microservices architecture",
+        "Automated service discovery",
+        "Load balancing and scaling",
+        "Health monitoring and recovery",
+        "Service communication patterns",
+        "Deployment automation"
       ],
-      github: "https://github.com/mohitsharmamanpur/IPC-Section-Suggestion-ML",
-      image: "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Machine Learning"
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Industry Level"
     },
     {
       id: 3,
-      title: "Personal Portfolio Website",
-      description: "A modern, animated portfolio website to showcase my projects, skills, and achievements. Built with React and Tailwind CSS.",
-      tech: ["React", "TypeScript", "Tailwind CSS"],
+      title: "Multinode Kubernetes Cluster",
+      description: "Deployed and managed a multi-node Kubernetes cluster for container orchestration and application deployment.",
+      tech: ["Kubernetes", "Docker", "Cluster Management", "Orchestration"],
       features: [
-        "Animated hero and project sections",
-        "Responsive design for all devices",
-        "Dark/light theme toggle",
-        "Interactive project modals",
-        "Custom 3D and glitch effects",
-        "Fast performance with Vite"
+        "Multi-node cluster setup",
+        "Pod scheduling and management",
+        "Service discovery and load balancing",
+        "Persistent storage management",
+        "Monitoring and logging",
+        "Security and RBAC"
       ],
-      github: "https://github.com/mohitsharmamanpur/Mohit-Portfolio",
-      demo: "https://mohitportfolio30.netlify.app/",
+      github: "#",
       image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Frontend"
+      category: "Industry Level"
     },
     {
       id: 4,
-      title: "BGMI (Battlegrounds Mobile India) Info Site",
-      description: "A web-based info hub for BGMI players providing data on guns, maps, damage stats, utilities, and more.",
-      tech: ["HTML", "CSS", "JavaScript"],
+      title: "Project 4 - Coming Soon",
+      description: "Exciting new industry-level project in development. Stay tuned for updates!",
+      tech: ["Coming Soon"],
       features: [
-        "Gamer theme with glitch text and dark mode.",
-        "Used in projects to help YouTubers and eSports players.",
-        "Complete weapon database with damage statistics",
-        "Interactive maps with strategic locations",
-        "Player statistics tracking",
-        "Mobile responsive design"
+        "Project details will be revealed soon",
+        "Industry-standard implementation",
+        "Advanced technologies",
+        "Real-world applications"
       ],
-      github: "https://github.com/mohitsharmamanpur/bgmi-project",
-      demo: "https://bgmi-info.netlify.app",
-      image: "https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Web Development"
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Industry Level"
     },
     {
       id: 5,
-      title: "Alumni Association Platform",
-      description: "A website that connects college/school students to their alumni for networking, mentorship, and career support.",
-      tech: ["HTML", "CSS", "JavaScript", "Bootstrap"],
+      title: "Project 5 - Coming Soon",
+      description: "Exciting new industry-level project in development. Stay tuned for updates!",
+      tech: ["Coming Soon"],
       features: [
-        "Alumni registration and profile management",
-        "Mentorship matching system",
-        "Event management and notifications",
-        "Career opportunity board",
-        "Discussion forums and networking",
-        "Success stories showcase"
+        "Project details will be revealed soon",
+        "Industry-standard implementation",
+        "Advanced technologies",
+        "Real-world applications"
       ],
-      github: "https://github.com/mohitsharmamanpur/Collage-Assoiciation-Platform",
-      demo: "https://alumni-connect.netlify.app",
-      image: "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Web Development"
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Industry Level"
     },
     {
       id: 6,
-      title: "Menu Based Project",
-      description: "A menu-based project is a program or application that presents the user with a list of options (a menu) and performs specific actions based on the user's selection. It usually follows this structure:",
-      tech: ["Machine Learning", "Linux", "Windows", "Python", "DevOps", "Cloud", "Agentic AI", "Full-Stack", "JavaScript"],
+      title: "Project 6 - Coming Soon",
+      description: "Exciting new industry-level project in development. Stay tuned for updates!",
+      tech: ["Coming Soon"],
       features: [
-        "User-friendly menu-driven interface",
-        "Supports multiple platforms: Linux, Windows",
-        "Integrates Machine Learning and DevOps tasks",
-        "Cloud and Agentic AI capabilities",
-        "Full-Stack and JavaScript automation"
+        "Project details will be revealed soon",
+        "Industry-standard implementation",
+        "Advanced technologies",
+        "Real-world applications"
       ],
-      github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py",
+      github: "#",
       image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Automation"
+      category: "Industry Level"
     },
     {
       id: 7,
-      title: "Automated EC2 Instance Launch Using Python & Boto3 | AWS Cloud Project",
-      description: "I’m excited to share that I successfully launched an Amazon EC2 instance using Python (Boto3 SDK)! This hands-on experience helped me understand the real power of Infrastructure as Code (IaC), cloud automation, and AWS services — crucial skills in the DevOps and cloud ecosystem.",
-      tech: ["Python", "AWS", "Boto3", "Cloud", "DevOps"],
+      title: "Project 7 - Coming Soon",
+      description: "Exciting new industry-level project in development. Stay tuned for updates!",
+      tech: ["Coming Soon"],
       features: [
-        "Launched a t2.micro EC2 instance using a Python script",
-        "Integrated AWS credentials securely with the Boto3 SDK",
-        "Specified AMI, region, and instance configurations programmatically",
-        "Understood the backend automation behind GUI-based EC2 launches",
-        "Explored how DevOps tools leverage automation for scalable deployments"
+        "Project details will be revealed soon",
+        "Industry-standard implementation",
+        "Advanced technologies",
+        "Real-world applications"
       ],
-      github: "https://github.com/mohitsharmamanpur/secure-ec2-launcher",
-      image: "https://images.pexels.com/photos/325229/pexels-photo-325229.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Cloud/DevOps"
-    },
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Industry Level"
+    }
+  ];
+
+  const majorProjects: Project[] = [
     {
       id: 8,
-      title: "Finance Education Chatbot using Google Gemini + Gradio",
-      description: "In the fast-paced world of AI and finance, I’ve created a beginner-friendly chatbot that explains financial concepts like SIPs, mutual funds, stocks, Nifty 50, compound interest, and more — all in simple, easy-to-understand language. The chatbot is powered by Google’s Gemini 1.5 Flash model and features a sleek Gradio interface where users can ask finance-related questions and get instant AI-generated responses.",
-      tech: ["Python", "Gradio", "Google Gemini", "AI", "Finance"],
+      title: "Create own Telegram Bot using AWS-cloud Server",
+      description: "Developed a custom Telegram bot deployed on AWS cloud infrastructure for automated messaging and interactions.",
+      tech: ["Python", "AWS", "Telegram API", "Cloud Computing"],
       features: [
-        "Natural language answers to complex finance topics",
-        "Interactive Gradio UI with input, examples, and clear options",
-        "Prompt-engineered backend for reliable, beginner-focused output",
-        "Beginner-friendly explanations for financial literacy",
-        "Explores Generative AI in education"
+        "Custom bot functionality",
+        "AWS EC2 deployment",
+        "Automated messaging",
+        "User interaction handling",
+        "Cloud scalability",
+        "Real-time responses"
       ],
-      github: "https://github.com/mohitsharmamanpur/finance-chatbot-gemini",
-      image: "https://images.pexels.com/photos/4386375/pexels-photo-4386375.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "AI/Education"
+      github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 9,
+      title: "Launching Serverless EC2 instance via API-Gateway",
+      description: "Implemented serverless architecture to launch EC2 instances through API Gateway integration.",
+      tech: ["AWS Lambda", "API Gateway", "EC2", "Serverless"],
+      features: [
+        "Serverless EC2 management",
+        "API Gateway integration",
+        "Automated instance provisioning",
+        "Cost optimization",
+        "Scalable architecture",
+        "Event-driven triggers"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 10,
+      title: "Create App, when user comes in URL or API than it show some information",
+      description: "Developed a web application that displays information when users access specific URLs or API endpoints.",
+      tech: ["Web Development", "API", "URL Routing", "Information Display"],
+      features: [
+        "Dynamic URL handling",
+        "API endpoint responses",
+        "Information display",
+        "User-friendly interface",
+        "Responsive design",
+        "Real-time updates"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 11,
+      title: "Launching Instances inside cloud using AI and Computer Vision",
+      description: "Implemented AI-powered computer vision system for automated cloud instance management and deployment.",
+      tech: ["AI", "Computer Vision", "Cloud Computing", "Automation"],
+      features: [
+        "AI-powered automation",
+        "Computer vision integration",
+        "Cloud instance management",
+        "Intelligent deployment",
+        "Visual recognition",
+        "Automated scaling"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 12,
+      title: "File Upload Notification",
+      description: "When a file is uploaded to S3, it triggers a Lambda function that sends a notification using SNS. Ensures real-time alerts for uploads.",
+      tech: ["AWS S3", "AWS Lambda", "AWS SNS", "Notifications"],
+      features: [
+        "S3 file upload detection",
+        "Lambda function triggers",
+        "SNS notifications",
+        "Real-time alerts",
+        "Automated workflows",
+        "Event-driven architecture"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 13,
+      title: "Audio to Text Conversion",
+      description: "On audio file upload, S3 triggers Lambda which uses Amazon Transcribe to convert the audio into text automatically.",
+      tech: ["AWS S3", "AWS Lambda", "Amazon Transcribe", "Audio Processing"],
+      features: [
+        "Audio file processing",
+        "Automatic transcription",
+        "S3 integration",
+        "Lambda automation",
+        "Text extraction",
+        "Real-time conversion"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 14,
+      title: "Dataset-Based Model Training",
+      description: "When a dataset is uploaded, Lambda invokes Amazon SageMaker to train a machine learning model with minimal manual input.",
+      tech: ["AWS Lambda", "Amazon SageMaker", "Machine Learning", "Automation"],
+      features: [
+        "Dataset upload detection",
+        "Automated model training",
+        "SageMaker integration",
+        "ML pipeline automation",
+        "Model deployment",
+        "Performance monitoring"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 15,
+      title: "PDF Summarization using LLM",
+      description: "When a PDF is uploaded, Lambda calls Amazon Bedrock, which uses LLMs to generate a smart summary of the document.",
+      tech: ["AWS Lambda", "Amazon Bedrock", "LLM", "PDF Processing"],
+      features: [
+        "PDF document processing",
+        "LLM integration",
+        "Smart summarization",
+        "Automated extraction",
+        "Content analysis",
+        "Intelligent insights"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 16,
+      title: "Linear Regression Machine Learning model",
+      description: "Implemented a linear regression machine learning model for predictive analytics and data analysis.",
+      tech: ["Machine Learning", "Linear Regression", "Python", "Data Analysis"],
+      features: [
+        "Linear regression implementation",
+        "Data preprocessing",
+        "Model training",
+        "Prediction capabilities",
+        "Performance evaluation",
+        "Statistical analysis"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 17,
+      title: "Multilinear Regression Machine learning model",
+      description: "Developed a multilinear regression model for complex predictive modeling with multiple variables.",
+      tech: ["Machine Learning", "Multilinear Regression", "Python", "Predictive Modeling"],
+      features: [
+        "Multilinear regression",
+        "Multiple variable analysis",
+        "Complex modeling",
+        "Feature engineering",
+        "Model validation",
+        "Advanced predictions"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    },
+    {
+      id: 18,
+      title: "Binary Classification ML Model",
+      description: "Binary Classification ML Model using Sigmoid Function with Confusion Matrix for evaluation.",
+      tech: ["Machine Learning", "Binary Classification", "Sigmoid Function", "Confusion Matrix"],
+      features: [
+        "Binary classification",
+        "Sigmoid function implementation",
+        "Confusion matrix evaluation",
+        "Model performance metrics",
+        "Classification accuracy",
+        "Decision boundary analysis"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Major Project"
+    }
+  ];
+
+  const minorProjects: Project[] = [
+    {
+      id: 19,
+      title: "Launching apache web server inside docker",
+      description: "Containerized Apache web server deployment using Docker for consistent and portable web hosting.",
+      tech: ["Docker", "Apache", "Web Server", "Containerization"],
+      features: [
+        "Docker containerization",
+        "Apache web server setup",
+        "Port mapping",
+        "Volume mounting",
+        "Custom configurations",
+        "Easy deployment"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 20,
+      title: "Docker inside Docker (DIND concept)",
+      description: "Implemented Docker-in-Docker concept for nested containerization and isolated development environments.",
+      tech: ["Docker", "DIND", "Containerization", "Isolation"],
+      features: [
+        "Nested containerization",
+        "Isolated environments",
+        "Development sandboxing",
+        "Resource management",
+        "Security isolation",
+        "CI/CD integration"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 21,
+      title: "Linear Regression model inside Docker",
+      description: "Containerized linear regression machine learning model for consistent deployment and execution.",
+      tech: ["Docker", "Machine Learning", "Linear Regression", "Containerization"],
+      features: [
+        "ML model containerization",
+        "Linear regression implementation",
+        "Consistent deployment",
+        "Portable execution",
+        "Environment isolation",
+        "Easy scaling"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 22,
+      title: "Run Flask app inside Docker",
+      description: "Containerized Flask web application for consistent deployment and easy scaling.",
+      tech: ["Docker", "Flask", "Python", "Web Development"],
+      features: [
+        "Flask app containerization",
+        "Web application deployment",
+        "Consistent environment",
+        "Easy scaling",
+        "Port management",
+        "Development workflow"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 23,
+      title: "Install Firefox Browser inside Docker",
+      description: "Containerized Firefox browser installation for isolated web browsing and testing environments.",
+      tech: ["Docker", "Firefox", "Browser", "Containerization"],
+      features: [
+        "Browser containerization",
+        "Isolated browsing",
+        "Testing environment",
+        "Security isolation",
+        "Easy cleanup",
+        "Portable browser"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 24,
+      title: "Docker Compose",
+      description: "Multi-container application orchestration using Docker Compose for complex service management.",
+      tech: ["Docker Compose", "Container Orchestration", "Multi-service", "Automation"],
+      features: [
+        "Multi-container setup",
+        "Service orchestration",
+        "Automated deployment",
+        "Service dependencies",
+        "Environment management",
+        "Easy scaling"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 25,
+      title: "Launching Wordpress server (Using Docker Volume)",
+      description: "WordPress server deployment with persistent data storage using Docker volumes.",
+      tech: ["Docker", "WordPress", "Docker Volumes", "CMS"],
+      features: [
+        "WordPress containerization",
+        "Persistent data storage",
+        "Volume management",
+        "CMS deployment",
+        "Data persistence",
+        "Easy backup"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 26,
+      title: "Backup automation using Flask API",
+      description: "Automated backup system implemented using Flask API for data protection and recovery.",
+      tech: ["Flask", "Python", "API", "Backup Automation"],
+      features: [
+        "Automated backup system",
+        "Flask API integration",
+        "Data protection",
+        "Scheduled backups",
+        "Recovery mechanisms",
+        "API endpoints"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 27,
+      title: "Launching ec2 instances using Python",
+      description: "Python automation for launching and managing EC2 instances in AWS cloud infrastructure.",
+      tech: ["Python", "AWS EC2", "Boto3", "Cloud Automation"],
+      features: [
+        "EC2 instance automation",
+        "Python scripting",
+        "AWS integration",
+        "Instance management",
+        "Cloud provisioning",
+        "Automated deployment"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 28,
+      title: "Make a Phone Call with Python",
+      description: "Python automation for making phone calls using various telephony APIs and services.",
+      tech: ["Python", "Telephony", "API Integration", "Automation"],
+      features: [
+        "Phone call automation",
+        "API integration",
+        "Voice communication",
+        "Automated dialing",
+        "Call management",
+        "Telephony services"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 29,
+      title: "Web Scraping using Python",
+      description: "Python-based web scraping solution for extracting data from websites and online sources.",
+      tech: ["Python", "Web Scraping", "Data Extraction", "Automation"],
+      features: [
+        "Web data extraction",
+        "Automated scraping",
+        "Data parsing",
+        "Content extraction",
+        "Information gathering",
+        "Structured data"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 30,
+      title: "Send an Email with Python",
+      description: "Python automation for sending emails using SMTP and email service integrations.",
+      tech: ["Python", "SMTP", "Email", "Automation"],
+      features: [
+        "Email automation",
+        "SMTP integration",
+        "Bulk email sending",
+        "Email templates",
+        "Attachment support",
+        "Scheduled emails"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 31,
+      title: "Send an SMS with Python",
+      description: "Python automation for sending SMS messages using various messaging APIs and services.",
+      tech: ["Python", "SMS", "API Integration", "Messaging"],
+      features: [
+        "SMS automation",
+        "API integration",
+        "Bulk messaging",
+        "Message delivery",
+        "Status tracking",
+        "Multi-provider support"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 32,
+      title: "Post on Instagram with Python",
+      description: "Python automation for posting content on Instagram using API integration and automation tools.",
+      tech: ["Python", "Instagram", "API", "Social Media"],
+      features: [
+        "Instagram automation",
+        "Content posting",
+        "API integration",
+        "Social media management",
+        "Scheduled posts",
+        "Media upload"
+      ],
+      github: "#",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
+    },
+    {
+      id: 33,
+      title: "Send WhatsApp Message Using Python",
+      description: "Python automation for sending WhatsApp messages using web automation and API integration.",
+      tech: ["Python", "WhatsApp", "Automation", "Messaging"],
+      features: [
+        "WhatsApp automation",
+        "Message sending",
+        "Web automation",
+        "API integration",
+        "Bulk messaging",
+        "Media sharing"
+      ],
+      github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      category: "Minor Project"
     }
   ];
 
@@ -202,297 +645,356 @@ export default function Projects({ theme }: ProjectsProps) {
     setSelectedProject(null);
   };
 
-  return (
-    <section id="projects" className={`pt-32 pb-20 relative overflow-hidden min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      {/* Enhanced Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Floating project icons */}
-        <div className="floating-project-icons">
-          {['💻', '🚀', '⚡', '🔧', '🎯', '💡', '🌟', '🔥'].map((icon, i) => (
-            <div
-              key={i}
-              className={`absolute text-4xl opacity-15 ${isVisible ? 'animate-float-complex' : ''} hover:opacity-30 hover:scale-125 transition-all duration-300`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${4 + Math.random() * 2}s`
-              }}
-            >
-              {icon}
-            </div>
-          ))}
-        </div>
-
-        {/* Parallax background with tech pattern */}
-        <div 
-          className="parallax-layer-3"
-          style={{
-            transform: `translateY(${scrollY * 0.2}px) scale(${1 + scrollY * 0.0001})`,
+  const renderProjectCard = (project: Project, index: number) => {
+    // Special rendering for minor projects
+    if (project.category === "Minor Project") {
+      return (
+        <div
+          key={project.id}
+          className={`group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer ${
+            theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+          } ${isVisible ? 'animate-card-reveal' : 'opacity-0'}`}
+          style={{animationDelay: `${index * 0.1}s`}}
+          onClick={(e) => {
+            if (!(e.target as HTMLElement).closest('.project-image-flip')) {
+              openModal(project);
+            }
           }}
         >
-          <div className={`w-full h-full opacity-10 ${theme === 'dark' ? 'bg-gradient-to-bl from-cyan-500 to-purple-500' : 'bg-gradient-to-bl from-purple-500 to-pink-500'}`} />
-        </div>
-
-        {/* Enhanced Hexagonal grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <svg width="100%" height="100%" viewBox="0 0 100 100" className="hexagon-pattern">
-            <defs>
-              <pattern id="hexagons" x="0" y="0" width="10" height="8.66" patternUnits="userSpaceOnUse">
-                <polygon points="5,0 8.66,2.5 8.66,6.5 5,9 1.34,6.5 1.34,2.5" stroke={theme === 'dark' ? '#06b6d4' : '#8b5cf6'} strokeWidth="0.3" fill="none"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#hexagons)"/>
-          </svg>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-10">
-          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-title-reveal' : 'opacity-0'}`}>
-            Major <span className="bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">Projects</span>
-          </h2>
-          <div className={`w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full ${isVisible ? 'animate-line-expand' : 'w-0'} transition-all duration-1000 delay-300`}></div>
-          <p className={`mt-4 text-lg font-medium ${theme === 'dark' ? 'text-cyan-200' : 'text-purple-700'} animate-float`}>Click image to see details about project.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              className={`group relative overflow-visible rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer project-card-3d ${
-                theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-              } ${isVisible ? 'animate-card-reveal' : 'opacity-0'} project-3d-tilt`}
-              style={{animationDelay: `${index * 0.2}s`}}
-              onClick={(e) => {
-                // If the image area was not clicked, open modal
-                if (!(e.target as HTMLElement).closest('.project-image-flip')) {
-                  openModal(project);
-                }
-              }}
-            >
-              {/* Image Flip Effect Only */}
-              <div
-                className={`project-image-flip${flippedId === project.id ? ' flipped' : ''}`}
-                onClick={e => {
-                  e.stopPropagation();
-                  setFlippedId(flippedId === project.id ? null : project.id);
-                }}
-                style={{ cursor: 'pointer' }}
-              >
-                <div className="project-image-front">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  {/* Glowing border effect */}
-                  <div className="absolute inset-0 rounded-2xl border-4 border-transparent group-hover:border-cyan-400 group-hover:shadow-[0_0_32px_8px_rgba(34,211,238,0.4)] transition-all duration-500 pointer-events-none animate-gradient-border"></div>
-                    {/* Overlay effects */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
-                        Click to View Details
-                      </div>
-                    </div>
-                  </div>
-                <div className="project-image-back">
-                  <div className="flex flex-col justify-center items-center w-full h-48 p-4 bg-gradient-to-br from-cyan-500/80 to-purple-500/80 rounded-2xl">
-                    <h3 className="text-lg font-bold text-white mb-2">Key Features</h3>
-                    <ul className="text-white text-sm space-y-1">
-                      {project.features.slice(0, 4).map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    {project.features.length > 4 && (
-                      <p className="text-xs text-white/80 mt-2">+{project.features.length - 4} more features</p>
-                    )}
-                  </div>
-                </div>
+          {/* Project Content with Icon */}
+          <div className="p-6">
+            {/* Category Tag */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="px-3 py-1 bg-green-500 text-blue-900 text-xs rounded-full font-medium">
+                Python Automation
+              </span>
+            </div>
+            
+            {/* Icon and Title */}
+            <div className="flex items-start gap-4 mb-4">
+              <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Code className="w-6 h-6 text-white" />
               </div>
-              {/* End Image Flip Effect Only */}
-                  {/* Enhanced Project Content */}
-                  <div className="p-6 relative">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs rounded-full animate-pulse">
-                        {project.category}
-                      </span>
-                    </div>
-                {/* Glitch effect on title */}
-                <h3 className={`text-xl font-bold mb-3 glitch-text ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-cyan-500 group-hover:to-purple-500 group-hover:bg-clip-text transition-all duration-300`} data-text={project.title}>
-                      {project.title}
-                    </h3>
-                    <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} group-hover:text-gray-500 transition-colors duration-300`}>
-                      {project.description}
-                    </p>
-                    {/* Enhanced Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tech.slice(0, 3).map((tech, techIndex) => (
-                        <span
-                          key={tech}
-                          className={`px-2 py-1 text-xs rounded-full transition-all duration-300 hover:scale-110 ${
-                            theme === 'dark'
-                              ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                          }`}
-                          style={{animationDelay: `${techIndex * 0.1}s`}}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.tech.length > 3 && (
-                        <span className="text-xs text-gray-500 animate-pulse">+{project.tech.length - 3} more</span>
-                      )}
-                    </div>
-                    {/* Enhanced Action Links */}
-                    <div className="flex gap-3">
-                      {project.github && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(project.github, '_blank');
-                          }}
-                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
-                        >
-                          <Github className="w-4 h-4" />
-                          Code
-                        </button>
-                      )}
-                  {project.github && (
-                    <button
-                      onClick={e => {
-                        e.stopPropagation();
-                        window.open(project.github, '_blank');
-                      }}
-                      className="p-2 ml-1 rounded-full bg-gray-800 text-white hover:bg-gray-700 transition-all duration-300 flex items-center justify-center"
-                      title="GitHub"
-                    >
-                      <Github className="w-4 h-4" />
-                    </button>
-                  )}
-                      {project.demo && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(project.demo, '_blank');
-                          }}
-                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm hover:scale-105 hover:shadow-lg"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Demo
-                        </button>
-                      )}
-                    </div>
-                  </div>
-              {/* Enhanced Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-              {/* Particle burst effect on hover */}
-              <div className="particle-burst opacity-0 group-hover:opacity-100">
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="particle"
-                    style={{
-                      '--angle': `${i * 45}deg`,
-                      '--delay': `${i * 0.1}s`
-                    } as React.CSSProperties}
-                  />
-                ))}
+              <div className="flex-1">
+                <h3 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  {project.title}
+                </h3>
+                <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                  {project.description}
+                </p>
               </div>
             </div>
-          ))}
+            
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              {project.github && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(project.github, '_blank');
+                  }}
+                  className="flex items-center gap-2 px-3 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors duration-300 text-sm"
+                >
+                  <Github className="w-4 h-4" />
+                  View Code
+                </button>
+              )}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal(project);
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300 text-sm"
+              >
+                <Code className="w-4 h-4" />
+                Details
+              </button>
+            </div>
+          </div>
         </div>
+      );
+    }
+
+    // Default rendering for other project types
+    return (
+      <div
+        key={project.id}
+        className={`group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl cursor-pointer ${
+          theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+        } ${isVisible ? 'animate-card-reveal' : 'opacity-0'}`}
+        style={{animationDelay: `${index * 0.1}s`}}
+        onClick={(e) => {
+          if (!(e.target as HTMLElement).closest('.project-image-flip')) {
+            openModal(project);
+          }
+        }}
+      >
+        {/* Simplified Image */}
+        <div className="relative">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <div className="absolute bottom-4 left-4 right-4">
+            <span className="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-xs rounded-full">
+              {project.category}
+            </span>
+          </div>
+          {/* Hover overlay with "Click to view details" */}
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="text-white text-lg font-bold text-center">
+              Click to view details
+            </div>
+          </div>
+        </div>
+
+        {/* Project Content */}
+        <div className="p-6">
+          <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-cyan-500 transition-colors duration-300`}>
+            {project.title}
+          </h3>
+          
+          <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+            {project.description}
+          </p>
+          
+          {/* Tech Stack */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tech.slice(0, 3).map((tech) => (
+              <span
+                key={tech}
+                className={`px-2 py-1 text-xs rounded-full ${
+                  theme === 'dark'
+                    ? 'bg-gray-700 text-gray-300'
+                    : 'bg-gray-200 text-gray-700'
+                }`}
+              >
+                {tech}
+              </span>
+            ))}
+            {project.tech.length > 3 && (
+              <span className="text-xs text-gray-500">+{project.tech.length - 3} more</span>
+            )}
+          </div>
+          
+          {/* Action Links */}
+          <div className="flex gap-3">
+            {project.github && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.github, '_blank');
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors duration-300 text-sm"
+              >
+                <Github className="w-4 h-4" />
+                Code
+              </button>
+            )}
+            {project.demo && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(project.demo, '_blank');
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-colors duration-300 text-sm"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Demo
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <section id="projects" className={`pt-32 pb-20 relative overflow-hidden min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="text-center mb-10">
+          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            My <span className="text-cyan-500">Projects</span>
+          </h2>
+          <div className="w-24 h-1 bg-cyan-500 mx-auto rounded-full mb-4"></div>
+          <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Click on any project to view details</p>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="flex justify-center mb-12">
+          <div className={`flex rounded-lg p-1 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}>
+            <button
+              onClick={() => setActiveSection('industry')}
+              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                activeSection === 'industry'
+                  ? 'bg-cyan-500 text-white'
+                  : theme === 'dark'
+                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
+                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300'
+              }`}
+            >
+              Industry Level
+            </button>
+            <button
+              onClick={() => setActiveSection('major')}
+              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                activeSection === 'major'
+                  ? 'bg-cyan-500 text-white'
+                  : theme === 'dark'
+                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
+                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300'
+              }`}
+            >
+              Major Projects
+            </button>
+            <button
+              onClick={() => setActiveSection('minor')}
+              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                activeSection === 'minor'
+                  ? 'bg-cyan-500 text-white'
+                  : theme === 'dark'
+                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
+                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300'
+              }`}
+            >
+              Minor Projects
+            </button>
+          </div>
+        </div>
+
+        {/* Industry Level Projects */}
+        {activeSection === 'industry' && (
+          <div className="mb-16">
+            <h3 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Industry Level Projects
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+              {industryProjects.map((project, index) => renderProjectCard(project, index))}
+            </div>
+          </div>
+        )}
+
+        {/* Major Projects */}
+        {activeSection === 'major' && (
+          <div className="mb-16">
+            <h3 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Major Projects
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
+              {majorProjects.map((project, index) => renderProjectCard(project, index))}
+            </div>
+          </div>
+        )}
+
+        {/* Minor Projects */}
+        {activeSection === 'minor' && (
+          <div className="mb-16">
+            <h3 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Minor Projects
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {minorProjects.map((project, index) => renderProjectCard(project, index))}
+            </div>
+          </div>
+        )}
 
         {/* Enhanced Modal */}
         {selectedProject && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
-            <div className={`relative max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl modal-3d ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-              {/* Enhanced Close Button */}
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className={`relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${
+              theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+            }`}>
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 z-10 p-2 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 hover:scale-110 hover:rotate-90"
+                className={`absolute top-4 right-4 p-2 rounded-full transition-all duration-300 hover:scale-110 ${
+                  theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
-
-              {/* Enhanced Modal Content */}
+              
               <div className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <h3 className={`text-3xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} animate-title-reveal`}>
-                    {selectedProject.title}
-                  </h3>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-sm rounded-full">
+                    {selectedProject.category}
+                  </span>
                   {selectedProject.award && (
-                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 animate-bounce-gentle">
+                    <span className="flex items-center gap-2 px-3 py-1 bg-yellow-500 text-white text-sm rounded-full">
                       <Award className="w-4 h-4" />
                       {selectedProject.award}
-                    </div>
+                    </span>
                   )}
                 </div>
-
-                <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} animate-slide-in-up`}>
+                
+                <h2 className={`text-3xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  {selectedProject.title}
+                </h2>
+                
+                <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   {selectedProject.description}
                 </p>
-
+                
                 <div className="grid md:grid-cols-2 gap-8">
-                  <div className="animate-slide-in-left">
-                    <h4 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                      Key Features
-                    </h4>
-                    <ul className="space-y-2">
-                      {selectedProject.features.map((feature, index) => (
-                        <li key={index} className={`flex items-start gap-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} animate-slide-in-up`} style={{animationDelay: `${index * 0.1}s`}}>
-                          <div className="w-2 h-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full mt-2 flex-shrink-0 animate-pulse"></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="animate-slide-in-right">
-                    <h4 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                      Technology Stack
-                    </h4>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {selectedProject.tech.map((tech, index) => (
+                  <div>
+                    <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                      Technologies Used
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-full text-sm font-medium hover:scale-110 transition-transform duration-300 animate-slide-in-up"
-                          style={{animationDelay: `${index * 0.1}s`}}
+                          className={`px-3 py-2 rounded-lg text-sm font-medium ${
+                            theme === 'dark'
+                              ? 'bg-gray-700 text-gray-300'
+                              : 'bg-gray-200 text-gray-700'
+                          }`}
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
-
-                    <div className="flex gap-4">
-                      {selectedProject.github && (
-                        <a
-                          href={selectedProject.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                        >
-                          <Github className="w-5 h-5" />
-                          View Code
-                        </a>
-                      )}
-                      {selectedProject.demo && (
-                        <a
-                          href={selectedProject.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                        >
-                          <ExternalLink className="w-5 h-5" />
-                          Live Demo
-                        </a>
-                      )}
-                    </div>
                   </div>
+                  
+                  <div>
+                    <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                      Key Features
+                    </h3>
+                    <ul className={`space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {selectedProject.features.map((feature, index) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <span className="w-2 h-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full mt-2 flex-shrink-0"></span>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4 mt-8">
+                  {selectedProject.github && (
+                    <a
+                      href={selectedProject.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 hover:scale-105"
+                    >
+                      <Github className="w-5 h-5" />
+                      View Code
+                    </a>
+                  )}
+                  {selectedProject.demo && (
+                    <a
+                      href={selectedProject.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 hover:scale-105"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                      Live Demo
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -501,4 +1003,4 @@ export default function Projects({ theme }: ProjectsProps) {
       </div>
     </section>
   );
-}
+} 
