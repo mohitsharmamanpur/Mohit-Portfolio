@@ -23,7 +23,7 @@ export default function Projects({ theme }: ProjectsProps) {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [flippedId, setFlippedId] = useState<number | null>(null);
-  const [activeSection, setActiveSection] = useState<'industry' | 'major' | 'minor'>('major');
+  const [activeSection, setActiveSection] = useState<'industry' | 'major' | 'minor'>('industry');
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -75,6 +75,13 @@ export default function Projects({ theme }: ProjectsProps) {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Update URL hash when active section changes
+  useEffect(() => {
+    const hash = activeSection === 'industry' ? 'industry-projects' : 
+                 activeSection === 'major' ? 'major-projects' : 'minor-projects';
+    window.location.hash = hash;
+  }, [activeSection]);
+
   const industryProjects: Project[] = [
     {
       id: 1,
@@ -89,7 +96,7 @@ export default function Projects({ theme }: ProjectsProps) {
         "Rollback capabilities",
         "Monitoring and logging integration"
       ],
-      github: "https://github.com/mohitsharmamanpur/DevOps-project-1",
+      github: "https://github.com/mohitsharmamanpur/CI-CD_Pipeline",
       image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
       category: "Industry Level"
     },
@@ -107,7 +114,7 @@ export default function Projects({ theme }: ProjectsProps) {
         "Deployment automation"
       ],
       github: "#",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "https://github.com/mohitsharmamanpur/Microservices_Architecture",
       category: "Industry Level"
     },
     {

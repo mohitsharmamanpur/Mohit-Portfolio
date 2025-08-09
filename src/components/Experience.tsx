@@ -41,10 +41,10 @@ const Experience: React.FC<ExperienceProps> = ({ theme }) => {
       description: "Worked on real-time projects, pipelines, and AI applications. Gained hands-on experience with development and deployment workflows in a professional environment.",
       domains: [
         {
-          name: "MERN Stack",
-          icon: Code,
+          name: "Cloud Computing",
+          icon: Cloud,
           color: "from-green-400 to-emerald-500",
-          skills: ["MongoDB", "Express.js", "React", "Node.js"]
+          skills: ["AWS", "Ansible", "Terraform"]
         },
         {
           name: "DevOps",
@@ -66,7 +66,7 @@ const Experience: React.FC<ExperienceProps> = ({ theme }) => {
         }
       ],
       achievements: [
-        "Developed and deployed multiple full-stack applications using MERN stack",
+        "Implemented cloud infrastructure using AWS services and automation tools",
         "Built automated CI/CD pipelines for production deployments",
         "Implemented machine learning models for data analysis",
         "Created intelligent AI agents for workflow automation",
@@ -300,10 +300,10 @@ const Experience: React.FC<ExperienceProps> = ({ theme }) => {
           </h3>
           <div className="flex flex-wrap justify-center gap-6 barrel-skills-grid">
             {[
-              "Full-Stack Development", "DevOps Engineering", "Machine Learning", 
+              "DevOps Engineering", "Machine Learning", 
               "AI Development", "Project Management", "Team Collaboration",
-              "Production Deployment", "System Architecture", "Code Review",
-              "Technical Documentation", "Problem Solving", "Agile Methodology"
+              "Production Deployment", "Code Review",
+              "Technical Documentation", "Problem Solving"
             ].map((skill, index) => (
               <span 
                 key={index} 
