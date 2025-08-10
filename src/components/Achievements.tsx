@@ -133,17 +133,27 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
           </p>
         </div>
 
-        {/* Achievements Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Achievement Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {achievements.map((achievement, index) => {
             const Icon = achievement.icon;
+            const isHighlighted = index === 0 || index === 1; // Highlight first two cards (Neuroaura and Research Paper)
+            
             return (
-              <div
-                key={index}
-                className={`group relative p-6 rounded-xl border transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800/50 border-gray-700 hover:border-purple-500/50' 
-                    : 'bg-white/80 border-gray-200 hover:border-purple-500/50 shadow-lg'
+              <div 
+                key={index} 
+                className={`relative p-6 rounded-xl border transition-all duration-300 hover:shadow-xl group cursor-pointer ${
+                  isHighlighted 
+                    ? `ring-2 ring-purple-500/50 shadow-lg shadow-purple-500/20 ${
+                        theme === 'dark' 
+                          ? 'bg-gradient-to-br from-gray-800/80 to-purple-900/30 border-purple-500/50 hover:bg-gradient-to-br hover:from-gray-800/90 hover:to-purple-900/40' 
+                          : 'bg-gradient-to-br from-white/90 to-purple-50/80 border-purple-300/60 hover:bg-gradient-to-br hover:from-white hover:to-purple-50'
+                      }`
+                    : `${
+                        theme === 'dark' 
+                          ? 'bg-gray-800/50 border-gray-700 hover:bg-gray-800/70' 
+                          : 'bg-white/80 border-gray-200 hover:bg-white'
+                      }`
                 } ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
                 style={{animationDelay: `${index * 0.1}s`}}
               >
@@ -189,10 +199,25 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
                 </div>
 
                 {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
+                <div className={`absolute inset-0 rounded-xl transition-opacity duration-300 ${
+                  isHighlighted 
+                    ? 'bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-30 group-hover:opacity-50'
+                    : 'bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100'
+                }`}></div>
                 
                 {/* Border glow effect */}
-                <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-purple-500/30 transition-colors duration-300"></div>
+                <div className={`absolute inset-0 rounded-xl border-2 transition-colors duration-300 ${
+                  isHighlighted 
+                    ? 'border-purple-500/50 group-hover:border-purple-400/70'
+                    : 'border-transparent group-hover:border-purple-500/30'
+                }`}></div>
+
+                {/* Special highlight indicator for featured cards */}
+                {isHighlighted && (
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse shadow-lg">
+                    <span className="text-white text-xs font-bold">★</span>
+                  </div>
+                )}
               </div>
             );
           })}
