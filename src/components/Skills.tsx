@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Code, Database, Cloud, Settings, Brain, Globe, GitBranch, Server, Cpu, Zap } from 'lucide-react';
+import { Code, Cloud, Settings, Brain, Cpu, Zap } from 'lucide-react';
 
 interface SkillsProps {
   theme: 'light' | 'dark';
@@ -26,61 +26,40 @@ const Skills: React.FC<SkillsProps> = ({ theme }) => {
 
   const skillCategories = [
     {
-      title: "Programming Languages / Frameworks",
-      skills: [
-        { name: "Python", icon: "🐍", color: "bg-gradient-to-br from-yellow-400 to-blue-600" },
-        { name: "C", icon: "⚙️", color: "bg-gradient-to-br from-blue-500 to-blue-700" },
-        { name: "C++", icon: "⚡", color: "bg-gradient-to-br from-blue-600 to-purple-700" },
-        { name: "Streamlit", icon: "📊", color: "bg-gradient-to-br from-red-400 to-red-600" },
-        { name: "Gradio", icon: "🎨", color: "bg-gradient-to-br from-green-400 to-green-600" }
-      ]
+      title: "Programming Languages",
+      icon: Code,
+      iconColor: "text-blue-500",
+      skills: ["Python", "C", "C++"]
     },
     {
-      title: "Cloud Technologies",
-      skills: [
-        { name: "AWS", icon: "☁️", color: "bg-gradient-to-br from-orange-400 to-orange-600" },
-        { name: "Apache", icon: "🌐", color: "bg-gradient-to-br from-red-500 to-red-700" },
-        { name: "Terraform", icon: "🏗️", color: "bg-gradient-to-br from-purple-500 to-purple-700" },
-        { name: "Ansible", icon: "🤖", color: "bg-gradient-to-br from-red-600 to-red-800" }
-      ]
+      title: "GenAI & Agentic AI",
+      icon: Brain,
+      iconColor: "text-purple-500",
+      skills: ["Google Gemini", "OpenAI GPT", "LangChain", "AI Agents", "Prompt Engineering", "RAG Systems"]
     },
     {
-      title: "DevOps & System Tools",
-      skills: [
-        { name: "Docker", icon: "🐳", color: "bg-gradient-to-br from-blue-400 to-blue-600" },
-        { name: "Kubernetes", icon: "⚓", color: "bg-gradient-to-br from-blue-500 to-blue-700" },
-        { name: "Jenkins", icon: "🤖", color: "bg-gradient-to-br from-red-500 to-red-700" },
-        { name: "Prometheus", icon: "📈", color: "bg-gradient-to-br from-orange-500 to-orange-700" },
-        { name: "Git", icon: "📝", color: "bg-gradient-to-br from-orange-600 to-orange-800" },
-        { name: "GitHub", icon: "🐙", color: "bg-gradient-to-br from-gray-700 to-gray-900" },
-        { name: "CI/CD", icon: "🔄", color: "bg-gradient-to-br from-green-500 to-green-700" },
-        { name: "Shell", icon: "💻", color: "bg-gradient-to-br from-green-600 to-green-800" },
-        { name: "Linux", icon: "🐧", color: "bg-gradient-to-br from-yellow-500 to-yellow-700" },
-        { name: "Monitoring", icon: "👁️", color: "bg-gradient-to-br from-purple-600 to-purple-800" }
-      ]
+      title: "DevOps",
+      icon: Settings,
+      iconColor: "text-orange-500",
+      skills: ["Docker", "Kubernetes", "Jenkins", "CI/CD", "Linux", "Git", "GitHub"]
     },
     {
-      title: "Machine Learning / AI",
-      skills: [
-        { name: "Deep Learning", icon: "🧠", color: "bg-gradient-to-br from-purple-400 to-purple-600" },
-        { name: "CNN", icon: "🖼️", color: "bg-gradient-to-br from-blue-400 to-blue-600" },
-        { name: "NLP", icon: "💬", color: "bg-gradient-to-br from-green-400 to-green-600" },
-        { name: "GANs", icon: "🎭", color: "bg-gradient-to-br from-pink-400 to-pink-600" },
-        { name: "Pandas", icon: "🐼", color: "bg-gradient-to-br from-blue-500 to-blue-700" },
-        { name: "NumPy", icon: "🔢", color: "bg-gradient-to-br from-blue-600 to-blue-800" },
-        { name: "TensorFlow", icon: "🔥", color: "bg-gradient-to-br from-orange-500 to-orange-700" },
-        { name: "PyTorch", icon: "🔥", color: "bg-gradient-to-br from-red-500 to-red-700" },
-        { name: "Keras", icon: "🧠", color: "bg-gradient-to-br from-red-600 to-red-800" }
-      ]
+      title: "Cloud",
+      icon: Cloud,
+      iconColor: "text-cyan-500",
+      skills: ["AWS", "Google Cloud", "Azure", "Cloud Architecture", "Serverless", "Microservices"]
     },
     {
-      title: "Tools / IDEs",
-      skills: [
-        { name: "Scikit-Learn", icon: "🔬", color: "bg-gradient-to-br from-orange-400 to-orange-600" },
-        { name: "VS Code", icon: "💻", color: "bg-gradient-to-br from-blue-500 to-blue-700" },
-        { name: "Dev C++", icon: "⚙️", color: "bg-gradient-to-br from-blue-600 to-blue-800" },
-        { name: "GitHub CLI", icon: "📟", color: "bg-gradient-to-br from-gray-600 to-gray-800" }
-      ]
+      title: "Machine Learning",
+      icon: Cpu,
+      iconColor: "text-pink-500",
+      skills: ["TensorFlow", "PyTorch", "Deep Learning", "NLP", "CNN", "Pandas", "NumPy"]
+    },
+    {
+      title: "Tools & IDEs",
+      icon: Zap,
+      iconColor: "text-green-500",
+      skills: ["VS Code", "Jupyter", "Postman", "Streamlit", "Flask", "React"]
     }
   ];
 
@@ -118,49 +97,59 @@ const Skills: React.FC<SkillsProps> = ({ theme }) => {
           </p>
         </div>
 
-        {/* Skills Categories */}
-        <div className="space-y-16">
-          {skillCategories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{animationDelay: `${categoryIndex * 0.1}s`}}>
-              <h3 className={`text-2xl font-bold mb-8 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                {category.title}
-              </h3>
-              
-              {/* Skills Grid */}
-              <div className="flex flex-wrap justify-center gap-6">
-                {category.skills.map((skill, skillIndex) => (
-                  <div
-                    key={skillIndex}
-                    className={`group relative cursor-pointer transform hover:scale-110 transition-all duration-300 ${isVisible ? 'animate-bubble-in' : 'opacity-0 scale-0'}`}
-                    style={{animationDelay: `${categoryIndex * 0.1 + skillIndex * 0.05}s`}}
-                  >
-                    {/* Skill Bubble */}
-                    <div className={`w-20 h-20 ${skill.color} rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden group-hover:rotate-12`}>
-                      <span className="text-2xl">{skill.icon}</span>
-                      
-                      {/* Hover glow effect */}
-                      <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-                      
-                      {/* Pulse effect */}
-                      <div className="absolute inset-0 bg-white/10 rounded-full animate-ping opacity-0 group-hover:opacity-100"></div>
-                    </div>
-                    
-                    {/* Skill name tooltip */}
-                    <div className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-lg text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      theme === 'dark' 
-                        ? 'bg-gray-800 text-white border border-gray-700' 
-                        : 'bg-white text-gray-900 border border-gray-200 shadow-lg'
-                    }`}>
-                      {skill.name}
-                      <div className={`absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rotate-45 ${
-                        theme === 'dark' ? 'bg-gray-800 border-l border-t border-gray-700' : 'bg-white border-l border-t border-gray-200'
-                      }`}></div>
-                    </div>
+        {/* Skills Categories - Card Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {skillCategories.map((category, categoryIndex) => {
+            const IconComponent = category.icon;
+            return (
+              <div 
+                key={categoryIndex} 
+                className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
+                  theme === 'dark' 
+                    ? 'bg-gray-800/50 border-gray-700 hover:bg-gray-800/70' 
+                    : 'bg-white/80 border-gray-200 hover:bg-white shadow-lg'
+                } ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                style={{animationDelay: `${categoryIndex * 0.1}s`}}
+              >
+                {/* Category Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`p-3 rounded-xl ${
+                    theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-100'
+                  }`}>
+                    <IconComponent className={`w-6 h-6 ${category.iconColor}`} />
                   </div>
-                ))}
+                  <h3 className={`text-lg font-bold ${
+                    theme === 'dark' ? 'text-white' : 'text-gray-900'
+                  }`}>
+                    {category.title}
+                  </h3>
+                </div>
+                
+                {/* Skills List */}
+                <div className="space-y-3">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div
+                      key={skillIndex}
+                      className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 hover:scale-105 ${
+                        theme === 'dark' 
+                          ? 'bg-gray-700/30 hover:bg-gray-700/50 text-gray-300' 
+                          : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                      }`}
+                    >
+                      <div className={`w-2 h-2 rounded-full ${category.iconColor.replace('text-', 'bg-')}`}></div>
+                      <span className="text-sm font-medium">{skill}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Hover glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
+                
+                {/* Border glow effect */}
+                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-500/30 transition-colors duration-300"></div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Additional Skills Section */}

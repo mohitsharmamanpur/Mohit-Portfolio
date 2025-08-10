@@ -821,53 +821,119 @@ export default function Projects({ theme }: ProjectsProps) {
   return (
     <section id="projects" className={`pt-32 pb-20 relative overflow-hidden min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-10">
+        <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
             My <span className="text-cyan-500">Projects</span>
           </h2>
-          <div className="w-24 h-1 bg-cyan-500 mx-auto rounded-full mb-4"></div>
-          <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Click on any project to view details</p>
+          <div className="w-24 h-1 bg-cyan-500 mx-auto rounded-full mb-6"></div>
+          <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Explore my projects across different categories</p>
+          
+          {/* Enhanced Category Navigation */}
+          <div className="relative">
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${theme === 'dark' ? 'bg-gray-800/50 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+              <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></span>
+              Choose a category below to view projects
+            </div>
+          </div>
         </div>
 
-        {/* Navigation Tabs */}
-        <div className="flex justify-center mb-12">
-          <div className={`flex rounded-lg p-1 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}>
-            <button
-              onClick={() => setActiveSection('industry')}
-              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-                activeSection === 'industry'
-                  ? 'bg-cyan-500 text-white'
-                  : theme === 'dark'
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300'
-              }`}
-            >
-              Industry Level
-            </button>
-            <button
-              onClick={() => setActiveSection('major')}
-              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-                activeSection === 'major'
-                  ? 'bg-cyan-500 text-white'
-                  : theme === 'dark'
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300'
-              }`}
-            >
-              Major Projects
-            </button>
-            <button
-              onClick={() => setActiveSection('minor')}
-              className={`px-6 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-                activeSection === 'minor'
-                  ? 'bg-cyan-500 text-white'
-                  : theme === 'dark'
-                  ? 'text-gray-300 hover:text-white hover:bg-gray-700'
-                  : 'text-gray-700 hover:text-gray-900 hover:bg-gray-300'
-              }`}
-            >
-              Minor Projects
-            </button>
+        {/* Enhanced Navigation Tabs */}
+        <div className="flex justify-center mb-16">
+          <div className="relative">
+            {/* Background glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur-xl"></div>
+            
+            {/* Main navigation container */}
+            <div className={`relative flex flex-col sm:flex-row gap-4 sm:gap-2 p-2 rounded-2xl border-2 shadow-2xl ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700 backdrop-blur-sm' : 'bg-white/90 border-gray-200 backdrop-blur-sm'}`}>
+              
+              {/* Navigation instruction */}
+              <div className={`text-center sm:hidden mb-2 px-4 py-2 rounded-lg ${theme === 'dark' ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                <span className="text-sm font-medium">👆 Tap to explore different project categories</span>
+              </div>
+              
+              <button
+                onClick={() => setActiveSection('industry')}
+                className={`group relative px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 ${
+                  activeSection === 'industry'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30'
+                    : theme === 'dark'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50 border border-gray-600 hover:border-cyan-500/50'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-cyan-500/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-3 h-3 rounded-full ${
+                    activeSection === 'industry' ? 'bg-white' : 'bg-cyan-500'
+                  } ${activeSection !== 'industry' ? 'animate-pulse' : ''}`}></div>
+                  <span>Industry Level</span>
+                  {activeSection === 'industry' && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+                  )}
+                </div>
+                {activeSection !== 'industry' && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                )}
+              </button>
+              
+              <button
+                onClick={() => setActiveSection('major')}
+                className={`group relative px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 ${
+                  activeSection === 'major'
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/30'
+                    : theme === 'dark'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50 border border-gray-600 hover:border-purple-500/50'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-purple-500/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-3 h-3 rounded-full ${
+                    activeSection === 'major' ? 'bg-white' : 'bg-purple-500'
+                  } ${activeSection !== 'major' ? 'animate-pulse' : ''}`}></div>
+                  <span>Major Projects</span>
+                  {activeSection === 'major' && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+                  )}
+                </div>
+                {activeSection !== 'major' && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                )}
+              </button>
+              
+              <button
+                onClick={() => setActiveSection('minor')}
+                className={`group relative px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 ${
+                  activeSection === 'minor'
+                    ? 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-lg shadow-green-500/30'
+                    : theme === 'dark'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50 border border-gray-600 hover:border-green-500/50'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-green-500/50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-3 h-3 rounded-full ${
+                    activeSection === 'minor' ? 'bg-white' : 'bg-green-500'
+                  } ${activeSection !== 'minor' ? 'animate-pulse' : ''}`}></div>
+                  <span>Minor Projects</span>
+                  {activeSection === 'minor' && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
+                  )}
+                </div>
+                {activeSection !== 'minor' && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-teal-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                )}
+              </button>
+              
+              {/* Desktop instruction */}
+              <div className={`hidden sm:flex items-center px-4 py-2 rounded-lg ${theme === 'dark' ? 'bg-gray-700/30 text-gray-400' : 'bg-gray-50 text-gray-500'}`}>
+                <span className="text-sm">👈 Click to switch categories</span>
+              </div>
+            </div>
+            
+            {/* Category counter */}
+            <div className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-xs font-medium ${theme === 'dark' ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-600'}`}>
+              {activeSection === 'industry' ? '🏢' : activeSection === 'major' ? '🚀' : '⭐'} 
+              {activeSection === 'industry' ? 'Professional' : activeSection === 'major' ? 'Advanced' : 'Learning'} Projects
+            </div>
           </div>
         </div>
 

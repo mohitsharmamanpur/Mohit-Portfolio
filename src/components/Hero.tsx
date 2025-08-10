@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Github, Linkedin, Code, MapPin, Mail, Phone } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 interface HeroProps {
   theme: 'light' | 'dark';
@@ -11,31 +11,12 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   
   const textArray = [
-    "Aspiring Software Developer",
+    "Mohit Sharma",
     "DevOps Enthusiast", 
-    "Machine Learning Learner",
-    "Cloud Aspirant"
+    "Cloud Enthusiast"
   ];
 
-  // Tech logos for rotating border (updated to requested tools)
-  const techLogos = [
-    { name: 'Linux', icon: '🐧' },
-    { name: 'Docker', icon: '🐳' },
-    { name: 'Jenkins', icon: '🤖' },
-    { name: 'Kubernetes', icon: '⚙️' },
-    { name: 'Cloud', icon: '☁️' },
-    { name: 'Flutter', icon: '💙' },
-    { name: 'VS Code', icon: '📝' },
-    { name: 'Jupyter', icon: '📒' },
-    { name: 'HTML', icon: '🌐' },
-    { name: 'CSS', icon: '🎨' },
-    { name: 'JavaScript', icon: '🟨' },
-    { name: 'Node.js', icon: '🟢' },
-    // Add more popular tools as needed
-    { name: 'Git', icon: '📦' },
-    { name: 'Python', icon: '🐍' },
-    { name: 'React', icon: '⚛️' }
-  ];
+
 
   useEffect(() => {
     const typeSpeed = isDeleting ? 50 : 150;
@@ -114,17 +95,17 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
         </div>
       </div>
       {/* Content */}
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-8">
         {/* Left: Text Content */}
-        <div className="flex-1 flex flex-col items-start justify-center md:items-start text-left z-10">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-lg flex items-center gap-4 whitespace-nowrap">
+        <div className="flex-1 flex flex-col items-center lg:items-start justify-center text-center lg:text-left z-10 pr-0 lg:pr-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 drop-shadow-lg whitespace-nowrap">
             Hello, I'm <span className="relative inline-block ml-3">
               <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent font-extrabold animate-blink shimmer-text" style={{animation: 'blink 1.2s infinite alternate'}}>
-                Mohit Sharma
+                {typedText}
+                <span className="animate-pulse">|</span>
               </span>
             </span>
           </h1>
-          <h2 className="text-xl md:text-2xl text-cyan-200 font-medium mb-4">Aspiring Software Developer</h2>
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-xl animate-float">
             DevOps & Cloud Enthusiast | Python Learner | Machine Learning
           </p>
@@ -159,11 +140,11 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
             </button>
           </div>
         </div>
-        {/* Right: Profile Image with revolving tech icons */}
-        <div className="flex-1 flex justify-center items-start relative z-10 mt-[-60px]">
+        {/* Right: Profile Image - Fixed positioning */}
+        <div className="flex-shrink-0 flex justify-center items-center relative z-10 w-full lg:w-auto">
           <div className="relative flex flex-col items-center">
-            {/* Main profile image - larger size, no rotating icons */}
-            <div className="w-96 h-96 rounded-full bg-white p-1 relative z-10 shadow-2xl flex items-center justify-center mx-auto">
+            {/* Main profile image */}
+            <div className="w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full bg-white p-1 relative z-10 shadow-2xl flex items-center justify-center">
               <div className="w-full h-full rounded-full overflow-hidden">
                 <img 
                   src="/WhatsApp Image 2025-07-29 at 02.15.40_38a321fc.jpg" 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, Send, X, Bot, User, Search, Code, Award, Briefcase, Mail, Home, User as UserIcon } from 'lucide-react';
+import { MessageCircle, Send, X, Bot, User, Code, Award, Briefcase, Mail, Home, User as UserIcon } from 'lucide-react';
 
 interface ChatbotProps {
   theme: 'light' | 'dark';
@@ -127,22 +127,40 @@ export default function Chatbot({ theme }: ChatbotProps) {
     return null;
   };
 
-  const generateBotResponse = (userInput: string) => {
-    const relevantInfo = findRelevantInfo(userInput);
-    
-    if (relevantInfo) {
-      const Icon = relevantInfo.icon;
-      return {
-        text: relevantInfo.description,
-        section: relevantInfo.section,
-        icon: Icon
-      };
-    } else {
-      return {
-        text: "I'm not sure about that. You can ask me about:\n• Home/Introduction\n• About/Background\n• Skills/Technologies\n• Mini Projects\n• Major Projects\n• Achievements\n• Experience\n• Contact Information",
-        section: null,
-        icon: null
-      };
+  const generateBotResponse = async (userInput: string) => {
+    try {
+      setIsTyping(true);
+      
+      // Call the backend API
+      const response = await fetch('http://localhost:3001/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userInput }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response from API');
+      }
+
+      const data = await response.json();
+      
+      setIsTyping(false);
+      return data.response;
+      
+    } catch (error) {
+      console.error('Error calling Gemini API:', error);
+      setIsTyping(false);
+      
+      // Fallback to original logic if API fails
+      const relevantInfo = findRelevantInfo(userInput);
+      
+      if (relevantInfo) {
+        return `${relevantInfo.description}\n\nWould you like me to take you to the ${relevantInfo.section} section?`;
+      }
+      
+      return "I'm sorry, I'm having trouble connecting to my AI brain right now. But I can still help you navigate Mohit's portfolio! Try asking about his skills, projects, or achievements.";
     }
   };
 
@@ -152,14 +170,16 @@ export default function Chatbot({ theme }: ChatbotProps) {
     const userMessage = inputValue.trim();
     addUserMessage(userMessage);
     setInputValue('');
-    setIsTyping(true);
 
-    // Simulate typing delay
-    setTimeout(() => {
-      const response = generateBotResponse(userMessage);
-      addBotMessage(response.text);
+    // Get response from Gemini API
+    try {
+      const response = await generateBotResponse(userMessage);
+      addBotMessage(response);
+    } catch (error) {
+      console.error('Error in handleSendMessage:', error);
+      addBotMessage("I'm sorry, I encountered an error. Please try again.");
       setIsTyping(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -184,24 +204,45 @@ export default function Chatbot({ theme }: ChatbotProps) {
 
   return (
     <>
-      {/* Chatbot Toggle Button */}
+      {/* Chatbot Toggle Button - Enhanced Visibility */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-8 left-8 z-50 p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 ${
+        className={`fixed bottom-8 left-8 z-50 p-5 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 transform ${
           theme === 'dark'
-            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600'
-            : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600'
-        } ${isOpen ? 'animate-bounce' : 'animate-pulse'}`}
+            ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white hover:from-purple-400 hover:via-pink-400 hover:to-purple-500'
+            : 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white hover:from-purple-400 hover:via-pink-400 hover:to-purple-500'
+        } ${isOpen ? 'animate-spin' : 'animate-pulse'} 
+        ring-4 ring-purple-300/50 hover:ring-purple-400/70 
+        shadow-purple-500/50 hover:shadow-purple-600/70 hover:shadow-2xl
+        backdrop-blur-sm border-2 border-white/20`}
+        style={{
+          boxShadow: '0 0 30px rgba(168, 85, 247, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)',
+          filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
+        }}
       >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        {isOpen ? <X className="w-7 h-7" /> : <MessageCircle className="w-7 h-7" />}
+        
+        {/* Pulsing ring effect */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-75 animate-ping"></div>
+        
+        {/* Notification dot when closed */}
+        {!isOpen && (
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-bounce border-2 border-white">
+            <div className="absolute inset-0 bg-red-500 rounded-full animate-ping"></div>
+          </div>
+        )}
       </button>
 
-      {/* Chatbot Modal */}
+      {/* Chatbot Modal - Centered */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 flex items-end justify-start p-4 pointer-events-none">
-          <div className={`relative w-96 h-[500px] rounded-2xl shadow-2xl border ${
-            theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
-          } pointer-events-auto animate-slide-in-up`}>
+        <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/30 backdrop-blur-sm">
+          <div className={`relative w-[480px] h-[600px] max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl border ${
+            theme === 'dark' ? 'bg-gray-800/95 border-gray-700' : 'bg-white/95 border-gray-200'
+          } backdrop-blur-md animate-scale-in ring-1 ring-purple-500/20`}
+          style={{
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(168, 85, 247, 0.1)',
+            animation: 'modalSlideIn 0.3s ease-out'
+          }}>
             
             {/* Header */}
             <div className={`flex items-center justify-between p-4 border-b ${
@@ -231,7 +272,7 @@ export default function Chatbot({ theme }: ChatbotProps) {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto h-[380px]">
+            <div className="flex-1 p-4 overflow-y-auto h-[480px]">
               <div className="space-y-4">
                 {messages.map((message) => (
                   <div
@@ -346,6 +387,8 @@ export default function Chatbot({ theme }: ChatbotProps) {
           </div>
         </div>
       )}
+      
+
     </>
   );
-} 
+}

@@ -111,9 +111,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               <a href="https://mail.google.com/mail/u/0/#inbox" className={`p-3 rounded-full bg-gradient-to-br from-pink-500 via-cyan-400 to-purple-600 shadow-lg animate-bounce-slow2 hover:scale-125 transition-all duration-300`} title="Mail">
                 <Mail className="w-7 h-7 text-white" />
               </a>
-              <a href="https://leetcode.com/problemset/" target="_blank" rel="noopener noreferrer" className={`p-3 rounded-full bg-gradient-to-br from-yellow-400 via-orange-500 to-yellow-700 shadow-lg animate-bounce-slow3 hover:scale-125 transition-all duration-300`} title="LeetCode">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" className="w-7 h-7"><g><path fill="#FFA116" d="M36.6,32.6c-0.8,0.8-2,0.8-2.8,0l-8.2-8.2c-0.8-0.8-0.8-2,0-2.8l8.2-8.2c0.8-0.8,2-0.8,2.8,0c0.8,0.8,0.8,2,0,2.8l-6.8,6.8l6.8,6.8C37.4,30.6,37.4,31.8,36.6,32.6z"/><path fill="#070707" d="M25,50C11.2,50,0,38.8,0,25S11.2,0,25,0s25,11.2,25,25S38.8,50,25,50z M25,4C13.4,4,4,13.4,4,25s9.4,21,21,21s21-9.4,21-21S36.6,4,25,4z"/></g></svg>
-              </a>
+
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
