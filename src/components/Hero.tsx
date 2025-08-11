@@ -13,7 +13,8 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   const textArray = [
     "Mohit Sharma",
     "DevOps Enthusiast", 
-    "Cloud Enthusiast"
+    "Cloud Enthusiast",
+    "AI/ML Learner"
   ];
 
 

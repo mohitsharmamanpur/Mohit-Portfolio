@@ -204,36 +204,36 @@ export default function Chatbot({ theme }: ChatbotProps) {
 
   return (
     <>
-      {/* Chatbot Toggle Button - Enhanced Visibility */}
+      {/* Chatbot Toggle Button - Compact */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-8 left-8 z-50 p-5 rounded-full shadow-2xl transition-all duration-300 hover:scale-125 transform ${
+        className={`fixed bottom-6 left-6 z-50 p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 transform ${
           theme === 'dark'
             ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white hover:from-purple-400 hover:via-pink-400 hover:to-purple-500'
             : 'bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 text-white hover:from-purple-400 hover:via-pink-400 hover:to-purple-500'
         } ${isOpen ? 'animate-spin' : 'animate-pulse'} 
-        ring-4 ring-purple-300/50 hover:ring-purple-400/70 
-        shadow-purple-500/50 hover:shadow-purple-600/70 hover:shadow-2xl
-        backdrop-blur-sm border-2 border-white/20`}
+        ring-2 ring-purple-300/50 hover:ring-purple-400/70 
+        shadow-purple-500/50 hover:shadow-purple-600/70 hover:shadow-xl
+        backdrop-blur-sm border border-white/20`}
         style={{
-          boxShadow: '0 0 30px rgba(168, 85, 247, 0.6), 0 0 60px rgba(236, 72, 153, 0.4)',
-          filter: 'drop-shadow(0 0 10px rgba(168, 85, 247, 0.8))'
+          boxShadow: '0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(236, 72, 153, 0.3)',
+          filter: 'drop-shadow(0 0 8px rgba(168, 85, 247, 0.6))'
         }}
       >
-        {isOpen ? <X className="w-7 h-7" /> : <MessageCircle className="w-7 h-7" />}
+        {isOpen ? <X className="w-5 h-5" /> : <MessageCircle className="w-5 h-5" />}
         
         {/* Pulsing ring effect */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-75 animate-ping"></div>
         
         {/* Notification dot when closed */}
         {!isOpen && (
-          <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-bounce border-2 border-white">
+          <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-bounce border border-white">
             <div className="absolute inset-0 bg-red-500 rounded-full animate-ping"></div>
           </div>
         )}
       </button>
 
-      {/* Chatbot Modal - Centered */}
+      {/* Chatbot Modal - Compact Size */}
       {isOpen && (
         <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-black/30 backdrop-blur-sm">
           <div className={`relative w-[480px] h-[600px] max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl border ${
