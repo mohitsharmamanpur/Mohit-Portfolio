@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trophy, Award, Target, Users, BookOpen, Cloud, Lock, ExternalLink, Star, Sparkles } from 'lucide-react';
+import { Trophy, Award, Target, Users, BookOpen, Cloud, ExternalLink, Star, Sparkles } from 'lucide-react';
 
 interface AchievementsProps {
   theme: 'light' | 'dark';
@@ -41,6 +41,23 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       year: "2023",
       category: "Workshop",
       verifyLink: "#"
+    },
+    // Newly added certifications
+    {
+      icon: Award,
+      title: "Oracle Cloud Infrastructure 2025 DevOps Professional Certification",
+      description: "CI/CD pipelines, microservices, containerization (OKE, OCIR), DevSecOps, IaC (Terraform), observability, cloud-native deployments on OCI.",
+      year: "Aug 14, 2025",
+      category: "Certification",
+      verifyLink: "#INSERT_DEVOPS_CREDENTIAL_URL"
+    },
+    {
+      icon: Award,
+      title: "Oracle Cloud Infrastructure 2025 Generative AI Professional Certification",
+      description: "Large Language Models (LLMs), prompt engineering, fine-tuning (T-Few), RAG-based chatbot development, LangChain, vector databases, semantic search, AI app deployment on OCI.",
+      year: "Aug 2025",
+      category: "Certification",
+      verifyLink: "#INSERT_GENAI_CREDENTIAL_URL"
     }
   ];
 
@@ -52,6 +69,10 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       year: "2024",
       category: "Leadership",
       verifyLink: "https://neuroauraindia.netlify.app/",
+      links: [
+        { label: 'LinkedIn Post', url: '#INSERT_NEUROAURA_POST_URL' },
+        { label: 'Pitch Video', url: '#INSERT_NEUROAURA_VIDEO_URL' }
+      ],
       isBigAchievement: true
     },
     {
@@ -181,22 +202,43 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
                       {item.description}
                     </p>
                     
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
                       <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                         {item.year}
                       </span>
                       
-                      <button 
-                        onClick={() => item.verifyLink && item.verifyLink !== "#" && window.open(item.verifyLink, '_blank')}
-                        className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                          theme === 'dark' 
-                            ? 'text-gray-400 hover:text-purple-400' 
-                            : 'text-gray-600 hover:text-purple-600'
-                        } ${item.verifyLink && item.verifyLink !== "#" ? 'cursor-pointer' : 'cursor-default'}`}
-                      >
-                        <span>{item.verifyLink && item.verifyLink !== "#" ? 'View' : 'Verify'}</span>
-                        {item.verifyLink && item.verifyLink !== "#" ? <ExternalLink className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
-                      </button>
+                      <div className="flex items-center gap-3">
+                        {item.verifyLink && item.verifyLink !== '#' && (
+                          <button
+                            onClick={() => window.open(item.verifyLink, '_blank')}
+                            className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                              theme === 'dark'
+                                ? 'text-purple-300 hover:text-purple-200'
+                                : 'text-purple-600 hover:text-purple-700'
+                            }`}
+                          >
+                            <span>{item.category === 'Certification' ? 'View Credential' : item.category === 'Research' ? 'Read Paper' : 'View'}</span>
+                            <ExternalLink className="w-4 h-4" />
+                          </button>
+                        )}
+                        {Array.isArray(item.links) && item.links.length > 0 && (
+                          <div className="flex items-center gap-2">
+                            {item.links.map((lnk: any, li: number) => (
+                              <button
+                                key={li}
+                                onClick={() => lnk.url && lnk.url !== '#' && window.open(lnk.url, '_blank')}
+                                className={`px-3 py-1.5 text-xs rounded-md border transition-colors ${
+                                  theme === 'dark'
+                                    ? 'border-purple-500/40 text-purple-300 hover:bg-purple-500/10'
+                                    : 'border-purple-300 text-purple-700 hover:bg-purple-50'
+                                } ${lnk.url && lnk.url !== '#' ? '' : 'opacity-60 cursor-not-allowed'}`}
+                              >
+                                {lnk.label}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -1,28 +1,597 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ExternalLink, Github, Code, Award, X } from 'lucide-react';
-import Background3D from './Background3D';
+import { useState, useEffect, useCallback } from 'react';
+import ProjectCard from './ProjectCard';
+import ProjectModal from './ProjectModal';
 
-interface ProjectsProps {
-  theme: 'light' | 'dark';
-}
-
-interface Project {
+export interface Project {
   id: number;
   title: string;
   description: string;
   tech: string[];
   features: string[];
-  award?: string;
-  github?: string;
+  github: string;
   demo?: string;
   image: string;
   category: string;
+  award?: string;
+  linkedin?: string;
 }
+
+interface ProjectsProps {
+  theme: 'light' | 'dark';
+}
+
+// Industry Level Projects (IDs 1-5)
+const industryProjects: Project[] = [
+  {
+    id: 1,
+    title: "Full CI/CD Pipeline",
+    description: "Built a comprehensive CI/CD pipeline to automate build-test-deploy workflows for applications, demonstrating modern DevOps practices.",
+    tech: ["Docker", "Jenkins", "Git", "GitHub", "Kubernetes"],
+    features: [
+      "Automated build and testing processes",
+      "Multi-stage Docker containerization",
+      "Kubernetes orchestration",
+      "Automated deployment to staging/production",
+      "Rollback capabilities",
+      "Monitoring and logging integration"
+    ],
+    github: "https://github.com/mohitsharmamanpur/CI-CD_Pipeline",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Industry Level"
+  },
+  {
+    id: 2,
+    title: "Microservices Architecture",
+    description: "Designed and implemented a scalable microservices architecture for enterprise applications.",
+    tech: ["Docker", "Kubernetes", "Node.js", "MongoDB", "RabbitMQ"],
+    features: [
+      "Containerized microservices",
+      "Service discovery and load balancing",
+      "Asynchronous communication",
+      "Centralized logging",
+      "Auto-scaling"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Microservices_Architecture",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Industry Level"
+  },
+  {
+    id: 3,
+    title: "Kubernetes Cluster",
+    description: "Set up and managed a production-grade Kubernetes cluster with monitoring and logging.",
+    tech: ["Kubernetes", "Helm", "Prometheus", "Grafana", "ELK Stack"],
+    features: [
+      "High availability setup",
+      "Auto-scaling nodes",
+      "Monitoring and alerting",
+      "Log aggregation",
+      "RBAC implementation"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Kubernetes-Cluster",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Industry Level"
+  },
+  {
+    id: 4,
+    title: "Automated WordPress on AWS with Terraform",
+    description: "Fully automated deployment of a secure, scalable WordPress application on AWS using Infrastructure as Code.",
+    tech: ["Terraform", "AWS", "WordPress", "RDS", "VPC"],
+    features: [
+      "Custom VPC with public/private subnets",
+      "Secure RDS instance in private subnets",
+      "Automated WordPress installation",
+      "Fine-grained security groups",
+      "High availability architecture",
+      "Single-command deployment"
+    ],
+    github: "https://github.com/mohitsharmamanpur/AWS-WordPress-Terraform",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Industry Level"
+  },
+  {
+    id: 5,
+    title: "Coming Soon Project",
+    description: "An exciting new project currently under development. Stay tuned for updates!",
+    tech: ["React", "Node.js", "MongoDB", "Docker"],
+    features: [
+      "Modern web application",
+      "Responsive design",
+      "Secure authentication",
+      "RESTful API"
+    ],
+    github: "#",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/326514/pexels-photo-326514.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Industry Level"
+  }
+];
+
+// Major Projects (IDs 6-30)
+const majorProjects: Project[] = [
+  {
+    id: 6,
+    title: "Terraform AWS Automation",
+    description: "Infrastructure as Code using Terraform to automate AWS resource provisioning.",
+    tech: ["Terraform", "AWS", "CI/CD"],
+    features: [
+      "Automated infrastructure deployment",
+      "Multi-environment support",
+      "Modular architecture"
+    ],
+    github: "https://github.com/mohitsharmamanpur/terraform-automated-aws-server",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1591061/pexels-photo-1591061.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 7,
+    title: "Titanic MLOps Pipeline",
+    description: "End-to-end MLOps pipeline for the Titanic survival prediction challenge.",
+    tech: ["Python", "Scikit-learn", "MLflow", "Docker", "FastAPI"],
+    features: [
+      "Data preprocessing pipeline",
+      "Model training and evaluation",
+      "Model versioning",
+      "API endpoint for predictions"
+    ],
+    github: "https://github.com/mohitsharmamanpur/MLOps-Project-titanic",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_machinelearning-mlops-aws-activity-7360618359807209472--96e?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 8,
+    title: "AI-Powered Startup Assistant",
+    description: "An intelligent assistant that helps refine startup ideas, perform market research, and generate business plans using Agentic AI.",
+    tech: ["LangChain", "Google Gemini 2.5", "Streamlit", "Python"],
+    features: [
+      "Refines vague startup ideas into clear problem-solution statements",
+      "Performs automated market research (size, competitors, trends)",
+      "Generates complete Business Model Canvas",
+      "Creates structured Pitch Deck",
+      "Writes 30-second persuasive Elevator Pitch",
+      "Agentic AI architecture with LangChain"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Agentic-AI-tool1",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 9,
+    title: "Cloud System Monitor Bot",
+    description: "A Telegram bot for real-time system monitoring and performance metrics tracking.",
+    tech: ["Python", "python-telegram-bot", "psutil", "Docker", "Cloud"],
+    features: [
+      "Real-time system metrics monitoring (CPU, RAM, Disk)",
+      "24/7 cloud-hosted solution",
+      "Interactive Telegram commands (/start, /status)",
+      "Readable performance statistics",
+      "Lightweight and efficient"
+    ],
+    github: "https://github.com/mohitsharmamanpur/System-Monitor-Bot",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 10,
+    title: "Serverless EC2 API Gateway",
+    description: "Serverless API Gateway for EC2 instance management.",
+    tech: ["AWS Lambda", "API Gateway", "EC2", "Python"],
+    features: [
+      "RESTful API endpoints",
+      "JWT authentication",
+      "Auto-scaling integration",
+      "Cost-effective solution"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Serverless-EC2-API-Gateway",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 11,
+    title: "URL API Info App",
+    description: "A web application to extract and display information about any URL.",
+    tech: ["Node.js", "Express", "Cheerio", "React"],
+    features: [
+      "URL metadata extraction",
+      "Preview generation",
+      "Link analysis",
+      "Responsive UI"
+    ],
+    github: "https://github.com/mohitsharmamanpur/URL-API-Info-App",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 12,
+    title: "AI Computer Vision Cloud",
+    description: "Cloud-based computer vision solution for image analysis.",
+    tech: ["Python", "OpenCV", "TensorFlow", "AWS"],
+    features: [
+      "Object detection",
+      "Image classification",
+      "Face recognition",
+      "Scalable cloud architecture"
+    ],
+    github: "https://github.com/mohitsharmamanpur/AI-Computer-Vision-Cloud",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_ai-aws-gesturecontrol-activity-7355076978820997121-NzC7?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861437/pexels-photo-3861437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 10,
+    title: "S3 Lambda SNS Notification",
+    description: "Automated file processing with S3, Lambda, and SNS notifications.",
+    tech: ["AWS S3", "AWS Lambda", "SNS", "Python"],
+    features: [
+      "Event-driven architecture",
+      "Real-time notifications",
+      "File processing pipeline",
+      "Serverless implementation"
+    ],
+    github: "https://github.com/mohitsharmamanpur/S3-Lambda-SNS-Notification",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 11,
+    title: "Audio Text Transcribe",
+    description: "Convert speech to text with high accuracy using AI.",
+    tech: ["Python", "SpeechRecognition", "Flask", "AWS Transcribe"],
+    features: [
+      "Speech-to-text conversion",
+      "Multiple language support",
+      "Web interface",
+      "Batch processing"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Audio-Text-Transcribe",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 12,
+    title: "SageMaker ML Training",
+    description: "Machine learning model training pipeline using AWS SageMaker.",
+    tech: ["AWS SageMaker", "Python", "Scikit-learn", "Pandas"],
+    features: [
+      "Distributed training",
+      "Hyperparameter optimization",
+      "Model deployment",
+      "Monitoring"
+    ],
+    github: "https://github.com/mohitsharmamanpur/SageMaker-ML-Training",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861437/pexels-photo-3861437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 13,
+    title: "PDF LLM Summarization",
+    description: "AI-powered document summarization using large language models.",
+    tech: ["Python", "Transformers", "PyPDF2", "Streamlit"],
+    features: [
+      "PDF text extraction",
+      "Abstractive summarization",
+      "Web interface",
+      "Customizable summary length"
+    ],
+    github: "https://github.com/mohitsharmamanpur/PDF-LLM-Summarization",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 14,
+    title: "Linear Regression ML",
+    description: "Implementation of linear regression from scratch.",
+    tech: ["Python", "NumPy", "Matplotlib", "Pandas"],
+    features: [
+      "Gradient descent optimization",
+      "Feature scaling",
+      "Model evaluation",
+      "Visualization"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Linear-Regression-ML",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861437/pexels-photo-3861437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 13,
+    title: "Multilinear Regression ML",
+    description: "Implementation of multilinear regression for multiple features.",
+    tech: ["Python", "NumPy", "Matplotlib", "Scikit-learn"],
+    features: [
+      "Multiple feature support",
+      "Feature selection",
+      "Regularization",
+      "Cross-validation"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Multilinear-Regression-ML",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 16,
+    title: "Binary Classification ML",
+    description: "Binary classification model implementation with various algorithms.",
+    tech: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
+    features: [
+      "Logistic regression",
+      "SVM",
+      "Decision trees",
+      "Model evaluation metrics"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Binary-Classification-ML",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861437/pexels-photo-3861437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  }
+];
+
+// Minor Projects (IDs 30+)
+const minorProjects: Project[] = [
+  {
+    id: 33,
+    title: "AWS Apache Web Server Automation with Ansible",
+    description: "Automated Apache Web Server deployment on AWS using Ansible across 3 EC2s (1 Controller, 2 Managed). Started with ad-hoc commands, then fully automated via YAML Playbook for one-click provisioning.",
+    tech: ["Ansible", "AWS EC2", "YAML", "Linux", "Apache"],
+    features: [
+      "3-instance setup: 1 Controller, 2 Managed",
+      "Initial configuration via ad-hoc commands",
+      "Idempotent Ansible Playbook for end-to-end automation",
+      "Apache installation and service management",
+      "One-click deployment workflow"
+    ],
+    github: "#",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_devops-ansible-aws-activity-7361745143479025664-fihU?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 30,
+    title: "Apache Docker Server",
+    description: "Dockerized Apache web server with custom configuration.",
+    tech: ["Docker", "Apache", "Linux"],
+    features: [
+      "Lightweight container",
+      "Custom configuration",
+      "Volume mounting",
+      "Port mapping"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Apache-Docker-Server",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 18,
+    title: "Docker in Docker (DIND)",
+    description: "Running Docker inside a Docker container for CI/CD pipelines.",
+    tech: ["Docker", "CI/CD", "DevOps"],
+    features: [
+      "Nested Docker environment",
+      "CI/CD pipeline integration",
+      "Isolated build environment"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Docker-in-Docker-DIND",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 19,
+    title: "ML Docker Container",
+    description: "Pre-configured Docker container for machine learning development.",
+    tech: ["Docker", "Python", "Jupyter", "ML"],
+    features: [
+      "Pre-installed ML libraries",
+      "Jupyter notebook support",
+      "GPU acceleration"
+    ],
+    github: "https://github.com/mohitsharmamanpur/ML-Docker-Container",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 20,
+    title: "Flask Docker App",
+    description: "Dockerized Flask web application with production-ready configuration.",
+    tech: ["Docker", "Flask", "Python", "Nginx"],
+    features: [
+      "Production-ready setup",
+      "Nginx reverse proxy",
+      "WSGI server",
+      "Environment variables"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Flask-Docker-App",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/461064/pexels-photo-461064.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 21,
+    title: "Firefox Docker Browser",
+    description: "Headless Firefox browser in a Docker container for web automation.",
+    tech: ["Docker", "Selenium", "Python", "Firefox"],
+    features: [
+      "Headless browsing",
+      "Selenium WebDriver",
+      "Screenshots",
+      "Automation ready"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Firefox-Docker-Browser",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/270404/pexels-photo-270404.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 22,
+    title: "Docker Compose Multi-Service",
+    description: "Multi-container application using Docker Compose.",
+    tech: ["Docker", "Docker Compose", "Microservices"],
+    features: [
+      "Containerized services",
+      "Networking between containers",
+      "Volume management"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Docker-Compose-Multi-Service",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 31,
+    title: "WordPress Docker Volume",
+    description: "WordPress with persistent storage using Docker volumes.",
+    tech: ["Docker", "WordPress", "MySQL", "PHP"],
+    features: [
+      "Persistent storage",
+      "Database volume",
+      "Easy backup",
+      "Portable setup"
+    ],
+    github: "https://github.com/mohitsharmamanpur/WordPress-Docker-Volume",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/270637/pexels-photo-270637.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 24,
+    title: "Flask Backup API",
+    description: "RESTful API for managing file backups with Flask.",
+    tech: ["Python", "Flask", "REST API", "File handling"],
+    features: [
+      "File upload/download",
+      "Authentication",
+      "Metadata storage",
+      "Versioning"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Flask-Backup-API",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/270700/pexels-photo-270700.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 25,
+    title: "Python EC2 Automation",
+    description: "Automate AWS EC2 instance management with Python.",
+    tech: ["Python", "AWS", "Boto3", "EC2"],
+    features: [
+      "Instance creation/termination",
+      "Status monitoring",
+      "Tag management",
+      "Cost optimization"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Python-EC2-Automation",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 26,
+    title: "Python Phone Call",
+    description: "Make phone calls programmatically using Python.",
+    tech: ["Python", "Twilio", "API", "Automation"],
+    features: [
+      "Voice calls",
+      "Text-to-speech",
+      "Call recording",
+      "Call tracking"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Python-Phone-Call",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 27,
+    title: "Python Web Scraping",
+    description: "Web scraping and data extraction using Python.",
+    tech: ["Python", "BeautifulSoup", "Requests", "Pandas"],
+    features: [
+      "HTML parsing",
+      "Data extraction",
+      "CSV/Excel export",
+      "Rate limiting"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Python-Web-Scraping",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 28,
+    title: "Python Email Automation",
+    description: "Automate email sending and processing with Python.",
+    tech: ["Python", "SMTP", "IMAP", "Email parsing"],
+    features: [
+      "Send/receive emails",
+      "Attachments handling",
+      "Templates",
+      "Scheduling"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Python-Email-Automation",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 32,
+    title: "Python SMS Automation",
+    description: "Send and receive SMS messages programmatically.",
+    tech: ["Python", "Twilio", "API", "Automation"],
+    features: [
+      "Send SMS/MMS",
+      "Receive messages",
+      "Status callbacks",
+      "Scheduling"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Python-SMS-Automation",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 30,
+    title: "Python Instagram Automation",
+    description: "Automate Instagram interactions using Python.",
+    tech: ["Python", "Selenium", "WebDriver", "Automation"],
+    features: [
+      "Auto-like posts",
+      "Follow/unfollow",
+      "Commenting",
+      "Analytics"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Python-Instagram-Automation",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/211290/pexels-photo-211290.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  }
+];
 
 export default function Projects({ theme }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState<'industry' | 'major' | 'minor'>('industry');
+  const [isVisible, setIsVisible] = useState(false);
+
+  const openModal = useCallback((project: Project) => {
+    setSelectedProject(project);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {};
@@ -54,1097 +623,96 @@ export default function Projects({ theme }: ProjectsProps) {
     };
   }, []);
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1);
-      if (hash === 'industry-projects') {
-        setActiveSection('industry');
-      } else if (hash === 'major-projects') {
-        setActiveSection('major');
-      } else if (hash === 'minor-projects') {
-        setActiveSection('minor');
-      }
-    };
+  // Removed URL hash sync to prevent external hash changes from switching sections.
 
-    // Check initial hash
-    handleHashChange();
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  // Update URL hash when active section changes
-  useEffect(() => {
-    const hash = activeSection === 'industry' ? 'industry-projects' : 
-                 activeSection === 'major' ? 'major-projects' : 'minor-projects';
-    window.location.hash = hash;
-  }, [activeSection]);
-
-  const industryProjects: Project[] = [
-    {
-      id: 1,
-      title: "Full CI/CD Pipeline",
-      description: "Built a comprehensive CI/CD pipeline to automate build-test-deploy workflows for applications, demonstrating modern DevOps practices.",
-      tech: ["Docker", "Jenkins", "Git", "GitHub", "Kubernetes"],
-      features: [
-        "Automated build and testing processes",
-        "Multi-stage Docker containerization",
-        "Kubernetes orchestration",
-        "Automated deployment to staging/production",
-        "Rollback capabilities",
-        "Monitoring and logging integration"
-      ],
-      github: "https://github.com/mohitsharmamanpur/CI-CD_Pipeline",
-      image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    },
-    {
-      id: 2,
-      title: "Microservices Scaling inside Docker",
-      description: "Implemented microservices architecture with Docker containerization and automated scaling capabilities.",
-      tech: ["Docker", "Docker Compose", "Microservices", "Load Balancing"],
-      features: [
-        "Containerized microservices architecture",
-        "Automated service discovery",
-        "Load balancing and scaling",
-        "Health monitoring and recovery",
-        "Service communication patterns",
-        "Deployment automation"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Microservices_Architecture",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    },
-    {
-      id: 3,
-      title: "Multinode Kubernetes Cluster",
-      description: "Deployed and managed a multi-node Kubernetes cluster for container orchestration and application deployment.",
-      tech: ["Kubernetes", "Docker", "Cluster Management", "Orchestration"],
-      features: [
-        "Multi-node cluster setup",
-        "Pod scheduling and management",
-        "Service discovery and load balancing",
-        "Persistent storage management",
-        "Monitoring and logging",
-        "Security and RBAC"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Kubernetes-Cluster",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    },
-    {
-      id: 4,
-      title: "Project 4 - Coming Soon",
-      description: "Exciting new industry-level project in development. Stay tuned for updates!",
-      tech: ["Coming Soon"],
-      features: [
-        "Project details will be revealed soon",
-        "Industry-standard implementation",
-        "Advanced technologies",
-        "Real-world applications"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Coming-Soon-Project",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    },
-    {
-      id: 5,
-      title: "Project 5 - Coming Soon",
-      description: "Exciting new industry-level project in development. Stay tuned for updates!",
-      tech: ["Coming Soon"],
-      features: [
-        "Project details will be revealed soon",
-        "Industry-standard implementation",
-        "Advanced technologies",
-        "Real-world applications"
-      ],
-      github: "#",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    },
-    {
-      id: 6,
-      title: "Project 6 - Coming Soon",
-      description: "Exciting new industry-level project in development. Stay tuned for updates!",
-      tech: ["Coming Soon"],
-      features: [
-        "Project details will be revealed soon",
-        "Industry-standard implementation",
-        "Advanced technologies",
-        "Real-world applications"
-      ],
-      github: "#",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    },
-    {
-      id: 7,
-      title: "Project 7 - Coming Soon",
-      description: "Exciting new industry-level project in development. Stay tuned for updates!",
-      tech: ["Coming Soon"],
-      features: [
-        "Project details will be revealed soon",
-        "Industry-standard implementation",
-        "Advanced technologies",
-        "Real-world applications"
-      ],
-      github: "#",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Industry Level"
-    }
-  ];
-
-  const majorProjects: Project[] = [
-    {
-      id: 7,
-      title: "End-to-End Web Server Automation with Terraform on AWS",
-      description: "A comprehensive Infrastructure as Code (IaC) project that demonstrates automated cloud deployment. With a single 'terraform apply' command, this system provisions a complete, persistent Apache web server on AWS, automatically configures all infrastructure, and opens the live webpage in your browser. Solves the challenges of manual cloud deployments by creating a fast, reliable, and repeatable deployment pipeline.",
-      tech: ["Terraform", "AWS", "EC2", "EBS", "Apache", "Infrastructure as Code", "Linux", "VPC", "Security Groups"],
-      features: [
-        "Single-command deployment with 'terraform apply'",
-        "Automated EC2 instance provisioning",
-        "EBS volume creation and attachment for persistence",
-        "Automatic Apache HTTP Server installation and configuration",
-        "Persistent storage mounting to /var/www/html",
-        "Automated browser opening to live webpage",
-        "Infrastructure as Code best practices",
-        "AWS VPC and Security Group configuration",
-        "Remote and local provisioner automation",
-        "Complete infrastructure teardown capability",
-        "Error handling and rollback mechanisms",
-        "Scalable and repeatable deployment process"
-      ],
-      github: "https://github.com/mohitsharmamanpur/terraform-aws-webserver",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 8,
-      title: "Titanic Survival Prediction - End-to-End MLOps Pipeline",
-      description: "Comprehensive MLOps project implementing a complete machine learning pipeline for Titanic survival prediction. Features automated data preprocessing, model training with Logistic Regression, AWS S3 integration for model persistence, Flask API for real-time predictions, and Streamlit dashboard for interactive user experience. Demonstrates industry-standard MLOps practices with automated training, deployment, and monitoring workflows.",
-      tech: ["Python", "Pandas", "Scikit-learn", "Joblib", "Flask", "Streamlit", "AWS S3", "Boto3", "MLOps", "Machine Learning"],
-      features: [
-        "End-to-end ML pipeline automation",
-        "Advanced data preprocessing & feature engineering",
-        "Logistic Regression model with hyperparameter tuning",
-        "Comprehensive model evaluation with confusion matrix",
-        "AWS S3 integration for model versioning & storage",
-        "RESTful Flask API for real-time predictions",
-        "Interactive Streamlit dashboard with data visualization",
-        "Automated model training, saving, and deployment pipeline",
-        "Model persistence and retrieval system",
-        "Production-ready code architecture",
-        "Error handling and logging mechanisms",
-        "Scalable cloud-based model management"
-      ],
-      github: "https://github.com/mohitsharmamanpur/MLOps-Project-titanic",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 9,
-      title: "Create own Telegram Bot using AWS-cloud Server",
-      description: "Developed a custom Telegram bot deployed on AWS cloud infrastructure for automated messaging and interactions.",
-      tech: ["Python", "AWS", "Telegram API", "Cloud Computing"],
-      features: [
-        "Custom bot functionality",
-        "AWS EC2 deployment",
-        "Automated messaging",
-        "User interaction handling",
-        "Cloud scalability",
-        "Real-time responses"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 10,
-      title: "Launching Serverless EC2 instance via API-Gateway",
-      description: "Implemented serverless architecture to launch EC2 instances through API Gateway integration.",
-      tech: ["AWS Lambda", "API Gateway", "EC2", "Serverless"],
-      features: [
-        "Serverless EC2 management",
-        "API Gateway integration",
-        "Automated instance provisioning",
-        "Cost optimization",
-        "Scalable architecture",
-        "Event-driven triggers"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Serverless-EC2-API-Gateway",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 11,
-      title: "Create App, when user comes in URL or API than it show some information",
-      description: "Developed a web application that displays information when users access specific URLs or API endpoints.",
-      tech: ["Web Development", "API", "URL Routing", "Information Display"],
-      features: [
-        "Dynamic URL handling",
-        "API endpoint responses",
-        "Information display",
-        "User-friendly interface",
-        "Responsive design",
-        "Real-time updates"
-      ],
-      github: "https://github.com/mohitsharmamanpur/URL-API-Info-App",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 12,
-      title: "Launching Instances inside cloud using AI and Computer Vision",
-      description: "Implemented AI-powered computer vision system for automated cloud instance management and deployment.",
-      tech: ["AI", "Computer Vision", "Cloud Computing", "Automation"],
-      features: [
-        "AI-powered automation",
-        "Computer vision integration",
-        "Cloud instance management",
-        "Intelligent deployment",
-        "Visual recognition",
-        "Automated scaling"
-      ],
-      github: "https://github.com/mohitsharmamanpur/AI-Computer-Vision-Cloud",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 13,
-      title: "File Upload Notification",
-      description: "When a file is uploaded to S3, it triggers a Lambda function that sends a notification using SNS. Ensures real-time alerts for uploads.",
-      tech: ["AWS S3", "AWS Lambda", "AWS SNS", "Notifications"],
-      features: [
-        "S3 file upload detection",
-        "Lambda function triggers",
-        "SNS notifications",
-        "Real-time alerts",
-        "Automated workflows",
-        "Event-driven architecture"
-      ],
-      github: "https://github.com/mohitsharmamanpur/S3-Lambda-SNS-Notification",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 14,
-      title: "Audio to Text Conversion",
-      description: "On audio file upload, S3 triggers Lambda which uses Amazon Transcribe to convert the audio into text automatically.",
-      tech: ["AWS S3", "AWS Lambda", "Amazon Transcribe", "Audio Processing"],
-      features: [
-        "Audio file processing",
-        "Automatic transcription",
-        "S3 integration",
-        "Lambda automation",
-        "Text extraction",
-        "Real-time conversion"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Audio-Text-Transcribe",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 15,
-      title: "Dataset-Based Model Training",
-      description: "When a dataset is uploaded, Lambda invokes Amazon SageMaker to train a machine learning model with minimal manual input.",
-      tech: ["AWS Lambda", "Amazon SageMaker", "Machine Learning", "Automation"],
-      features: [
-        "Dataset upload detection",
-        "Automated model training",
-        "SageMaker integration",
-        "ML pipeline automation",
-        "Model deployment",
-        "Performance monitoring"
-      ],
-      github: "https://github.com/mohitsharmamanpur/SageMaker-ML-Training",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 16,
-      title: "PDF Summarization using LLM",
-      description: "When a PDF is uploaded, Lambda calls Amazon Bedrock, which uses LLMs to generate a smart summary of the document.",
-      tech: ["AWS Lambda", "Amazon Bedrock", "LLM", "PDF Processing"],
-      features: [
-        "PDF document processing",
-        "LLM integration",
-        "Smart summarization",
-        "Automated extraction",
-        "Content analysis",
-        "Intelligent insights"
-      ],
-      github: "https://github.com/mohitsharmamanpur/PDF-LLM-Summarization",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 17,
-      title: "Linear Regression Machine Learning model",
-      description: "Implemented a linear regression machine learning model for predictive analytics and data analysis.",
-      tech: ["Machine Learning", "Linear Regression", "Python", "Data Analysis"],
-      features: [
-        "Linear regression implementation",
-        "Data preprocessing",
-        "Model training",
-        "Prediction capabilities",
-        "Performance evaluation",
-        "Statistical analysis"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Linear-Regression-ML",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 18,
-      title: "Multilinear Regression Machine learning model",
-      description: "Developed a multilinear regression model for complex predictive modeling with multiple variables.",
-      tech: ["Machine Learning", "Multilinear Regression", "Python", "Predictive Modeling"],
-      features: [
-        "Multilinear regression",
-        "Multiple variable analysis",
-        "Complex modeling",
-        "Feature engineering",
-        "Model validation",
-        "Advanced predictions"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Multilinear-Regression-ML",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    },
-    {
-      id: 19,
-      title: "Binary Classification ML Model",
-      description: "Binary Classification ML Model using Sigmoid Function with Confusion Matrix for evaluation.",
-      tech: ["Machine Learning", "Binary Classification", "Sigmoid Function", "Confusion Matrix"],
-      features: [
-        "Binary classification",
-        "Sigmoid function implementation",
-        "Confusion matrix evaluation",
-        "Model performance metrics",
-        "Classification accuracy",
-        "Decision boundary analysis"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Binary-Classification-ML",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Major Project"
-    }
-  ];
-
-  const minorProjects: Project[] = [
-    {
-      id: 20,
-      title: "Launching apache web server inside docker",
-      description: "Containerized Apache web server deployment using Docker for consistent and portable web hosting.",
-      tech: ["Docker", "Apache", "Web Server", "Containerization"],
-      features: [
-        "Docker containerization",
-        "Apache web server setup",
-        "Port mapping",
-        "Volume mounting",
-        "Custom configurations",
-        "Easy deployment"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Apache-Docker-Server",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 20,
-      title: "Docker inside Docker (DIND concept)",
-      description: "Implemented Docker-in-Docker concept for nested containerization and isolated development environments.",
-      tech: ["Docker", "DIND", "Containerization", "Isolation"],
-      features: [
-        "Nested containerization",
-        "Isolated environments",
-        "Development sandboxing",
-        "Resource management",
-        "Security isolation",
-        "CI/CD integration"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Docker-in-Docker-DIND",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 21,
-      title: "Linear Regression model inside Docker",
-      description: "Containerized linear regression machine learning model for consistent deployment and execution.",
-      tech: ["Docker", "Machine Learning", "Linear Regression", "Containerization"],
-      features: [
-        "ML model containerization",
-        "Linear regression implementation",
-        "Consistent deployment",
-        "Portable execution",
-        "Environment isolation",
-        "Easy scaling"
-      ],
-      github: "https://github.com/mohitsharmamanpur/ML-Docker-Container",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 22,
-      title: "Run Flask app inside Docker",
-      description: "Containerized Flask web application for consistent deployment and easy scaling.",
-      tech: ["Docker", "Flask", "Python", "Web Development"],
-      features: [
-        "Flask app containerization",
-        "Web application deployment",
-        "Consistent environment",
-        "Easy scaling",
-        "Port management",
-        "Development workflow"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Flask-Docker-App",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 23,
-      title: "Install Firefox Browser inside Docker",
-      description: "Containerized Firefox browser installation for isolated web browsing and testing environments.",
-      tech: ["Docker", "Firefox", "Browser", "Containerization"],
-      features: [
-        "Browser containerization",
-        "Isolated browsing",
-        "Testing environment",
-        "Security isolation",
-        "Easy cleanup",
-        "Portable browser"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Firefox-Docker-Browser",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 24,
-      title: "Docker Compose",
-      description: "Multi-container application orchestration using Docker Compose for complex service management.",
-      tech: ["Docker Compose", "Container Orchestration", "Multi-service", "Automation"],
-      features: [
-        "Multi-container setup",
-        "Service orchestration",
-        "Automated deployment",
-        "Service dependencies",
-        "Environment management",
-        "Easy scaling"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Docker-Compose-Multi-Service",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 25,
-      title: "Launching Wordpress server (Using Docker Volume)",
-      description: "WordPress server deployment with persistent data storage using Docker volumes.",
-      tech: ["Docker", "WordPress", "Docker Volumes", "CMS"],
-      features: [
-        "WordPress containerization",
-        "Persistent data storage",
-        "Volume management",
-        "CMS deployment",
-        "Data persistence",
-        "Easy backup"
-      ],
-      github: "https://github.com/mohitsharmamanpur/WordPress-Docker-Volume",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 26,
-      title: "Backup automation using Flask API",
-      description: "Automated backup system implemented using Flask API for data protection and recovery.",
-      tech: ["Flask", "Python", "API", "Backup Automation"],
-      features: [
-        "Automated backup system",
-        "Flask API integration",
-        "Data protection",
-        "Scheduled backups",
-        "Recovery mechanisms",
-        "API endpoints"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Flask-Backup-API",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 27,
-      title: "Launching ec2 instances using Python",
-      description: "Python automation for launching and managing EC2 instances in AWS cloud infrastructure.",
-      tech: ["Python", "AWS EC2", "Boto3", "Cloud Automation"],
-      features: [
-        "EC2 instance automation",
-        "Python scripting",
-        "AWS integration",
-        "Instance management",
-        "Cloud provisioning",
-        "Automated deployment"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-EC2-Automation",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 28,
-      title: "Make a Phone Call with Python",
-      description: "Python automation for making phone calls using various telephony APIs and services.",
-      tech: ["Python", "Telephony", "API Integration", "Automation"],
-      features: [
-        "Phone call automation",
-        "API integration",
-        "Voice communication",
-        "Automated dialing",
-        "Call management",
-        "Telephony services"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-Phone-Call",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 29,
-      title: "Web Scraping using Python",
-      description: "Python-based web scraping solution for extracting data from websites and online sources.",
-      tech: ["Python", "Web Scraping", "Data Extraction", "Automation"],
-      features: [
-        "Web data extraction",
-        "Automated scraping",
-        "Data parsing",
-        "Content extraction",
-        "Information gathering",
-        "Structured data"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-Web-Scraping",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 30,
-      title: "Send an Email with Python",
-      description: "Python automation for sending emails using SMTP and email service integrations.",
-      tech: ["Python", "SMTP", "Email", "Automation"],
-      features: [
-        "Email automation",
-        "SMTP integration",
-        "Bulk email sending",
-        "Email templates",
-        "Attachment support",
-        "Scheduled emails"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-Email-Automation",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 31,
-      title: "Send an SMS with Python",
-      description: "Python automation for sending SMS messages using various messaging APIs and services.",
-      tech: ["Python", "SMS", "API Integration", "Messaging"],
-      features: [
-        "SMS automation",
-        "API integration",
-        "Bulk messaging",
-        "Message delivery",
-        "Status tracking",
-        "Multi-provider support"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-SMS-Automation",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 32,
-      title: "Post on Instagram with Python",
-      description: "Python automation for posting content on Instagram using API integration and automation tools.",
-      tech: ["Python", "Instagram", "API", "Social Media"],
-      features: [
-        "Instagram automation",
-        "Content posting",
-        "API integration",
-        "Social media management",
-        "Scheduled posts",
-        "Media upload"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-Instagram-Automation",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    },
-    {
-      id: 33,
-      title: "Send WhatsApp Message Using Python",
-      description: "Python automation for sending WhatsApp messages using web automation and API integration.",
-      tech: ["Python", "WhatsApp", "Automation", "Messaging"],
-      features: [
-        "WhatsApp automation",
-        "Message sending",
-        "Web automation",
-        "API integration",
-        "Bulk messaging",
-        "Media sharing"
-      ],
-      github: "https://github.com/mohitsharmamanpur/Python-Menu-Tasks-/blob/main/Menu.py",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800",
-      category: "Minor Project"
-    }
-  ];
-
-  const openModal = (project: Project) => {
-    setSelectedProject(project);
-  };
-
-  const closeModal = () => {
-    setSelectedProject(null);
-  };
-
-  const renderProjectCard = (project: Project, index: number) => {
-    // Special rendering for minor projects
-    if (project.category === "Minor Project") {
-      return (
-        <div
-          key={project.id}
-          className={`group relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
-            theme === 'dark' ? 'bg-gray-800/90 border border-gray-700' : 'bg-white/90 border border-gray-200'
-          } ${isVisible ? 'animate-card-reveal' : 'opacity-0'} backdrop-blur-sm`}
-          style={{animationDelay: `${index * 0.1}s`}}
-        >
-          {/* Project Content with Icon */}
-          <div className="p-6">
-            {/* Category Tag */}
-            <div className="flex items-center justify-between mb-4">
-              <span className="px-3 py-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs rounded-full font-medium">
-                Python Automation
-              </span>
-            </div>
-            
-            {/* Icon and Title */}
-            <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
-                <Code className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className={`text-lg font-bold mb-2 line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  {project.title}
-                </h3>
-                <p className={`text-sm line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {project.description}
-                </p>
-              </div>
-            </div>
-            
-            {/* Tech Stack */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {project.tech.slice(0, 3).map((tech) => (
-                <span
-                  key={tech}
-                  className={`px-2 py-1 text-xs rounded-lg font-medium ${
-                    theme === 'dark'
-                      ? 'bg-gray-700 text-gray-300'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}
-                >
-                  {tech}
-                </span>
-              ))}
-              {project.tech.length > 3 && (
-                <span className={`px-2 py-1 text-xs rounded-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                  +{project.tech.length - 3}
-                </span>
-              )}
-            </div>
-            
-            {/* Action Buttons */}
-            <div className="flex gap-3">
-              {project.github && project.github !== '#' && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(project.github, '_blank');
-                  }}
-                  className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 text-sm font-medium flex-1"
-                >
-                  <Github className="w-4 h-4" />
-                  View Code
-                </button>
-              )}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal(project);
-                }}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-300 text-sm font-medium flex-1"
-              >
-                <ExternalLink className="w-4 h-4" />
-                View Details
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // Default rendering for other project types
-    return (
-      <div
-        key={project.id}
-        className={`group relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 ${
-          theme === 'dark' ? 'bg-gray-800/90 border border-gray-700' : 'bg-white/90 border border-gray-200'
-        } ${isVisible ? 'animate-card-reveal' : 'opacity-0'} backdrop-blur-sm`}
-        style={{animationDelay: `${index * 0.1}s`}}
-      >
-        {/* Enhanced Image with Gradient Overlay */}
-        <div className="relative">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-          
-          {/* Category Badge */}
-          <div className="absolute top-4 left-4">
-            <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-              project.category === 'Industry Level' 
-                ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white'
-                : project.category === 'Major Project'
-                ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
-                : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
-            }`}>
-              {project.category}
-            </span>
-          </div>
-
-          {/* Award Badge */}
-          {project.award && (
-            <div className="absolute top-4 right-4">
-              <span className="flex items-center gap-1 px-2 py-1 bg-yellow-500 text-white text-xs rounded-full">
-                <Award className="w-3 h-3" />
-                {project.award}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Project Content */}
-        <div className="p-6">
-          <h3 className={`text-xl font-bold mb-3 line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            {project.title}
-          </h3>
-          
-          <p className={`text-sm mb-4 line-clamp-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-            {project.description}
-          </p>
-          
-          {/* Tech Stack */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tech.slice(0, 4).map((tech) => (
-              <span
-                key={tech}
-                className={`px-2 py-1 text-xs rounded-lg font-medium ${
-                  theme === 'dark'
-                    ? 'bg-gray-700 text-gray-300'
-                    : 'bg-gray-100 text-gray-700'
-                }`}
-              >
-                {tech}
-              </span>
-            ))}
-            {project.tech.length > 4 && (
-              <span className={`px-2 py-1 text-xs rounded-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                +{project.tech.length - 4}
-              </span>
-            )}
-          </div>
-          
-          {/* Action Buttons */}
-          <div className="flex gap-3">
-            {project.github && project.github !== '#' && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(project.github, '_blank');
-                }}
-                className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all duration-300 text-sm font-medium flex-1"
-              >
-                <Github className="w-4 h-4" />
-                View Code
-              </button>
-            )}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal(project);
-              }}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 text-sm font-medium flex-1"
-            >
-              <ExternalLink className="w-4 h-4" />
-              View Details
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // No derived memoization; we render completely separate blocks per section to avoid mixing
 
   return (
-    <section id="projects" className={`pt-32 pb-20 relative overflow-hidden min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      {/* 3D Background Effects */}
-      <Background3D theme={theme} />
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            My <span className="text-cyan-500">Projects</span>
+    <section id="projects" className={`py-16 md:py-24 lg:py-32 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-12">
+          <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            My Projects
           </h2>
-          <div className="w-24 h-1 bg-cyan-500 mx-auto rounded-full mb-6"></div>
-          <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Explore my projects across different categories</p>
-          
-          {/* Enhanced Category Navigation */}
-          <div className="relative">
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${theme === 'dark' ? 'bg-gray-800/50 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
-              <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></span>
-              Choose a category below to view projects
-            </div>
+          <div className="w-20 h-1 bg-cyan-500 mx-auto"></div>
+        </div>
+
+        {/* Navigation Tabs */}
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex rounded-lg p-1 bg-gray-100 dark:bg-gray-800">
+            {['industry', 'major', 'minor'].map((section) => (
+              <button
+                key={section}
+                onClick={() => setActiveSection(section as 'industry' | 'major' | 'minor')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  activeSection === section
+                    ? 'bg-white dark:bg-gray-700 text-cyan-600 dark:text-cyan-400 shadow'
+                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                {section === 'industry' ? 'Industry Projects' : 
+                 section === 'major' ? 'Major Projects' : 'Minor Projects'}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Enhanced Navigation Tabs */}
-        <div className="flex justify-center mb-16">
-          <div className="relative">
-            {/* Background glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur-xl"></div>
-            
-            {/* Main navigation container */}
-            <div className={`relative flex flex-col sm:flex-row gap-4 sm:gap-2 p-2 rounded-2xl border-2 shadow-2xl ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700 backdrop-blur-sm' : 'bg-white/90 border-gray-200 backdrop-blur-sm'}`}>
-              
-              {/* Navigation instruction */}
-              <div className={`text-center sm:hidden mb-2 px-4 py-2 rounded-lg ${theme === 'dark' ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
-                <span className="text-sm font-medium">👆 Tap to explore different project categories</span>
-              </div>
-              
-              <button
-                onClick={() => setActiveSection('industry')}
-                className={`group relative px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 ${
-                  activeSection === 'industry'
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30'
-                    : theme === 'dark'
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50 border border-gray-600 hover:border-cyan-500/50'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-cyan-500/50'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${
-                    activeSection === 'industry' ? 'bg-white' : 'bg-cyan-500'
-                  } ${activeSection !== 'industry' ? 'animate-pulse' : ''}`}></div>
-                  <span>Industry Level</span>
-                  {activeSection === 'industry' && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
-                  )}
-                </div>
-                {activeSection !== 'industry' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                )}
-              </button>
-              
-              <button
-                onClick={() => setActiveSection('major')}
-                className={`group relative px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 ${
-                  activeSection === 'major'
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/30'
-                    : theme === 'dark'
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50 border border-gray-600 hover:border-purple-500/50'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-purple-500/50'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${
-                    activeSection === 'major' ? 'bg-white' : 'bg-purple-500'
-                  } ${activeSection !== 'major' ? 'animate-pulse' : ''}`}></div>
-                  <span>Major Projects</span>
-                  {activeSection === 'major' && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
-                  )}
-                </div>
-                {activeSection !== 'major' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                )}
-              </button>
-              
-              <button
-                onClick={() => setActiveSection('minor')}
-                className={`group relative px-8 py-4 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-105 ${
-                  activeSection === 'minor'
-                    ? 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-lg shadow-green-500/30'
-                    : theme === 'dark'
-                    ? 'text-gray-300 hover:text-white hover:bg-gray-700/50 border border-gray-600 hover:border-green-500/50'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 border border-gray-300 hover:border-green-500/50'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${
-                    activeSection === 'minor' ? 'bg-white' : 'bg-green-500'
-                  } ${activeSection !== 'minor' ? 'animate-pulse' : ''}`}></div>
-                  <span>Minor Projects</span>
-                  {activeSection === 'minor' && (
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
-                  )}
-                </div>
-                {activeSection !== 'minor' && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-teal-600/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                )}
-              </button>
-              
-              {/* Desktop instruction */}
-              <div className={`hidden sm:flex items-center px-4 py-2 rounded-lg ${theme === 'dark' ? 'bg-gray-700/30 text-gray-400' : 'bg-gray-50 text-gray-500'}`}>
-                <span className="text-sm">👈 Click to switch categories</span>
-              </div>
-            </div>
-            
-            {/* Category counter */}
-            <div className={`absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-xs font-medium ${theme === 'dark' ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-600'}`}>
-              {activeSection === 'industry' ? '🏢' : activeSection === 'major' ? '🚀' : '⭐'} 
-              {activeSection === 'industry' ? 'Professional' : activeSection === 'major' ? 'Advanced' : 'Learning'} Projects
-            </div>
-          </div>
-        </div>
-
-        {/* Industry Level Projects */}
+        {/* Projects Grid - render exclusive blocks to prevent cross-tab DOM reuse */}
         {activeSection === 'industry' && (
-          <div className="mb-16">
-            <h3 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Industry Level Projects
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {industryProjects.map((project, index) => renderProjectCard(project, index))}
-            </div>
-          </div>
-        )}
-
-        {/* Major Projects */}
-        {activeSection === 'major' && (
-          <div className="mb-16">
-            <h3 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Major Projects
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {majorProjects.map((project, index) => renderProjectCard(project, index))}
-            </div>
-          </div>
-        )}
-
-        {/* Minor Projects */}
-        {activeSection === 'minor' && (
-          <div className="mb-16">
-            <h3 className={`text-2xl font-bold mb-6 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Minor Projects
-            </h3>
-            <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {minorProjects.map((project, index) => renderProjectCard(project, index))}
-            </div>
-          </div>
-        )}
-
-        {/* Enhanced Modal */}
-        {selectedProject && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className={`relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${
-              theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-            }`}>
-              <button
-                onClick={closeModal}
-                className={`absolute top-4 right-4 p-2 rounded-full transition-all duration-300 hover:scale-110 ${
-                  theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                <X className="w-6 h-6" />
-              </button>
-              
-              <div className="p-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-white text-sm rounded-full">
-                    {selectedProject.category}
-                  </span>
-                  {selectedProject.award && (
-                    <span className="flex items-center gap-2 px-3 py-1 bg-yellow-500 text-white text-sm rounded-full">
-                      <Award className="w-4 h-4" />
-                      {selectedProject.award}
-                    </span>
-                  )}
-                </div>
-                
-                <h2 className={`text-3xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  {selectedProject.title}
-                </h2>
-                
-                <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {selectedProject.description}
-                </p>
-                
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                      Technologies Used
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProject.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className={`px-3 py-2 rounded-lg text-sm font-medium ${
-                            theme === 'dark'
-                              ? 'bg-gray-700 text-gray-300'
-                              : 'bg-gray-200 text-gray-700'
-                          }`}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                      Key Features
-                    </h3>
-                    <ul className={`space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {selectedProject.features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <span className="w-2 h-2 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full mt-2 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4 mt-8">
-                  {selectedProject.github && (
-                    <a
-                      href={selectedProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all duration-300 hover:scale-105"
-                    >
-                      <Github className="w-5 h-5" />
-                      View Code
-                    </a>
-                  )}
-                  {selectedProject.demo && (
-                    <a
-                      href={selectedProject.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 hover:scale-105"
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                      Live Demo
-                    </a>
-                  )}
-                </div>
+          <div key="industry" className={`grid gap-6 lg:grid-cols-3 md:grid-cols-2 grid-cols-1`}>
+            {industryProjects.map((project, index) => (
+              <div key={`industry-${project.id}`} className="h-full">
+                <ProjectCard
+                  project={project}
+                  theme={theme}
+                  onOpenModal={openModal}
+                  index={index}
+                  isVisible={isVisible}
+                />
               </div>
-            </div>
+            ))}
           </div>
+        )}
+        {activeSection === 'major' && (
+          <div key="major" className={`grid gap-6 lg:grid-cols-4 md:grid-cols-2 grid-cols-1`}>
+            {majorProjects.map((project, index) => (
+              <div key={`major-${project.id}`} className="h-full">
+                <ProjectCard
+                  project={project}
+                  theme={theme}
+                  onOpenModal={openModal}
+                  index={index}
+                  isVisible={isVisible}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+        {activeSection === 'minor' && (
+          <div key="minor" className={`grid gap-6 lg:grid-cols-5 md:grid-cols-2 grid-cols-1`}>
+            {minorProjects.map((project, index) => (
+              <div key={`minor-${project.id}`} className="h-full">
+                <ProjectCard
+                  project={project}
+                  theme={theme}
+                  onOpenModal={openModal}
+                  index={index}
+                  isVisible={isVisible}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Project Modal */}
+        {selectedProject && (
+          <ProjectModal 
+            project={selectedProject}
+            onClose={closeModal}
+            theme={theme}
+          />
         )}
       </div>
     </section>
   );
-} 
+}

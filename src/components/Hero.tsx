@@ -42,11 +42,13 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   }, [typedText, isDeleting, currentTextIndex, textArray]);
 
   const handleResumeDownload = () => {
-    // Create a mock resume download
+    // Force fresh fetch to avoid cached older resume
     const link = document.createElement('a');
-    link.href = "/Resume.pdf";
+    link.href = `/Resume.pdf?ts=${Date.now()}`;
     link.download = 'Mohit_Sharma_Resume.pdf';
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   };
 
   return (
