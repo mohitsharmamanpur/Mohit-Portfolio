@@ -26,6 +26,24 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
 
   // Data
   const certifications = [
+    // Oracle certifications first
+    {
+      icon: Award,
+      title: "Oracle Cloud Infrastructure 2025 DevOps Professional Certification",
+      description: "CI/CD pipelines, microservices, containerization (OKE, OCIR), DevSecOps, IaC (Terraform), observability, cloud-native deployments on OCI.",
+      year: "Aug 14, 2025",
+      category: "Certification",
+      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=BEC4F0F8CE8A5B257645EF1AAB3413481E87ACE15663131AB698E752D1A51178"
+    },
+    {
+      icon: Award,
+      title: "Oracle Cloud Infrastructure 2025 Generative AI Professional Certification",
+      description: "Large Language Models (LLMs), prompt engineering, fine-tuning (T-Few), RAG-based chatbot development, LangChain, vector databases, semantic search, AI app deployment on OCI.",
+      year: "Aug 2025",
+      category: "Certification",
+      verifyLink: "#INSERT_GENAI_CREDENTIAL_URL"
+    },
+    // Other certifications
     {
       icon: Award,
       title: "NPTEL Certifications",
@@ -41,23 +59,6 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       year: "2023",
       category: "Workshop",
       verifyLink: "#"
-    },
-    // Newly added certifications
-    {
-      icon: Award,
-      title: "Oracle Cloud Infrastructure 2025 DevOps Professional Certification",
-      description: "CI/CD pipelines, microservices, containerization (OKE, OCIR), DevSecOps, IaC (Terraform), observability, cloud-native deployments on OCI.",
-      year: "Aug 14, 2025",
-      category: "Certification",
-      verifyLink: "#INSERT_DEVOPS_CREDENTIAL_URL"
-    },
-    {
-      icon: Award,
-      title: "Oracle Cloud Infrastructure 2025 Generative AI Professional Certification",
-      description: "Large Language Models (LLMs), prompt engineering, fine-tuning (T-Few), RAG-based chatbot development, LangChain, vector databases, semantic search, AI app deployment on OCI.",
-      year: "Aug 2025",
-      category: "Certification",
-      verifyLink: "#INSERT_GENAI_CREDENTIAL_URL"
     }
   ];
 
@@ -70,8 +71,8 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       category: "Leadership",
       verifyLink: "https://neuroauraindia.netlify.app/",
       links: [
-        { label: 'LinkedIn Post', url: '#INSERT_NEUROAURA_POST_URL' },
-        { label: 'Pitch Video', url: '#INSERT_NEUROAURA_VIDEO_URL' }
+        { label: 'LinkedIn Post', url: 'https://www.linkedin.com/posts/mohit-sharma-236829318_72hoursoflegacy-linuxworldinternship-startuppitch-activity-7356279909591187457-wAo4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A' },
+        { label: 'Pitch Video', url: 'https://www.linkedin.com/posts/mohit-sharma-236829318_jazbaa2025-startuppitch-entrepreneurship-activity-7357669477863297024-dejt?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A' }
       ],
       isBigAchievement: true
     },
@@ -208,19 +209,22 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
                       </span>
                       
                       <div className="flex items-center gap-3">
-                        {item.verifyLink && item.verifyLink !== '#' && (
-                          <button
-                            onClick={() => window.open(item.verifyLink, '_blank')}
-                            className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                              theme === 'dark'
-                                ? 'text-purple-300 hover:text-purple-200'
-                                : 'text-purple-600 hover:text-purple-700'
-                            }`}
-                          >
-                            <span>{item.category === 'Certification' ? 'View Credential' : item.category === 'Research' ? 'Read Paper' : 'View'}</span>
-                            <ExternalLink className="w-4 h-4" />
-                          </button>
-                        )}
+                        {(() => {
+                          const hasPrimaryLink = item.verifyLink && item.verifyLink !== '#';
+                          return (
+                            <button
+                              onClick={() => hasPrimaryLink && window.open(item.verifyLink, '_blank')}
+                              className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                                theme === 'dark'
+                                  ? 'text-purple-300 hover:text-purple-200'
+                                  : 'text-purple-600 hover:text-purple-700'
+                              } ${hasPrimaryLink ? '' : 'opacity-60 cursor-not-allowed'}`}
+                            >
+                              <span>{item.category === 'Certification' ? 'View Credential' : item.category === 'Research' ? 'Read Paper' : 'View'}</span>
+                              <ExternalLink className="w-4 h-4" />
+                            </button>
+                          );
+                        })()}
                         {Array.isArray(item.links) && item.links.length > 0 && (
                           <div className="flex items-center gap-2">
                             {item.links.map((lnk: any, li: number) => (
@@ -244,7 +248,7 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
                 </div>
 
                 {isBigAchievement && (
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-50 group-hover/item:opacity-70 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-50 group-hover/item:opacity-70 transition-opacity duration-300 pointer-events-none"></div>
                 )}
               </div>
             );
@@ -259,15 +263,15 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
           </div>
         </div>
 
-        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradientColors} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradientColors} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`}></div>
       </div>
     );
   };
 
   return (
     <section id="achievements" className={`py-20 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="floating-particles">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="floating-particles pointer-events-none">
           {[...Array(20)].map((_, i) => {
             const randomLeft = (i * 7 + 10) % 100;
             const randomTop = (i * 11 + 15) % 100;
@@ -288,7 +292,7 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
             );
           })}
         </div>
-        <div className={`absolute inset-0 opacity-5 ${theme === 'dark' ? 'bg-gradient-to-br from-purple-500 to-cyan-500' : 'bg-gradient-to-br from-purple-400 to-cyan-400'}`} />
+        <div className={`absolute inset-0 opacity-5 ${theme === 'dark' ? 'bg-gradient-to-br from-purple-500 to-cyan-500' : 'bg-gradient-to-br from-purple-400 to-cyan-400'} pointer-events-none`} />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
