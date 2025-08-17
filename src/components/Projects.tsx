@@ -103,7 +103,7 @@ const industryProjects: Project[] = [
       "Secure authentication",
       "RESTful API"
     ],
-    github: "#",
+    github: "",
     linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
     image: "https://images.pexels.com/photos/326514/pexels-photo-326514.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Industry Level"
@@ -161,6 +161,24 @@ const majorProjects: Project[] = [
     category: "Major Project"
   },
   {
+    id: 18,
+    title: "GenAI RAG Knowledge Assistant",
+    description: "A GenAI-powered Knowledge Assistant that reads plain text documents, chunks them, builds normalized embeddings for semantic search, and uses Retrieval-Augmented Generation (RAG) with Google Gemini to answer questions grounded in your documents. Purpose: enable smarter search and accurate Q&A directly from private knowledge bases.",
+    tech: ["Python", "NumPy", "Google Gemini", "Embeddings", "Semantic Search", "RAG"],
+    features: [
+      "Reads .txt documents and splits them into context-aware chunks",
+      "Generates vector embeddings per chunk to capture semantic meaning",
+      "Normalizes and stores embeddings for efficient similarity search",
+      "RAG pipeline retrieves top matches and crafts grounded answers",
+      "Semantic search interface for quick knowledge discovery",
+      "Clean, extensible code structure for future data sources",
+      "Learning outcomes: Implemented RAG pipelines, connected embeddings with AI, and built knowledge-aware AI tools"
+    ],
+    github: "https://github.com/mohitsharmamanpur/GenAI-RAG-Assistant",
+    image: "https://images.pexels.com/photos/3861437/pexels-photo-3861437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
     id: 9,
     title: "Cloud System Monitor Bot",
     description: "A Telegram bot for real-time system monitoring and performance metrics tracking.",
@@ -174,6 +192,24 @@ const majorProjects: Project[] = [
     ],
     github: "https://github.com/mohitsharmamanpur/System-Monitor-Bot",
     image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 17,
+    title: "AWS Apache Web Server Automation with Ansible & Ansible Tower",
+    description: "Automated provisioning and configuration of Apache HTTP Server across a 3-node AWS EC2 topology (1 Controller, 2 Managed) using Ansible. Evolved from ad-hoc bootstrap to fully idempotent, variable-driven YAML playbooks, and integrated Ansible Tower for centralized RBAC, scheduling, and audit-grade logging.",
+    tech: ["Ansible", "Ansible Tower", "AWS EC2", "YAML", "Linux", "Apache"],
+    features: [
+      "3-EC2 topology: 1 Ansible Controller, 2 Managed nodes",
+      "Initial bootstrap via ad-hoc commands (package install, service enable)",
+      "YAML playbooks with variables for package names, service state, ports, and document root",
+      "Configuration management to change Apache web root from /var/www/html to a custom path",
+      "Handlers and idempotent tasks ensure repeatable runs without drift",
+      "Inventory-driven targeting (groups/hosts vars)",
+      "Ansible Tower integration for one-click runs, RBAC, schedules, and centralized logs"
+    ],
+    github: "https://github.com/mohitsharmamanpur/aws-ansible-apache-automation",
+    image: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Major Project"
   },
   {
@@ -352,9 +388,26 @@ const minorProjects: Project[] = [
       "Apache installation and service management",
       "One-click deployment workflow"
     ],
-    github: "#",
+    github: "https://github.com/mohitsharmamanpur/aws-ansible-apache-automation",
     linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_devops-ansible-aws-activity-7361745143479025664-fihU?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
     image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 34,
+    title: "Linux Automation with Shell Scripting",
+    description: "Suite of Bash scripts to automate system administration tasks: backups, log analysis, server health monitoring, and software installation.",
+    tech: ["Bash", "Linux", "grep", "awk", "sed", "rsync", "systemctl", "cron"],
+    features: [
+      "Automated backups (rsync/tar) and package installs/updates",
+      "Log file analysis using grep/awk/sed with actionable reports",
+      "Server health checks with systemctl, disk/CPU monitoring",
+      "Robust error handling, logging, and input validation",
+      "Cron-scheduled jobs with notifications for failures"
+    ],
+    github: "",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_shellscripting-linux-bash-activity-7362199470802923520-QmUJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Minor Project"
   },
   {

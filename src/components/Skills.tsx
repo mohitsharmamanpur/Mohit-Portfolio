@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Code, Cloud, Settings, Brain, Cpu, Zap } from 'lucide-react';
+import SkillsConstellation from './SkillsConstellation';
 
 interface SkillsProps {
   theme: 'light' | 'dark';
@@ -29,7 +30,7 @@ const Skills: React.FC<SkillsProps> = ({ theme }) => {
       title: "Programming Languages",
       icon: Code,
       iconColor: "text-blue-500",
-      skills: ["Python", "C", "C++"]
+      skills: ["Python", "C", "C++", "Shell Scripting"]
     },
     {
       title: "GenAI & Agentic AI",
@@ -90,66 +91,73 @@ const Skills: React.FC<SkillsProps> = ({ theme }) => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
-            Skills & Expertise
+            Skills Constellation
           </h2>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`} style={{animationDelay: '0.2s'}}>
-            A playful bubble showcase of my technical and soft skills
+            Navigate through my technical universe where each skill orbits in harmony
           </p>
         </div>
 
-        {/* Skills Categories - Card Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skillCategories.map((category, categoryIndex) => {
-            const IconComponent = category.icon;
-            return (
-              <div 
-                key={categoryIndex} 
-                className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800/50 border-gray-700 hover:bg-gray-800/70' 
-                    : 'bg-white/80 border-gray-200 hover:bg-white shadow-lg'
-                } ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-                style={{animationDelay: `${categoryIndex * 0.1}s`}}
-              >
-                {/* Category Header */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`p-3 rounded-xl ${
-                    theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-100'
-                  }`}>
-                    <IconComponent className={`w-6 h-6 ${category.iconColor}`} />
-                  </div>
-                  <h3 className={`text-lg font-bold ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {category.title}
-                  </h3>
-                </div>
-                
-                {/* Skills List */}
-                <div className="space-y-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div
-                      key={skillIndex}
-                      className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 hover:scale-105 ${
-                        theme === 'dark' 
-                          ? 'bg-gray-700/30 hover:bg-gray-700/50 text-gray-300' 
-                          : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
-                      }`}
-                    >
-                      <div className={`w-2 h-2 rounded-full ${category.iconColor.replace('text-', 'bg-')}`}></div>
-                      <span className="text-sm font-medium">{skill}</span>
+        {/* Two-column layout: constellation + stacked categories */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Left: Constellation */}
+          <div className={`${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <SkillsConstellation theme={theme} />
+          </div>
+
+          {/* Right: Stacked Categories */}
+          <div className="grid grid-cols-1 gap-8">
+            {skillCategories.map((category, categoryIndex) => {
+              const IconComponent = category.icon;
+              return (
+                <div 
+                  key={categoryIndex} 
+                  className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${
+                    theme === 'dark' 
+                      ? 'bg-gray-800/50 border-gray-700 hover:bg-gray-800/70' 
+                      : 'bg-white/80 border-gray-200 hover:bg-white shadow-lg'
+                  } ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
+                  style={{animationDelay: `${categoryIndex * 0.08}s`}}
+                >
+                  {/* Category Header */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className={`p-3 rounded-xl ${
+                      theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-100'
+                    }`}>
+                      <IconComponent className={`w-6 h-6 ${category.iconColor}`} />
                     </div>
-                  ))}
+                    <h3 className={`text-lg font-bold ${
+                      theme === 'dark' ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {category.title}
+                    </h3>
+                  </div>
+                  
+                  {/* Skills List */}
+                  <div className="flex flex-wrap gap-3">
+                    {category.skills.map((skill, skillIndex) => (
+                      <span
+                        key={skillIndex}
+                        className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 hover:scale-105 ${
+                          theme === 'dark' 
+                            ? 'bg-gray-700/30 hover:bg-gray-700/50 text-gray-300' 
+                            : 'bg-gray-50 hover:bg-gray-100 text-gray-700'
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {/* Hover glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
+                  
+                  {/* Border glow effect */}
+                  <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-500/30 transition-colors duration-300"></div>
                 </div>
-                
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity duration-300"></div>
-                
-                {/* Border glow effect */}
-                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-500/30 transition-colors duration-300"></div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* Additional Skills Section */}

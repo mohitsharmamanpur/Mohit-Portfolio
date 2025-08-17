@@ -1114,7 +1114,16 @@ a:focus {
   }
 }
 .animate-orbit-individual {
-  animation: orbit-individual 6s linear infinite;
+  animation-name: orbit-individual;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: var(--orbit-duration, 12s);
+}
+
+/* Pause orbit on hover/focus so users can read tooltips */
+.group:hover .animate-orbit-individual,
+.group:focus .animate-orbit-individual {
+  animation-play-state: paused;
 }
 
 /* New animations for updated components */

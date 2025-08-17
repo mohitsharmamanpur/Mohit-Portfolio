@@ -41,7 +41,7 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       description: "Large Language Models (LLMs), prompt engineering, fine-tuning (T-Few), RAG-based chatbot development, LangChain, vector databases, semantic search, AI app deployment on OCI.",
       year: "Aug 2025",
       category: "Certification",
-      verifyLink: "#INSERT_GENAI_CREDENTIAL_URL"
+      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=467974165D603F1850172AB735DF6A3B43D00A0B3D480471EEED08CEC58D14AB"
     },
     // Other certifications
     {
