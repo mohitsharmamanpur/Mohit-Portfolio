@@ -145,6 +145,24 @@ const majorProjects: Project[] = [
   },
   {
     id: 8,
+    title: "Prometheus & PromQL Monitoring System",
+    description: "Comprehensive monitoring solution using Prometheus for system and container metrics across distributed infrastructure.",
+    tech: ["Prometheus", "PromQL", "Docker", "AWS EC2", "Linux", "Grafana", "Alertmanager"],
+    features: [
+      "Deployed Prometheus server on AWS EC2 instance",
+      "Monitored 3 target nodes (2 Linux VMs + 1 Docker container)",
+      "Configured comprehensive metric collection",
+      "Developed custom PromQL queries for system monitoring",
+      "Monitored CPU, memory, disk, and container metrics",
+      "Planned Grafana integration for visualization",
+      "Designed Alertmanager configuration for notifications"
+    ],
+    github: "https://github.com/mohitsharmamanpur/prometheus-linux-docker-observability",
+    image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 9,
     title: "AI-Powered Startup Assistant",
     description: "An intelligent assistant that helps refine startup ideas, perform market research, and generate business plans using Agentic AI.",
     tech: ["LangChain", "Google Gemini 2.5", "Streamlit", "Python"],
@@ -179,7 +197,7 @@ const majorProjects: Project[] = [
     category: "Major Project"
   },
   {
-    id: 9,
+    id: 10,
     title: "Cloud System Monitor Bot",
     description: "A Telegram bot for real-time system monitoring and performance metrics tracking.",
     tech: ["Python", "python-telegram-bot", "psutil", "Docker", "Cloud"],
@@ -195,7 +213,7 @@ const majorProjects: Project[] = [
     category: "Major Project"
   },
   {
-    id: 17,
+    id: 18,
     title: "AWS Apache Web Server Automation with Ansible & Ansible Tower",
     description: "Automated provisioning and configuration of Apache HTTP Server across a 3-node AWS EC2 topology (1 Controller, 2 Managed) using Ansible. Evolved from ad-hoc bootstrap to fully idempotent, variable-driven YAML playbooks, and integrated Ansible Tower for centralized RBAC, scheduling, and audit-grade logging.",
     tech: ["Ansible", "Ansible Tower", "AWS EC2", "YAML", "Linux", "Apache"],
@@ -271,7 +289,7 @@ const majorProjects: Project[] = [
       "File processing pipeline",
       "Serverless implementation"
     ],
-    github: "https://github.com/mohitsharmamanpur/S3-Lambda-SNS-Notification",
+    github: "https://github.com/mohitsharmamanpur/event-driven-architecture-SNS",
     linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
     image: "https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Major Project"
@@ -408,6 +426,23 @@ const minorProjects: Project[] = [
     github: "",
     linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_shellscripting-linux-bash-activity-7362199470802923520-QmUJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
     image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Minor Project"
+  },
+  {
+    id: 35,
+    title: "Flask App Deployment with Docker & AWS",
+    description: "Containerized a Flask application with Docker and deployed it locally and on AWS, focusing on portability, environment consistency, and secure cloud hosting.",
+    tech: ["Python", "Flask", "Docker", "AWS EC2", "Nginx"],
+    features: [
+      "Dockerized Flask app with production-ready Dockerfile",
+      "Exposed service ports and environment configuration",
+      "Local testing via Docker Desktop ensuring parity across environments",
+      "Deployed on AWS (publicly accessible) with secure networking",
+      "Followed DevOps best practices around CI/CD and scalability"
+    ],
+    github: "",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_python-flask-docker-activity-7364631282665906176-g1sA?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/461064/pexels-photo-461064.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Minor Project"
   },
   {
@@ -637,6 +672,7 @@ export default function Projects({ theme }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeSection, setActiveSection] = useState<'industry' | 'major' | 'minor'>('industry');
   const [isVisible, setIsVisible] = useState(false);
+  const [isTabChanging, setIsTabChanging] = useState(false);
 
   const openModal = useCallback((project: Project) => {
     setSelectedProject(project);
@@ -676,86 +712,151 @@ export default function Projects({ theme }: ProjectsProps) {
     };
   }, []);
 
-  // Removed URL hash sync to prevent external hash changes from switching sections.
+  const handleTabChange = (section: 'industry' | 'major' | 'minor') => {
+    if (section === activeSection) return;
+    setIsTabChanging(true);
+    setTimeout(() => {
+      setActiveSection(section);
+      setIsTabChanging(false);
+    }, 200);
+  };
 
-  // No derived memoization; we render completely separate blocks per section to avoid mixing
+  const sectionTitles = {
+    industry: 'Industry Projects',
+    major: 'Major Projects',
+    minor: 'Minor Projects'
+  };
+
+  const sectionDescriptions = {
+    industry: 'Enterprise-grade solutions developed for production environments',
+    major: 'Significant personal and academic projects with complex implementations',
+    minor: 'Smaller projects and experiments showcasing specific skills'
+  };
+
+  const sectionIcons = {
+    industry: (
+      <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
+    major: (
+      <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+      </svg>
+    ),
+    minor: (
+      <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    )
+  };
 
   return (
-    <section id="projects" className={`py-16 md:py-24 lg:py-32 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <section id="projects" className={`py-16 md:py-24 lg:py-32 relative overflow-hidden transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className={`text-3xl md:text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
             My Projects
           </h2>
-          <div className="w-20 h-1 bg-cyan-500 mx-auto"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mb-6 rounded-full"></div>
+          <p className={`text-lg max-w-3xl mx-auto ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+            Explore my work across different project categories, from enterprise solutions to personal experiments
+          </p>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex rounded-lg p-1 bg-gray-100 dark:bg-gray-800">
-            {['industry', 'major', 'minor'].map((section) => (
-              <button
-                key={section}
-                onClick={() => setActiveSection(section as 'industry' | 'major' | 'minor')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeSection === section
-                    ? 'bg-white dark:bg-gray-700 text-cyan-600 dark:text-cyan-400 shadow'
-                    : 'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                {section === 'industry' ? 'Industry Projects' : 
-                 section === 'major' ? 'Major Projects' : 'Minor Projects'}
-              </button>
-            ))}
+        <div className="flex flex-col items-center mb-12">
+          <div className="relative w-full max-w-4xl">
+            {/* Active tab indicator */}
+            <div 
+              className={`absolute top-0 left-0 h-full bg-white dark:bg-gray-800 rounded-lg shadow-md transition-all duration-300 ease-in-out ${
+                activeSection === 'industry' ? 'w-1/3 left-0' : 
+                activeSection === 'major' ? 'w-1/3 left-1/3' : 'w-1/3 left-2/3'
+              }`}
+              style={{
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+            />
+            
+            <div className="relative flex rounded-xl p-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 overflow-hidden">
+              {(['industry', 'major', 'minor'] as const).map((section) => (
+                <button
+                  key={section}
+                  onClick={() => handleTabChange(section)}
+                  className={`flex-1 flex items-center justify-center py-3 px-6 text-sm font-medium transition-all duration-300 relative z-10 ${
+                    activeSection === section
+                      ? 'text-cyan-600 dark:text-cyan-400'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-cyan-300'
+                  }`}
+                >
+                  {sectionIcons[section]}
+                  <span>{sectionTitles[section]}</span>
+                  {activeSection === section && (
+                    <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-cyan-500 rounded-full"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Section Description */}
+          <div className="mt-6 text-center max-w-2xl">
+            <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              {sectionDescriptions[activeSection]}
+            </p>
           </div>
         </div>
 
-        {/* Projects Grid - render exclusive blocks to prevent cross-tab DOM reuse */}
-        {activeSection === 'industry' && (
-          <div key="industry" className={`grid gap-6 lg:grid-cols-3 md:grid-cols-2 grid-cols-1`}>
-            {industryProjects.map((project, index) => (
-              <div key={`industry-${project.id}`} className="h-full">
-                <ProjectCard
-                  project={project}
-                  theme={theme}
-                  onOpenModal={openModal}
-                  index={index}
-                  isVisible={isVisible}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        {activeSection === 'major' && (
-          <div key="major" className={`grid gap-6 lg:grid-cols-4 md:grid-cols-2 grid-cols-1`}>
-            {majorProjects.map((project, index) => (
-              <div key={`major-${project.id}`} className="h-full">
-                <ProjectCard
-                  project={project}
-                  theme={theme}
-                  onOpenModal={openModal}
-                  index={index}
-                  isVisible={isVisible}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        {activeSection === 'minor' && (
-          <div key="minor" className={`grid gap-6 lg:grid-cols-5 md:grid-cols-2 grid-cols-1`}>
-            {minorProjects.map((project, index) => (
-              <div key={`minor-${project.id}`} className="h-full">
-                <ProjectCard
-                  project={project}
-                  theme={theme}
-                  onOpenModal={openModal}
-                  index={index}
-                  isVisible={isVisible}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Projects Grid with smooth transition */}
+        <div className={`relative min-h-[600px] transition-all duration-300 ${isTabChanging ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+          {activeSection === 'industry' && (
+            <div key="industry" className={`grid gap-6 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 animate-fadeIn`}>
+              {industryProjects.map((project, index) => (
+                <div key={`industry-${project.id}`} className="h-full">
+                  <ProjectCard
+                    project={project}
+                    theme={theme}
+                    onOpenModal={openModal}
+                    index={index}
+                    isVisible={isVisible}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+          {activeSection === 'major' && (
+            <div key="major" className="grid gap-6 lg:grid-cols-4 md:grid-cols-2 grid-cols-1 animate-fadeIn">
+              {majorProjects.map((project, index) => (
+                <div key={`major-${project.id}`} className="h-full flex">
+                  <div className="w-full">
+                    <ProjectCard
+                      project={project}
+                      theme={theme}
+                      onOpenModal={openModal}
+                      index={index}
+                      isVisible={isVisible}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {activeSection === 'minor' && (
+            <div key="minor" className="grid gap-3 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 animate-fadeIn">
+              {minorProjects.map((project, index) => (
+                <div key={`minor-${project.id}`} className="h-full">
+                  <ProjectCard
+                    project={project}
+                    theme={theme}
+                    onOpenModal={openModal}
+                    index={index}
+                    isVisible={isVisible}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Project Modal */}
         {selectedProject && (
