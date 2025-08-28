@@ -151,6 +151,131 @@ html {
   100% { transform: scale(1.1) rotate(0deg); }
 }
 
+/* Skills Constellation Animations */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* Skill Badge Hover Effects */
+.skill-badge {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: orbit var(--orbit-duration, 60s) linear infinite;
+}
+
+.skill-badge:hover {
+  animation-play-state: paused;
+  transform: scale(1.2) !important;
+  z-index: 50 !important;
+}
+
+.skill-badge .icon-wrapper {
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.skill-badge:hover .icon-wrapper {
+  transform: rotateY(180deg);
+}
+
+.skill-badge .glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: blur(15px);
+}
+
+.skill-badge:hover .glow {
+  opacity: 0.6;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Orbit Guides */
+.orbit-guide {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: spin-slow var(--orbit-duration, 60s) linear infinite;
+}
+
+.orbit-guide:nth-child(even) {
+  animation-name: spin-reverse;
+}
+
+/* Particle Connections */
+.particle-connection {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), transparent);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* Center Core */
+.center-core {
+  position: relative;
+  z-index: 10;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.center-core:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+}
+
+.center-core::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #8b5cf6, #3b82f6, #06b6d4);
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(15px);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .skill-badge {
+    transform: scale(0.8);
+  }
+  
+  .orbit-guide {
+    animation-duration: calc(var(--orbit-duration, 60s) * 1.5);
+  }
+}
+
 /* Project Card Flip Effect */
 .project-flip-card {
   perspective: 1000px;

@@ -1,5 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Trophy, Award, Target, Users, BookOpen, Cloud, ExternalLink, Star, Sparkles } from 'lucide-react';
+import { Trophy, Award, Target, Users, BookOpen, Cloud, ExternalLink, Star } from 'lucide-react';
+
+interface BaseAchievementItem {
+  icon: any;
+  description: string;
+  year: string;
+  category: string;
+  verifyLink: string;
+  isBigAchievement?: boolean;
+  isOracle?: boolean;
+  links?: Array<{ label: string; url: string }>;
+}
+
+interface ProjectAchievement extends BaseAchievementItem {
+  title: string;
+  role?: never;
+  organization?: never;
+  duration?: never;
+  link?: never;
+}
+
+interface ExtracurricularAchievement extends BaseAchievementItem {
+  role: string;
+  organization: string;
+  duration: string;
+  link: string;
+  title?: never;
+  isBigAchievement?: never;
+  isOracle?: never;
+}
+
+type AchievementItem = ProjectAchievement | ExtracurricularAchievement;
 
 interface AchievementsProps {
   theme: 'light' | 'dark';
@@ -8,12 +39,11 @@ interface AchievementsProps {
 const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
   const [isVisible, setIsVisible] = useState(false);
 
+  // Intersection Observer for animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.1 }
     );
@@ -25,23 +55,34 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
   }, []);
 
   // Data
-  const certifications = [
+  const certifications: AchievementItem[] = [
     // Oracle certifications first
     {
       icon: Award,
-      title: "Oracle Cloud Infrastructure 2025 DevOps Professional Certification",
-      description: "CI/CD pipelines, microservices, containerization (OKE, OCIR), DevSecOps, IaC (Terraform), observability, cloud-native deployments on OCI.",
-      year: "Aug 14, 2025",
+      title: "Oracle Cloud Infrastructure 2025 Multicloud Architect Professional",
+      description: "Advanced cloud architecture, multicloud strategies, OCI services, hybrid cloud solutions, and enterprise-grade cloud infrastructure design.",
+      year: "2025",
       category: "Certification",
-      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=BEC4F0F8CE8A5B257645EF1AAB3413481E87ACE15663131AB698E752D1A51178"
+      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=9033F19471A9BCBD1F11D8E4B4F99F18DC8B78AD0002F111CCE677E1DCA1EEF7",
+      isOracle: true
     },
     {
       icon: Award,
-      title: "Oracle Cloud Infrastructure 2025 Generative AI Professional Certification",
-      description: "Large Language Models (LLMs), prompt engineering, fine-tuning (T-Few), RAG-based chatbot development, LangChain, vector databases, semantic search, AI app deployment on OCI.",
-      year: "Aug 2025",
+      title: "Oracle Cloud Infrastructure 2025 DevOps Professional",
+      description: "CI/CD pipelines, microservices, containerization (OKE, OCIR), DevSecOps, IaC (Terraform), observability, cloud-native deployments on OCI.",
+      year: "Aug 2024",
       category: "Certification",
-      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=467974165D603F1850172AB735DF6A3B43D00A0B3D480471EEED08CEC58D14AB"
+      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=BEC4F0F8CE8A5B257645EF1AAB3413481E87ACE15663131AB698E752D1A51178",
+      isOracle: true
+    },
+    {
+      icon: Award,
+      title: "Oracle Cloud Infrastructure 2025 Generative AI Professional",
+      description: "Large Language Models (LLMs), prompt engineering, fine-tuning (T-Few), RAG-based chatbot development, LangChain, vector databases, semantic search, AI app deployment on OCI.",
+      year: "Aug 2024",
+      category: "Certification",
+      verifyLink: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=467974165D603F1850172AB735DF6A3B43D00A0B3D480471EEED08CEC58D14AB",
+      isOracle: true
     },
     // Other certifications
     {
@@ -95,256 +136,299 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
     }
   ];
 
-  const extracurricular = [
+  const extracurricular: ExtracurricularAchievement[] = [
     {
       icon: Target,
-      title: "Participant – Hackcrux",
-      description: "LNMIIT Jaipur - Competed in prestigious hackathon with innovative solutions",
+      role: "Participant",
+      organization: "Hackcrux, LNMIIT Jaipur",
+      description: "Competed in prestigious hackathon with innovative solutions",
       year: "2024",
       category: "Competition",
-      verifyLink: "#"
+      verifyLink: "#",
+      duration: "2024",
+      link: "#"
     },
     {
       icon: Users,
-      title: "Coordinator – BGMI Event",
-      description: "Annual Fest Pravah, SKIT Jaipur - Successfully organized gaming tournament",
+      role: "Event Coordinator",
+      organization: "BGMI Tournament, Pravah Fest",
+      description: "Successfully organized and managed a large-scale gaming tournament",
       year: "2023",
       category: "Leadership",
-      verifyLink: "#"
+      verifyLink: "#",
+      duration: "2023",
+      link: "#"
     },
     {
       icon: Users,
-      title: "Volunteer – ICI Fest",
-      description: "SKIT Jaipur - Contributed to technical festival organization and management",
+      role: "Volunteer",
+      organization: "ICI Fest, SKIT Jaipur",
+      description: "Contributed to the organization and management of a major technical festival",
       year: "2023",
       category: "Volunteering",
-      verifyLink: "#"
+      verifyLink: "#",
+      duration: "2023",
+      link: "#"
     }
   ];
 
-  const renderCard = (title: string, items: any[], icon: React.ComponentType<any>, gradientColors: string, index: number) => {
-    return (
-      <div 
-        className={`relative p-8 rounded-2xl border-2 transition-all duration-500 hover:shadow-2xl group ${
-          theme === 'dark' 
-            ? 'bg-gray-800/60 border-gray-700 hover:border-gray-600' 
-            : 'bg-white/80 border-gray-200 hover:border-gray-300'
-        } ${isVisible ? 'animate-fade-in-up' : 'opacity-0'} backdrop-blur-sm`}
-        style={{animationDelay: `${index * 0.2}s`}}
-      >
-        <div className="flex items-center gap-4 mb-8">
-          <div className={`p-4 rounded-xl bg-gradient-to-r ${gradientColors} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-            {React.createElement(icon, { className: "w-8 h-8 text-white" })}
-          </div>
-          <div>
-            <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              {title}
-            </h2>
-            <div className={`w-16 h-1 bg-gradient-to-r ${gradientColors} rounded-full mt-2`}></div>
-          </div>
+  return (
+    <section id="achievements" className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            Achievements & Certifications
+          </h2>
+          <div className={`w-24 h-1 mx-auto ${theme === 'dark' ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gradient-to-r from-blue-500 to-purple-500'}`}></div>
         </div>
 
-        <div className="space-y-6">
-          {items.map((item, itemIndex) => {
-            const ItemIcon = item.icon;
-            const isBigAchievement = item.isBigAchievement;
-            
-            return (
-              <div 
-                key={itemIndex}
-                className={`relative p-6 rounded-xl border transition-all duration-300 hover:shadow-lg group/item ${
-                  isBigAchievement
-                    ? `ring-2 ring-purple-500/50 shadow-lg shadow-purple-500/20 animate-pulse-slow ${
-                        theme === 'dark' 
-                          ? 'bg-gradient-to-br from-purple-900/30 to-pink-900/20 border-purple-500/50' 
-                          : 'bg-gradient-to-br from-purple-50/80 to-pink-50/60 border-purple-300/60'
-                      }`
-                    : `${
-                        theme === 'dark' 
-                          ? 'bg-gray-700/30 border-gray-600 hover:bg-gray-700/50' 
-                          : 'bg-gray-50/50 border-gray-200 hover:bg-gray-50'
-                      }`
-                }`}
-              >
-                {isBigAchievement && (
-                  <>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-bounce shadow-lg">
-                      <Star className="w-3 h-3 text-white" />
-                    </div>
-                    <div className="absolute top-2 left-2">
-                      <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
-                    </div>
-                  </>
-                )}
-
-                <div className="flex items-start gap-4">
-                  <div className={`p-3 rounded-lg bg-gradient-to-br ${gradientColors} shadow-md group-hover/item:scale-110 transition-transform duration-300`}>
-                    <ItemIcon className="w-5 h-5 text-white" />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover/item:text-purple-400 transition-colors duration-300`}>
-                        {item.title}
-                        {isBigAchievement && (
-                          <span className="ml-2 px-2 py-1 text-xs font-medium bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full animate-pulse">
-                            ✨ Featured
-                          </span>
-                        )}
-                      </h3>
+        <div className="space-y-12">
+          {/* Certifications Section */}
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg">
+                <Award className="w-6 h-6 text-white" />
+              </div>
+              <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                Certifications
+              </h3>
+            </div>
+            <div className="flex overflow-x-auto pb-6 -mx-4 px-4 scrollbar-hide">
+              <div className="flex gap-6">
+                {certifications.map((item, index) => (
+                  <div 
+                    key={index}
+                    className={`flex-shrink-0 w-80 rounded-2xl border-2 p-6 transition-all duration-300 hover:shadow-xl relative ${
+                      theme === 'dark' 
+                        ? 'bg-gray-800/60 border-gray-700 hover:border-gray-600' 
+                        : 'bg-white/80 border-gray-200 hover:border-gray-300'
+                    } ${item.isOracle ? 'ring-2 ring-orange-500/50 shadow-lg shadow-orange-500/20' : ''}`}
+                  >
+                    {item.isBigAchievement && (
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-bounce shadow-lg">
+                        <Star className="w-3 h-3 text-white" />
+                      </div>
+                    )}
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`p-3 rounded-lg ${
+                        item.isOracle 
+                          ? 'bg-gradient-to-br from-orange-500 to-red-500' 
+                          : 'bg-gradient-to-br from-blue-500 to-cyan-500'
+                      } shadow-md`}>
+                        <item.icon className="w-5 h-5 text-white" />
+                      </div>
                       <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        theme === 'dark' ? 'bg-gray-600 text-gray-300' : 'bg-gray-200 text-gray-700'
+                        item.isOracle 
+                          ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' 
+                          : theme === 'dark' 
+                            ? 'bg-gray-700 text-gray-300' 
+                            : 'bg-gray-200 text-gray-700'
                       }`}>
                         {item.category}
                       </span>
                     </div>
-                    
-                    <p className={`text-sm mb-3 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} leading-relaxed`}>
+                    <h4 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                      {item.title}
+                      {item.isOracle && (
+                        <span className="ml-2 text-orange-500">★</span>
+                      )}
+                    </h4>
+                    <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                       {item.description}
                     </p>
-                    
-                    <div className="flex items-center justify-between gap-3 flex-wrap">
-                      <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                    <div className="flex items-center justify-between">
+                      <span className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
                         {item.year}
                       </span>
-                      
-                      <div className="flex items-center gap-3">
-                        {(() => {
-                          const hasPrimaryLink = item.verifyLink && item.verifyLink !== '#';
-                          return (
+                      <a 
+                        href={item.verifyLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-blue-500 hover:text-blue-400 transition-colors"
+                      >
+                        Verify <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 mt-4">
+                      {(() => {
+                        const hasPrimaryLink = item.verifyLink && item.verifyLink !== '#';
+                        return (
+                          <button
+                            onClick={() => hasPrimaryLink && window.open(item.verifyLink, '_blank')}
+                            className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                              theme === 'dark'
+                                ? 'text-purple-300 hover:text-purple-200'
+                                : 'text-purple-600 hover:text-purple-700'
+                            } ${hasPrimaryLink ? '' : 'opacity-60 cursor-not-allowed'}`}
+                          >
+                            <span>{item.category === 'Certification' ? 'View Credential' : item.category === 'Research' ? 'Read Paper' : 'View'}</span>
+                            <ExternalLink className="w-4 h-4" />
+                          </button>
+                        );
+                      })()}
+                      {Array.isArray(item.links) && item.links.length > 0 && (
+                        <div className="flex items-center gap-2">
+                          {item.links.map((lnk, li) => (
                             <button
-                              onClick={() => hasPrimaryLink && window.open(item.verifyLink, '_blank')}
-                              className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                              key={li}
+                              onClick={() => lnk.url && lnk.url !== '#' && window.open(lnk.url, '_blank')}
+                              className={`px-3 py-1.5 text-xs rounded-md border transition-colors ${
                                 theme === 'dark'
-                                  ? 'text-purple-300 hover:text-purple-200'
-                                  : 'text-purple-600 hover:text-purple-700'
-                              } ${hasPrimaryLink ? '' : 'opacity-60 cursor-not-allowed'}`}
+                                  ? 'border-purple-500/40 text-purple-300 hover:bg-purple-500/10'
+                                  : 'border-purple-300 text-purple-700 hover:bg-purple-50'
+                              } ${lnk.url && lnk.url !== '#' ? '' : 'opacity-60 cursor-not-allowed'}`}
                             >
-                              <span>{item.category === 'Certification' ? 'View Credential' : item.category === 'Research' ? 'Read Paper' : 'View'}</span>
-                              <ExternalLink className="w-4 h-4" />
+                              {lnk.label}
                             </button>
-                          );
-                        })()}
-                        {Array.isArray(item.links) && item.links.length > 0 && (
-                          <div className="flex items-center gap-2">
-                            {item.links.map((lnk: any, li: number) => (
-                              <button
-                                key={li}
-                                onClick={() => lnk.url && lnk.url !== '#' && window.open(lnk.url, '_blank')}
-                                className={`px-3 py-1.5 text-xs rounded-md border transition-colors ${
-                                  theme === 'dark'
-                                    ? 'border-purple-500/40 text-purple-300 hover:bg-purple-500/10'
-                                    : 'border-purple-300 text-purple-700 hover:bg-purple-50'
-                                } ${lnk.url && lnk.url !== '#' ? '' : 'opacity-60 cursor-not-allowed'}`}
-                              >
-                                {lnk.label}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-
-                {isBigAchievement && (
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 opacity-50 group-hover/item:opacity-70 transition-opacity duration-300 pointer-events-none"></div>
-                )}
+                ))}
               </div>
-            );
-          })}
-        </div>
-
-        <div className={`mt-8 pt-6 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
-          <div className="flex items-center justify-center">
-            <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              {items.length} {title.toLowerCase()}
-            </span>
+            </div>
           </div>
-        </div>
 
-        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${gradientColors} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`}></div>
-      </div>
-    );
-  };
+          {/* Achievements Section */}
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg">
+                <Trophy className="w-6 h-6 text-white" />
+              </div>
+              <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                Key Achievements
+              </h3>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {achievements.map((item, index) => (
+                <div 
+                  key={index}
+                  className={`rounded-2xl border-2 p-6 transition-all duration-300 hover:shadow-xl relative ${
+                    theme === 'dark' 
+                      ? 'bg-gray-800/60 border-gray-700 hover:border-gray-600' 
+                      : 'bg-white/80 border-gray-200 hover:border-gray-300'
+                  } ${item.isBigAchievement ? 'ring-2 ring-purple-500/50 shadow-lg shadow-purple-500/20' : ''}`}
+                >
+                  {item.isBigAchievement && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
+                      <Star className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 shadow-md">
+                      <item.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      theme === 'dark' 
+                        ? 'bg-gray-700 text-gray-300' 
+                        : 'bg-gray-200 text-gray-700'
+                    }`}>
+                      {item.category}
+                    </span>
+                  </div>
+                  <h4 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    {item.title}
+                  </h4>
+                  <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {item.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {item.year}
+                    </span>
+                    <a 
+                      href={item.verifyLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-blue-500 hover:text-blue-400 transition-colors"
+                    >
+                      View <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                  
+                  {Array.isArray(item.links) && item.links.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {item.links.map((lnk, li) => (
+                        <a
+                          key={li}
+                          href={lnk.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`px-3 py-1.5 text-xs rounded-md border transition-colors ${
+                            theme === 'dark'
+                              ? 'border-purple-500/40 text-purple-300 hover:bg-purple-500/10'
+                              : 'border-purple-300 text-purple-700 hover:bg-purple-50'
+                          }`}
+                        >
+                          {lnk.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
 
-  return (
-    <section id="achievements" className={`py-20 relative overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="floating-particles pointer-events-none">
-          {[...Array(20)].map((_, i) => {
-            const randomLeft = (i * 7 + 10) % 100;
-            const randomTop = (i * 11 + 15) % 100;
-            const randomDelay = (i * 0.2) % 3;
-            const randomDuration = 4 + (i % 3);
-            
-            return (
-              <div
-                key={i}
-                className={`absolute w-1 h-1 bg-purple-400 rounded-full opacity-30 ${isVisible ? 'animate-float' : ''}`}
-                style={{
-                  left: `${randomLeft}%`,
-                  top: `${randomTop}%`,
-                  animationDelay: `${randomDelay}s`,
-                  animationDuration: `${randomDuration}s`
-                }}
-              />
-            );
-          })}
-        </div>
-        <div className={`absolute inset-0 opacity-5 ${theme === 'dark' ? 'bg-gradient-to-br from-purple-500 to-cyan-500' : 'bg-gradient-to-br from-purple-400 to-cyan-400'} pointer-events-none`} />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            Certifications & <span className="text-purple-500">Achievements</span>
-          </h1>
-          <div className="w-24 h-1 bg-purple-500 mx-auto rounded-full mb-6"></div>
-          <p className={`text-lg mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-            Explore my professional journey through certifications, notable achievements, and leadership experiences
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          {renderCard("Certifications", certifications, Award, "from-indigo-500 to-purple-600", 0)}
-          {renderCard("Achievements", achievements, Trophy, "from-purple-500 to-pink-600", 1)}
-          {renderCard("Extra-Curricular", extracurricular, Target, "from-green-500 to-teal-600", 2)}
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { number: "2", label: "Certifications", icon: Award, color: "from-indigo-400 to-purple-600" },
-            { number: "3", label: "Major Achievements", icon: Trophy, color: "from-purple-400 to-pink-600" },
-            { number: "3", label: "Leadership Roles", icon: Users, color: "from-green-400 to-teal-600" },
-            { number: "1", label: "Research Publication", icon: BookOpen, color: "from-blue-400 to-cyan-600" }
-          ].map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <div 
-                key={index} 
-                className={`relative text-center p-6 rounded-xl border transition-all duration-300 hover:shadow-xl group ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800/50 border-gray-700' 
-                    : 'bg-white/80 border-gray-200'
-                } ${isVisible ? 'animate-fade-in-up' : 'opacity-0'}`}
-                style={{animationDelay: `${index * 0.1 + 1}s`}}
-              >
-                <div className="flex justify-center mb-4">
-                  <div className={`p-3 bg-gradient-to-r ${stat.color} rounded-full group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <Icon className="w-6 h-6 text-white" />
+          {/* Extracurricular Activities Section */}
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 shadow-lg">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                Extracurricular Activities
+              </h3>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {extracurricular.map((item, index) => (
+                <div 
+                  key={index}
+                  className={`rounded-2xl border-2 p-6 transition-all duration-300 hover:shadow-xl ${
+                    theme === 'dark' 
+                      ? 'bg-gray-800/60 border-gray-700 hover:border-gray-600' 
+                      : 'bg-white/80 border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="p-3 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 shadow-md">
+                      <item.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      theme === 'dark' 
+                        ? 'bg-gray-700 text-gray-300' 
+                        : 'bg-gray-200 text-gray-700'
+                    }`}>
+                      {item.role}
+                    </span>
+                  </div>
+                  <h4 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    {item.organization}
+                  </h4>
+                  <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    {item.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {item.duration}
+                    </span>
+                    {item.link && (
+                      <a 
+                        href={item.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm font-medium text-blue-500 hover:text-blue-400 transition-colors"
+                      >
+                        Learn More <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
                   </div>
                 </div>
-                <div className={`text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  {stat.number}
-                </div>
-                <div className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                  {stat.label}
-                </div>
-                <div className={`absolute inset-0 bg-gradient-to-r ${stat.color} opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300`}></div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

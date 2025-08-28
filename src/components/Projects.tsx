@@ -279,7 +279,7 @@ const majorProjects: Project[] = [
     category: "Major Project"
   },
   {
-    id: 10,
+    id: 11,
     title: "S3 Lambda SNS Notification",
     description: "Automated file processing with S3, Lambda, and SNS notifications.",
     tech: ["AWS S3", "AWS Lambda", "SNS", "Python"],
@@ -477,7 +477,7 @@ const minorProjects: Project[] = [
     category: "Minor Project"
   },
   {
-    id: 19,
+    id: 34,
     title: "ML Docker Container",
     description: "Pre-configured Docker container for machine learning development.",
     tech: ["Docker", "Python", "Jupyter", "ML"],
@@ -571,7 +571,7 @@ const minorProjects: Project[] = [
     category: "Minor Project"
   },
   {
-    id: 25,
+    id: 35,
     title: "Python EC2 Automation",
     description: "Automate AWS EC2 instance management with Python.",
     tech: ["Python", "AWS", "Boto3", "EC2"],
@@ -683,15 +683,10 @@ export default function Projects({ theme }: ProjectsProps) {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {};
-
-    const section = document.getElementById('projects');
-    if (section) {
-      const rect = section.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
-      if (inView) {
-        setIsVisible(true);
-      }
+      const section = document.getElementById('projects');
+    if (!section) {
+      console.error('Projects section not found');
+      return;
     }
 
     const observer = new IntersectionObserver(
@@ -705,9 +700,7 @@ export default function Projects({ theme }: ProjectsProps) {
 
     if (section) observer.observe(section);
 
-    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
     };
   }, []);
