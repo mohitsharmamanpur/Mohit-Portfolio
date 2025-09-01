@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef, useState } from 'react';
 import {
   Cloud,
   Cpu,
@@ -15,6 +15,11 @@ import {
   Wrench,
   Zap,
   BookOpen,
+  Sparkles,
+  Code,
+  CpuIcon,
+  CloudLightning,
+  GitBranchIcon,
 } from 'lucide-react';
 
 interface SkillsConstellationProps {
@@ -138,9 +143,38 @@ function buildSkills(): SkillItem[] {
 }
 
 const SkillsConstellation: React.FC<SkillsConstellationProps> = ({ theme }) => {
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const skills = useMemo(() => buildSkills(), []);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number>();
+  const lastTimeRef = useRef(0);
+  const timeRef = useRef(0);
+  const centerXRef = useRef(0);
+  const centerYRef = useRef(0);
+
+  // Handle mouse move for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener('mousemove', handleMouseMove);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -151,48 +185,107 @@ const SkillsConstellation: React.FC<SkillsConstellationProps> = ({ theme }) => {
 
     let width = canvas.width = canvas.offsetWidth;
     let height = canvas.height = canvas.offsetHeight;
+    centerXRef.current = width / 2;
+    centerYRef.current = height / 2;
 
-    // Particle system
-    const particles = Array.from({ length: 80 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2 + 1,
-      speedX: Math.random() * 2 - 1,
-      speedY: Math.random() * 2 - 1,
-      color: `hsla(${Math.random() * 60 + 180}, 70%, 70%, ${Math.random() * 0.3 + 0.1})`
-    }));
+    // Enhanced particle system
+    const particles = Array.from({ length: 120 }, () => {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 50 + Math.random() * Math.min(width, height) * 0.4;
+      return {
+        x: width / 2 + Math.cos(angle) * distance,
+        y: height / 2 + Math.sin(angle) * distance,
+        size: Math.random() * 1.5 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.8,
+        speedY: (Math.random() - 0.5) * 0.8,
+        baseX: 0,
+        baseY: 0,
+        angle: Math.random() * Math.PI * 2,
+        radius: 50 + Math.random() * Math.min(width, height) * 0.3,
+        speed: 0.0005 + Math.random() * 0.001,
+        color: `hsla(${Math.random() * 60 + 180}, 70%, 70%, ${Math.random() * 0.2 + 0.1})`
+      };
+    });
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
+      if (!lastTimeRef.current) lastTimeRef.current = timestamp;
+      const deltaTime = timestamp - lastTimeRef.current;
+      lastTimeRef.current = timestamp;
+      timeRef.current += deltaTime * 0.001;
+      
       ctx.clearRect(0, 0, width, height);
       
-      // Draw connecting lines between close particles
+      // Update particle positions with orbital motion and parallax effect
+      const parallaxFactor = 0.1;
+      const mouseX = mousePosition.x - centerXRef.current;
+      const mouseY = mousePosition.y - centerYRef.current;
+      
+      // Draw connecting lines with gradient and improved performance
+      const connections: {x1: number, y1: number, x2: number, y2: number, distance: number}[] = [];
+      
       for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        
+        // Orbital motion with noise
+        p.angle += p.speed;
+        p.baseX = centerXRef.current + Math.cos(p.angle) * p.radius * (1 + Math.sin(timeRef.current * 0.5) * 0.1);
+        p.baseY = centerYRef.current + Math.sin(p.angle) * p.radius * (1 + Math.cos(timeRef.current * 0.3) * 0.1);
+        
+        // Apply parallax effect based on mouse position
+        p.x = p.baseX + mouseX * parallaxFactor * (p.size / 3);
+        p.y = p.baseY + mouseY * parallaxFactor * (p.size / 3);
+        
+        // Store connections for drawing later
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+          const other = particles[j];
+          const dx = p.x - other.x;
+          const dy = p.y - other.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 100})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
+          if (distance < 120) {
+            connections.push({
+              x1: p.x, y1: p.y,
+              x2: other.x, y2: other.y,
+              distance
+            });
           }
         }
       }
+      
+      // Sort connections by distance (farthest first for proper layering)
+      connections.sort((a, b) => b.distance - a.distance);
+      
+      // Draw connections with gradient
+      connections.forEach(conn => {
+        const gradient = ctx.createLinearGradient(conn.x1, conn.y1, conn.x2, conn.y2);
+        const opacity = 1 - conn.distance / 120;
+        gradient.addColorStop(0, `rgba(99, 102, 241, ${opacity * 0.4})`);
+        gradient.addColorStop(1, `rgba(168, 85, 247, ${opacity * 0.4})`);
+        
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        ctx.moveTo(conn.x1, conn.y1);
+        ctx.lineTo(conn.x2, conn.y2);
+        ctx.stroke();
+      });
 
-      // Update and draw particles
+      // Draw particles with glow effect
       particles.forEach(particle => {
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
+        // Glow effect
+        const gradient = ctx.createRadialGradient(
+          particle.x, particle.y, 0,
+          particle.x, particle.y, particle.size * 3
+        );
+        gradient.addColorStop(0, `hsla(240, 100%, 70%, 0.3)`);
+        gradient.addColorStop(1, 'transparent');
         
-        // Bounce off edges
-        if (particle.x < 0 || particle.x > width) particle.speedX *= -1;
-        if (particle.y < 0 || particle.y > height) particle.speedY *= -1;
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
+        ctx.fill();
         
-        // Draw particle
+        // Particle core
         ctx.fillStyle = particle.color;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
@@ -259,48 +352,27 @@ const SkillsConstellation: React.FC<SkillsConstellationProps> = ({ theme }) => {
 
 
       {/* Orbiting skill badges */}
-      {skills.map((s, idx) => {
-        const Icon = iconRegistry[(s.name as IconKey) in iconRegistry ? (s.name as IconKey) : 'VS Code'];
-        const colorClass = s.color.split(' ')[1]; // Extract color class for hover effect
-        
+      {skills.map((s, index) => {
+        const Icon = typeof s.name === 'string' && iconRegistry[s.name as IconKey] || Layers;
         return (
-          <button
-            aria-label={String(s.name)}
-            key={`${s.name}-${idx}`}
-            className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full focus:outline-none group transition-all duration-300 hover:scale-125 hover:z-10 ${
-              theme === 'dark' 
-                ? 'bg-gray-800/80 backdrop-blur-sm hover:bg-gray-700/90' 
-                : 'bg-white/80 backdrop-blur-sm hover:bg-white/90'
-            }`}
+          <div 
+            key={index}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 group"
             style={{
-              left: '50%',
-              top: '50%',
-              // @ts-ignore CSS variables for custom orbit
-              ['--orbit-radius' as any]: `${s.radius}px`,
-              ['--start-angle' as any]: `${s.startAngle}deg`,
-              ['--orbit-duration' as any]: `${s.speed}s`,
-              transform: 'translate(-50%, -50%)',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-              transition: 'all 0.3s ease, transform 0.1s ease',
+              transform: `translate(-50%, -50%) rotate(${s.startAngle}deg) translate(${s.radius}px) rotate(-${s.startAngle}deg)`,
+              transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+              willChange: 'transform'
             }}
           >
-            <div className={`relative w-14 h-14 rounded-full flex items-center justify-center animate-orbit-individual z-10 group-hover:z-30`}>
-              {/* Outer glow */}
-              <div
-              className={`relative flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br ${s.color} text-white shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg overflow-hidden`}
-            >
-              <div className="absolute inset-0 bg-white/20 group-hover:opacity-0 transition-opacity duration-300" />
-              <Icon className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+            <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-br from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <div className={`absolute -z-10 w-16 h-16 rounded-full bg-${colorClass} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500`} />
-                <div
+              <div className={`absolute -z-10 w-16 h-16 rounded-full bg-${s.color} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500`} />
+              <div
                 className={`relative w-12 h-12 rounded-full flex items-center justify-center transform transition-transform duration-200 ease-out ${
                   theme === 'dark' ? 'bg-slate-900/80 text-white' : 'bg-white text-slate-800'
                 } ring-1 ring-white/10 shadow-xl group-hover:scale-[2] group-hover:ring-2 group-hover:ring-cyan-400/40 group-hover:shadow-2xl`}
                 style={{
-                  boxShadow:
-                    '0 0 18px rgba(59,130,246,0.25), 0 0 36px rgba(139,92,246,0.25)'
+                  boxShadow: '0 0 18px rgba(59,130,246,0.25), 0 0 36px rgba(139,92,246,0.25)'
                 }}
               >
                 <div className={`absolute -inset-1 rounded-full bg-gradient-to-br ${s.color} opacity-40 blur-md`} />
@@ -316,7 +388,7 @@ const SkillsConstellation: React.FC<SkillsConstellationProps> = ({ theme }) => {
                 {String(s.name)}
               </div>
             </div>
-          </button>
+          </div>
         );
       })}
     </div>

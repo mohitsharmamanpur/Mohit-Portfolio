@@ -94,18 +94,20 @@ const industryProjects: Project[] = [
   },
   {
     id: 5,
-    title: "Coming Soon Project",
-    description: "An exciting new project currently under development. Stay tuned for updates!",
-    tech: ["React", "Node.js", "MongoDB", "Docker"],
+    title: "Terraform AWS Nginx Server Deployment",
+    description: "Automated provisioning of secure AWS infrastructure and Nginx web server deployment using Terraform's Infrastructure as Code (IaC) approach.",
+    tech: ["Terraform", "AWS", "Nginx", "VPC", "EC2", "S3"],
     features: [
-      "Modern web application",
-      "Responsive design",
-      "Secure authentication",
-      "RESTful API"
+      "Automated provisioning of AWS infrastructure with Terraform",
+      "Secure VPC setup with public and private subnets",
+      "Nginx web server auto-installed and configured on EC2",
+      "Remote backend state management in S3 for team collaboration",
+      "Modular and reusable Terraform code structure",
+      "Security group configurations for controlled access"
     ],
-    github: "",
-    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_aws-terraform-automation-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
-    image: "https://images.pexels.com/photos/326514/pexels-photo-326514.jpeg?auto=compress&cs=tinysrgb&w=800",
+    github: "https://github.com/mohitsharmamanpur/terraform-aws-nginx-server",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_devops-terraform-aws-activity-7368190073596428289-cyXO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/1591061/pexels-photo-1591061.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Industry Level"
   }
 ];
@@ -163,6 +165,24 @@ const majorProjects: Project[] = [
   },
   {
     id: 9,
+    title: "Grafana Cloud Monitoring Dashboard",
+    description: "Comprehensive monitoring solution using Grafana with AWS CloudWatch integration for real-time system observability and metrics visualization.",
+    tech: ["Grafana", "AWS CloudWatch", "Prometheus", "EC2", "Linux", "Docker"],
+    features: [
+      "Deployed Grafana for real-time monitoring and visualization",
+      "Integrated AWS CloudWatch for cloud metrics collection",
+      "Visualized EC2 instance metrics (CPU, memory, network, disk I/O)",
+      "Created intuitive dashboards with multiple visualization types",
+      "Set up alerts and notifications for system metrics",
+      "Explored Prometheus integration for deeper system insights"
+    ],
+    github: "",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_grafana-prometheus-devops-activity-7366451341738627073-_UOr?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 10,
     title: "AI-Powered Startup Assistant",
     description: "An intelligent assistant that helps refine startup ideas, perform market research, and generate business plans using Agentic AI.",
     tech: ["LangChain", "Google Gemini 2.5", "Streamlit", "Python"],
@@ -179,7 +199,7 @@ const majorProjects: Project[] = [
     category: "Major Project"
   },
   {
-    id: 18,
+    id: 11,
     title: "GenAI RAG Knowledge Assistant",
     description: "A GenAI-powered Knowledge Assistant that reads plain text documents, chunks them, builds normalized embeddings for semantic search, and uses Retrieval-Augmented Generation (RAG) with Google Gemini to answer questions grounded in your documents. Purpose: enable smarter search and accurate Q&A directly from private knowledge bases.",
     tech: ["Python", "NumPy", "Google Gemini", "Embeddings", "Semantic Search", "RAG"],
@@ -276,6 +296,24 @@ const majorProjects: Project[] = [
     github: "https://github.com/mohitsharmamanpur/AI-Computer-Vision-Cloud",
     linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_ai-aws-gesturecontrol-activity-7355076978820997121-NzC7?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
     image: "https://images.pexels.com/photos/3861437/pexels-photo-3861437.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 12,
+    title: "Grafana Cloud Monitoring Dashboard",
+    description: "Comprehensive monitoring solution using Grafana with AWS CloudWatch integration for real-time system observability and metrics visualization.",
+    tech: ["Grafana", "AWS CloudWatch", "Prometheus", "EC2", "Linux", "Docker"],
+    features: [
+      "Deployed Grafana for real-time monitoring and visualization",
+      "Integrated AWS CloudWatch for cloud metrics collection",
+      "Visualized EC2 instance metrics (CPU, memory, network, disk I/O)",
+      "Created intuitive dashboards with multiple visualization types",
+      "Set up alerts and notifications for system metrics",
+      "Explored Prometheus integration for deeper system insights"
+    ],
+    github: "https://github.com/mohitsharmamanpur/grafana-monitoring-setup",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_grafana-prometheus-devops-activity-7366451341738627073-_UOr?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Major Project"
   },
   {
