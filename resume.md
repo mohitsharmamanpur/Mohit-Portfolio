@@ -24,6 +24,16 @@ Aspiring Software Developer and DevOps Enthusiast with strong problem-solving sk
 
 ## Major Projects
 
+**Automated CI/CD Pipeline for Flask Application**  
+Designed and implemented a fully automated CI/CD pipeline for a Flask application using GitLab, Docker, and AWS. The pipeline handles building Docker images, storing them in GitLab Container Registry, and deploying to AWS EC2 instances with zero downtime.  
+*Tech:* GitLab CI/CD, Docker, AWS EC2, Python, Flask, Linux  
+*Key Achievements:*  
+- Automated the entire build and deployment process, eliminating manual intervention  
+- Implemented version control of Docker images using pipeline IDs for traceability  
+- Set up isolated build and production environments for better security and reliability  
+- Reduced deployment time from 15+ minutes to under 2 minutes per update  
+- [GitHub](https://github.com/mohitsharmamanpur/flask-cicd-pipeline) | [LinkedIn Post](https://www.linkedin.com/posts/mohit-sharma-236829318_devops-gitlab-ci-activity-7370462882024611840-14Nv)
+
 **CI/CD Pipeline Automation**  
 Automated build-test-deploy workflows using Docker, Jenkins, Kubernetes, and GitHub.  
 *Tech:* Docker, Jenkins, Git, GitHub, Kubernetes

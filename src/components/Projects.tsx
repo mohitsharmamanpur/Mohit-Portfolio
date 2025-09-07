@@ -131,6 +131,24 @@ const majorProjects: Project[] = [
   },
   {
     id: 7,
+    title: "DevOps Pipeline with GitLab (end to end)",
+    description: "End-to-end CI/CD pipeline implementation for a Flask application using GitLab, Docker, and AWS.",
+    tech: ["GitLab CI/CD", "Docker", "AWS EC2", "Python", "Flask", "Linux"],
+    features: [
+      "Fully automated build and deployment pipeline",
+      "Docker containerization with versioned images",
+      "Zero-downtime deployment strategy",
+      "GitLab Container Registry integration",
+      "Automated testing and deployment on push",
+      "Isolated build and production environments"
+    ],
+    github: "https://github.com/mohitsharmamanpur/flask-cicd-pipeline",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_devops-cicd-docker-activity-7360980905194102784-BSey?utm_source=share&utm_medium=member_desktop",
+    image: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project"
+  },
+  {
+    id: 8,
     title: "Titanic MLOps Pipeline",
     description: "End-to-end MLOps pipeline for the Titanic survival prediction challenge.",
     tech: ["Python", "Scikit-learn", "MLflow", "Docker", "FastAPI"],
@@ -146,7 +164,7 @@ const majorProjects: Project[] = [
     category: "Major Project"
   },
   {
-    id: 8,
+    id: 9,
     title: "Prometheus & PromQL Monitoring System",
     description: "Comprehensive monitoring solution using Prometheus for system and container metrics across distributed infrastructure.",
     tech: ["Prometheus", "PromQL", "Docker", "AWS EC2", "Linux", "Grafana", "Alertmanager"],
