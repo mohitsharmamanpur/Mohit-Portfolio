@@ -115,6 +115,23 @@ const industryProjects: Project[] = [
 // Major Projects (IDs 6-30)
 const majorProjects: Project[] = [
   {
+    id: 17,
+    title: "AI-Powered Pneumonia Detector",
+    description: "End-to-end ML web app built in a 48-hour hackathon to classify chest X-rays as Normal or Pneumonia. Flask serves a TensorFlow/Keras model, containerized and deployed on AWS EC2 behind Apache via Docker Compose.",
+    tech: ["Python", "Flask", "TensorFlow", "Keras", "HTML", "CSS", "JavaScript", "Docker", "Docker Compose", "Apache", "AWS EC2"],
+    features: [
+      "User-friendly web UI to upload chest X-ray images",
+      "Real-time classification using a pre-trained CNN model",
+      "Clear, immediate presentation of prediction results",
+      "Owned complete DevOps pipeline: wrote Docker Compose, containerized frontend and backend, deployed on AWS EC2 behind Apache, and resolved critical server permissions issue"
+    ],
+    github: "https://github.com/mohitsharmamanpur/Pneumonia-detection-deep-learning",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_hackathon-skit-top10team-activity-7378100430729478144-CnuP?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/5723888/pexels-photo-5723888.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Major Project",
+    award: "Top 10 – Hackathon"
+  },
+  {
     id: 6,
     title: "Terraform AWS Automation",
     description: "Infrastructure as Code using Terraform to automate AWS resource provisioning.",

@@ -134,6 +134,23 @@ const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
       category: "Competition",
       verifyLink: "#"
     }
+    ,
+    {
+      icon: Trophy,
+      title: "Top 10 – Hackathon (AI-Powered Pneumonia Detector)",
+      description: "Recognized among the Top 10 teams for delivering a complete, real-world ML web app within 48 hours.",
+      year: "2024",
+      category: "Competition",
+      verifyLink: "https://www.linkedin.com/posts/mohit-sharma-236829318_hackathon-skit-top10team-activity-7378100430729478144-CnuP?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A"
+    },
+    {
+      icon: Trophy,
+      title: "Winner – College Hackathon",
+      description: "Secured first place for end-to-end solution delivery and impact.",
+      year: "2024",
+      category: "Competition",
+      verifyLink: "#"
+    }
   ];
 
   const extracurricular: ExtracurricularAchievement[] = [
