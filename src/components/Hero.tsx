@@ -44,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({ theme }) => {
   const handleResumeDownload = () => {
     // Force fresh fetch to avoid cached older resume
     const link = document.createElement('a');
-    link.href = `/Resume.pdf?ts=${Date.now()}`;
+    link.href = `/Resume.pdf.pdf?ts=${Date.now()}`;
     link.download = 'Mohit_Sharma_Resume.pdf';
     document.body.appendChild(link);
     link.click();

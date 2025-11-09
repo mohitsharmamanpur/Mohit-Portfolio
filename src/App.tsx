@@ -17,10 +17,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for saved theme preference
+    // Check for saved theme preference, default to dark if none exists
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
     if (savedTheme) {
       setTheme(savedTheme);
+    } else {
+      // Set dark as default and save it
+      setTheme('dark');
+      localStorage.setItem('theme', 'dark');
     }
 
     // Simulate loading time

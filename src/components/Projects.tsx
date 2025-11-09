@@ -109,6 +109,24 @@ const industryProjects: Project[] = [
     linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_devops-terraform-aws-activity-7368190073596428289-cyXO?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
     image: "https://images.pexels.com/photos/1591061/pexels-photo-1591061.jpeg?auto=compress&cs=tinysrgb&w=800",
     category: "Industry Level"
+  },
+  {
+    id: 6,
+    title: "Prometheus & Grafana Cloud Monitoring Dashboard",
+    description: "Overview — Built a full-stack cloud observability platform combining Grafana, AWS CloudWatch, and Prometheus to deliver unified, real-time visibility across EC2 and container workloads. Solved fragmented monitoring by centralizing telemetry, normalizing metrics, and standardizing alerting for production readiness.\n\nOutcome & Impact — Reduced MTTR through proactive alerting, accelerated root-cause analysis with drill-down dashboards, and improved capacity planning via trend analysis. Established a reusable monitoring baseline that scales with infrastructure growth while maintaining reliability and cost-awareness.",
+    tech: ["Grafana", "Prometheus", "AWS CloudWatch", "EC2", "Linux", "Docker"],
+    features: [
+      "Deployment of Grafana for real-time observability",
+      "Integration of AWS CloudWatch for cloud metric collection",
+      "Monitoring of EC2 instance metrics (CPU, memory, disk, network)",
+      "Dashboard creation with diverse visualizations",
+      "Alerts & notifications for proactive incident handling",
+      "Prometheus integration for deeper system-level insights"
+    ],
+    github: "",
+    linkedin: "https://www.linkedin.com/posts/mohit-sharma-236829318_hackathon-skit-top10team-activity-7378100430729478144-CnuP?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFCRgAoBhv9dRdNT1FnsRUckazhI7I0NH4A",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    category: "Industry Level"
   }
 ];
 
